@@ -25,7 +25,7 @@ const initialState = {
     src: walls[wps],
 };
 export const wallpaperSlice = createSlice({
-    name: 'counter',
+    name: 'wallpaper',
     initialState,
     reducers: {
         // increment: state => {

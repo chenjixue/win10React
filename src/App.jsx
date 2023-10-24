@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import { ErrorBoundary } from "react-error-boundary";
 import { Background } from "./containers/background";
+import Taskbar from "./components/taskbar";
+import "./index.css";
 function ErrorFallback({ error, resetErrorBoundary }) {
   return (
     <div>
@@ -78,6 +80,7 @@ function App() {
           </div>
           <Taskbar />
           <ActMenu /> */}
+          <Taskbar />
         </div>
       </ErrorBoundary>
     </div>
