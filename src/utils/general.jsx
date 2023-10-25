@@ -31,7 +31,6 @@ export const Icon = (props) => {
       dispatch(action);
     }
   };
-  console.log(props.fafa,"props.fafa----")
   if (props.fafa != null) {
     return (
       <div
@@ -41,6 +40,7 @@ export const Icon = (props) => {
         data-payload={props.payload}
         data-menu={props.menu}
       >
+        {/* 用于使用fontAwesome系统里面的字体 */}
         <FontAwesomeIcon
           data-flip={props.flip != null}
           data-invert={props.invert != null ? "true" : "false"}
@@ -58,6 +58,7 @@ export const Icon = (props) => {
       </div>
     );
   } else if (props.icon != null) {
+    //用于输入自定义的iconsvg图标,自定义icon图标位于文件夹./icons
     var CustomIcon = AllIcons[props.icon];
     return (
       <div

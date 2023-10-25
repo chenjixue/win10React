@@ -2,12 +2,8 @@ import { createSlice } from '@reduxjs/toolkit'
 import { taskApps } from "../utils";
 const initialState = {
     apps: taskApps,
-    prev: false,
-    prevApp: "",
-    prevPos: 0,
     align: "center",
-    search: true,
-    widgets: true,
+    winStart: true,
     audio: 3,
 };
 export const taskbarSlice = createSlice({

@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { Icon } from "../../utils/general";
 import Battery from "../shared/Battery";
 import "./taskbar.scss";
-
 const Taskbar = () => {
   const tasks = useSelector((state) => {
     return state.taskbar;
@@ -64,24 +63,26 @@ const Taskbar = () => {
   return (
     <div className="taskbar">
       <div className="taskcont">
-        <div className="tasksCont" data-menu="task" data-side={tasks.align}>
+        <div className="tasksCont" data-menu="task">
           <div className="tsbar" onMouseOut={hidePrev}>
-            <Icon className="tsIcon" src="home" width={24} click="STARTOGG" />
-            {tasks.search ? (
+            {tasks.winStart ? (
               <Icon
-                click="STARTSRC"
-                className="tsIcon searchIcon"
-                icon="taskSearch"
+                icon="winStart"
+                height="16"
+                width="16"
+                className={`tsIcon win-start-icon`}
               />
             ) : null}
-            {tasks.widgets ? (
+            {/* <Icon className="tsIcon" src="home" width={24} click="STARTOGG" /> */}
+            <div className="win-search">
               <Icon
-                className="tsIcon widget"
-                src="widget"
-                width={24}
-                click="WIDGTOGG"
+                className="tsIcon win-search-icon"
+                icon="winSearch"
+                height="22"
+                width="22"
               />
-            ) : null}
+              <input placeholder="搜索"></input>
+            </div>
             {tasks.apps.map((task, i) => {
               var isHidden = apps[task.icon].hide;
               var isActive = apps[task.icon].z == apps.hz;

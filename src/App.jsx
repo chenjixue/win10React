@@ -57,9 +57,9 @@ function App() {
         {}
         <div className="appwrap">
           <Background />
-          {/* <div className="desktop" data-menu="desk">
-            <DesktopApp />
-            {Object.keys(Applications).map((key, idx) => {
+          <div className="desktop" data-menu="desk">
+            {/* <DesktopApp /> */}
+            {/* {Object.keys(Applications).map((key, idx) => {
               var WinApp = Applications[key];
               return <WinApp key={idx} />;
             })}
@@ -71,15 +71,15 @@ function App() {
                   var WinApp = Drafts[app.data.type];
                   return <WinApp key={i} icon={app.icon} {...app.data} />;
                 }
-              })}
-            <StartMenu />
+              })} */}
+            {/* <StartMenu />
             <BandPane />
             <SidePane />
             <WidPane />
-            <CalnWid />
+            <CalnWid /> */}
           </div>
-          <Taskbar />
-          <ActMenu /> */}
+          {/* <Taskbar /> */}
+          {/* <ActMenu /> */}
           <Taskbar />
         </div>
       </ErrorBoundary>
