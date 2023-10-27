@@ -1,5 +1,5 @@
 .taskbar {
-  --bg1: rgba(243, 243, 243, 0.85);
+  --bg1: rgba(235, 235, 235, 1);
   --bg2: rgba(255, 255, 255, 0.67);
 
   position: absolute;
@@ -89,9 +89,7 @@ body[data-theme="dark"] {
 .tsbar {
   width: auto;
   height: 100%;
-  display: flex;
-  align-items: center;
-  transition: all ease-in-out 200ms;
+  overflow: hidden;
 }
 
 .tsIcon {
@@ -148,27 +146,70 @@ body[data-theme="dark"] {
     fill: rgb(66, 156, 227)
   }
 }
-.win-start-icon{
-  width: 38px;
+
+.win-start-icon {
+  width: 48px;
+  float: left;
 }
 
 .win-search {
   height: 100%;
-  width: 280px;
+  width: 286px;
   display: flex;
+  float: left;
   align-items: center;
   background-color: #fff;
+  border: 1px solid rgb(180, 180, 180);
 
   input {
-    height: 26px;
+    height: 18px;
+    font-size: 16px;
     width: calc(100% - 38px);
     border: none;
+    margin-left: -5px;
+    outline: none;
+
+    &::-webkit-input-placeholder {
+      color: rgb(0, 0, 0);
+    }
   }
+}
+
+.win-task {
+  float: left;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.fix-icon {
+  display: flex;
+  align-items: center;
+  float: left;
+
+  height: 100%;
+
+  &>div {
+    height: 100%;
+  }
+}
+
+.win-task-icon-nohover {
+  width: 51px;
+
+  &:hover {
+    background: none;
+  }
+}
+
+.win-task-icon-hover {
+  width: 51px;
 }
 
 .tsbar {
   .win-search-icon {
-    width: 64px;
+    width: 41px;
   }
 }
 

@@ -3,7 +3,6 @@ import { useSelector } from "react-redux";
 // import Battery from "../../components/shared/Battery";
 // import { Icon, Image } from "../../utils/general";
 import Styles from "./back.module.scss";
-console.log(Styles, "Styles----")
 export const Background = () => {
   const wall = useSelector((state) => state.wallpaper);
   return (
