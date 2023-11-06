@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useSelector, useDispatch } from "react-redux";
 import "./general.scss";
-
+import { Actions } from "@/store"
 import * as FaIcons from "@fortawesome/free-solid-svg-icons";
 import * as FaRegIcons from "@fortawesome/free-regular-svg-icons";
 import * as AllIcons from "./icons";
@@ -22,13 +22,14 @@ export const Icon = (props) => {
   }
 
   const clickDispatch = (event) => {
-    var action = {
-      type: event.currentTarget.dataset.action,
-      payload: event.currentTarget.dataset.payload,
-    };
-
-    if (action.type) {
-      dispatch(action);
+    // var action = {
+    //   type: event.currentTarget.dataset.action,
+    //   payload: event.currentTarget.dataset.payload,
+    // };
+    let createAction = Actions[event.currentTarget.dataset.action]
+    let payload = event.currentTarget.dataset.payload
+    if (createAction) {
+      dispatch(createAction(payload));
     }
   };
   if (props.fafa != null) {
@@ -141,4 +142,13 @@ export const Icon = (props) => {
       </div>
     );
   }
+};
+export const LazyComponent = ({ show, children }) => {
+  const [loaded, setLoad] = useState(false);
+
+  useEffect(() => {
+    if (show && !loaded) setLoad(true);
+  }, [show]);
+
+  return show || loaded ? <>{children}</> : null;
 };

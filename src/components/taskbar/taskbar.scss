@@ -30,16 +30,33 @@ body[data-theme="dark"] {
   width: 100%;
   height: 100%;
 }
-
+.win-task-tem{
+  flex: 1;
+}
 .taskright {
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: auto;
   height: 100%;
   margin-left: 10px;
   display: flex;
+  .weather{
+    display: flex;
+    font-size: 15px;
+    font-weight: 450;
+    align-items: center;
+    margin-right: 15px;
+    // background-color: red;
+  }
+  .language{
+    display: flex;
+    width: 24px;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+  }
+  &>div:hover{
+    background: var(--bg2);
+  }
 }
+
 
 .taskIcon {
   display: flex;
@@ -54,10 +71,10 @@ body[data-theme="dark"] {
 
 .taskDate {
   display: flex;
-  padding: 0 8px;
-  font-size: 11px;
+  padding: 3px 2px;
+  font-size: 14px;
   flex-direction: column;
-  justify-content: center;
+  justify-content:space-between ;
 
   div {
     width: 100%;
@@ -70,8 +87,7 @@ body[data-theme="dark"] {
   width: 100%;
   height: 100%;
   display: flex;
-  flex-direction: column;
-
+  overflow: hidden;
   &[data-side="center"] {
     align-items: center;
 
@@ -83,6 +99,9 @@ body[data-theme="dark"] {
 
   &[data-side="left"] {
     align-items: flex-start;
+  }
+  .win-task-tem{
+    flex: 1;
   }
 }
 
@@ -100,8 +119,8 @@ body[data-theme="dark"] {
   border-radius: 0;
   background: rgba(254, 254, 254, 0);
   transform-origin: center;
-  animation: popintro 800ms ease-in-out;
-  transition: all 0.2s ease;
+  // animation: popintro 800ms ease-in-out;
+  // transition: all 0.2s ease;
   border-radius: 4px;
 
   &:after {
@@ -133,12 +152,12 @@ body[data-theme="dark"] {
 
 .graybd {
   border: solid 1px transparent;
-  height: 1rem;
+  height: 100%;
+  border-left:1px solid #000;
 }
 
 .graybd:hover {
   border: solid 1px #a1a1a1;
-  border-width: 0 0 0 2px;
 }
 
 .win-start-icon:hover {
@@ -149,14 +168,12 @@ body[data-theme="dark"] {
 
 .win-start-icon {
   width: 48px;
-  float: left;
 }
 
 .win-search {
   height: 100%;
   width: 286px;
   display: flex;
-  float: left;
   align-items: center;
   background-color: #fff;
   border: 1px solid rgb(180, 180, 180);
@@ -176,7 +193,6 @@ body[data-theme="dark"] {
 }
 
 .win-task {
-  float: left;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -186,8 +202,6 @@ body[data-theme="dark"] {
 .fix-icon {
   display: flex;
   align-items: center;
-  float: left;
-
   height: 100%;
 
   &>div {

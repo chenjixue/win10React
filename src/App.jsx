@@ -3,6 +3,9 @@ import { ErrorBoundary } from "react-error-boundary";
 import { Background } from "./containers/background";
 import Taskbar from "./components/taskbar";
 import "./index.css";
+import {
+  WidPane
+} from "./components/start";
 function ErrorFallback({ error, resetErrorBoundary }) {
   return (
     <div>
@@ -54,7 +57,7 @@ function App() {
   return (
     <div className="App">
       <ErrorBoundary FallbackComponent={ErrorFallback}>
-        {}
+        { }
         <div className="appwrap">
           <Background />
           <div className="desktop" data-menu="desk">
@@ -73,13 +76,11 @@ function App() {
                 }
               })} */}
             {/* <StartMenu />
-            <BandPane />
-            <SidePane />
+            <BandPane /> */}
             <WidPane />
-            <CalnWid /> */}
+            {/* <CalnWid /> */}
+            {/* <SidePane /> */}
           </div>
-          {/* <Taskbar /> */}
-          {/* <ActMenu /> */}
           <Taskbar />
         </div>
       </ErrorBoundary>
