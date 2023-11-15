@@ -5,7 +5,51 @@ const initialState = {
         temp: null,
         weatherImg: '',
         capAbbr: ''
-    }
+    },
+    controlIcons: [
+        {
+            src: "location",
+            width: 20,
+            text:"定位",
+            isOpen: false
+        },
+        {
+            src: "bluetooth",
+            width: 16,
+            text:"蓝牙",
+            isOpen: false
+        },
+        {
+            src: "darkMode",
+            width: 20,
+            text:"夜间模式",
+            isOpen: false
+        },
+        {
+            src: "airplaneMode",
+            width: 20,
+            text:"飞行模式",
+            isOpen: false
+        },
+        {
+            src: "setting",
+            width: 22,
+            text:"所有设置",
+            isOpen: false
+        },
+        {
+            src: "wifiSetting",
+            width: 24,
+            text:"网络",
+            isOpen: false
+        },
+        {
+            src: "focusAssitant",
+            width: 20,
+            text:"专注助手",
+            isOpen: false
+        },
+    ]
 };
 export const winpanSlice = createSlice({
     name: 'winpan',

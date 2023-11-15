@@ -1,7 +1,9 @@
 import { useState } from 'react'
 import { ErrorBoundary } from "react-error-boundary";
 import { Background } from "./containers/background";
+import { useDispatch, useSelector } from "react-redux";
 import Taskbar from "./components/taskbar";
+import { Actions } from "@/store"
 import "./index.css";
 import {
   WidPane
@@ -53,7 +55,32 @@ function ErrorFallback({ error, resetErrorBoundary }) {
   );
 }
 function App() {
+  const dispatch = useDispatch();
+  const afterMath = (event) => {
+    var ess = [
+      // ["START", "STARTHID"],
+      // ["BAND", "BANDHIDE"],
+      // ["PANE", "PANEHIDE"],
+      ["WIDG", "WIDGHIDE"],
+      // ["CALN", "CALNHIDE"],
+      // ["MENU", "MENUHIDE"],
+    ];
+    var actionType = "";
+    try {
+      actionType = event.target.dataset.action || "";
+    } catch (err) { }
 
+    var actionType0 = getComputedStyle(event.target).getPropertyValue(
+      "--prefix",
+    );
+
+    ess.forEach((item, i) => {
+      if (!actionType.startsWith(item[0]) && !actionType0.startsWith(item[0])) {
+        dispatch(Actions[item[1]]())
+      }
+    });
+  };
+  window.onclick = afterMath;
   return (
     <div className="App">
       <ErrorBoundary FallbackComponent={ErrorFallback}>
