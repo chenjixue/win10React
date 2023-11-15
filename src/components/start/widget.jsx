@@ -2,9 +2,14 @@ import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Icon, LazyComponent } from "../../utils/general";
 import Styles from "./widget.module.scss";
+import { Actions } from "@/store"
 export const ControlIcon = (props) => {
+  const dispatch = useDispatch();
   let { src, width, isOpen, text, height } = props
-  return (<div className={Styles.controlIcon}>
+  const onOpen = (src) => {
+    dispatch(Actions.ICONOPEN(src))
+  }
+  return (<div onClick={() => onOpen(src)} className={`${Styles.controlIcon} ${isOpen ? Styles.isOpen : ''}`}>
     <Icon src={src} width={width} height={height && width} />
     <div className={Styles.text}>{text}</div>
   </div>)
