@@ -4,7 +4,7 @@ const initialState = {
 };
 
 export const paneSlice = createSlice({
-  name: 'app',
+  name: 'pane',
   initialState,
   reducers: {
     BANDTOGG: state => {

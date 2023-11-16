@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Icon } from "../../utils/general";
+import { ControlIcon } from "@/components/start/widget.jsx"
 import "./startmenu.scss";
 import "./sidepane.scss";
 export * from "./widget";
@@ -95,6 +96,41 @@ export const BandPane = () => {
           payload="togg"
           src="notepad"
         />
+      </div>
+    </div>
+  );
+};
+export const NetWorkPane = () => {
+  const networkPane = useSelector((state) => state.networkPane);
+  let iconOptions = {
+    src: "airplaneMode",
+    width: 20,
+    text: "飞行模式",
+    isOpen: networkPane.isAirMode
+  }
+  return (
+    <div
+      className="networkpane dpShad"
+      data-hide={networkPane.banhide}
+      style={{ "--prefix": "NETWORK" }}
+    >
+      <div className="bandContainer">
+        <div className="network">
+          <Icon
+            width={29}
+            className="networkIcon"
+            src="network"
+          />
+          <div>
+            <div className="topText">TP-LIKE_376E</div>
+            <div className="bottomText">已连接</div>
+          </div>
+        </div>
+        <div className="networkSetText">网络和互联网设置</div>
+        <div className="networkSetTipText">更改设置，例如将某连接设置为按流量计费</div>
+        <div className="networkIconContainer">
+          <ControlIcon   {...iconOptions} data-action="AIRMODETOGG" />
+        </div>
       </div>
     </div>
   );

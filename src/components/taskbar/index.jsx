@@ -217,8 +217,8 @@ const Taskbar = () => {
                 marginLeft: '10px'
               }}> {widpane.data.capAbbr}</span>
             </div>
-            <Icon src="upArrow" width={24} click="BANDTOGG" data-action="BANDTOGG" />
-            <Icon className="taskIcon" src="wifi" ui width={24} />
+            <Icon src="upArrow" width={24} click="BANDTOGG" />
+            <Icon className="taskIcon" src="wifi" click="NETWORKTOGG" ui width={24} />
             <Icon
               className="taskIcon"
               src={"audio" + tasks.audio}

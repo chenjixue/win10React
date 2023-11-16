@@ -6,15 +6,19 @@ import appReducer from "./appSlice"
 import settingsReducer from "./settingsSlice"
 import widReducer from "./winpanSlice"
 import paneReducer from "./paneSlice"
+import networkReducer from "./networkSlice"
 import { winpanSliceActions } from "./winpanSlice"
 import { paneSliceActions } from "./paneSlice"
+import { networkSliceActions } from "./networkSlice"
 export let Actions = {
   ...winpanSliceActions,
-  ...paneSliceActions
+  ...paneSliceActions,
+  ...networkSliceActions
 }
 export default configureStore({
   reducer: {
     sidepane: paneReducer,
+    networkPane: networkReducer,
     wallpaper: wallReducer,
     taskbar: taskReducer,
     apps: appReducer,

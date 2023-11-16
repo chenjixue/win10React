@@ -8,6 +8,7 @@ import "./index.css";
 import {
   WidPane,
   BandPane,
+  NetWorkPane
 } from "./components/start";
 function ErrorFallback({ error, resetErrorBoundary }) {
   return (
@@ -61,6 +62,7 @@ function App() {
     var ess = [
       // ["START", "STARTHID"],
       ["BAND", "BANDHIDE"],
+      ["NETWORK", "NETWORKHIDE"],
       // ["PANE", "PANEHIDE"],
       ["WIDG", "WIDGHIDE"],
       // ["CALN", "CALNHIDE"],
@@ -107,6 +109,7 @@ function App() {
            */}
             <WidPane />
             <BandPane />
+            <NetWorkPane />
             {/* <CalnWid /> */}
             {/* <SidePane /> */}
           </div>
