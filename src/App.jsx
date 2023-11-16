@@ -6,7 +6,8 @@ import Taskbar from "./components/taskbar";
 import { Actions } from "@/store"
 import "./index.css";
 import {
-  WidPane
+  WidPane,
+  BandPane,
 } from "./components/start";
 function ErrorFallback({ error, resetErrorBoundary }) {
   return (
@@ -59,7 +60,7 @@ function App() {
   const afterMath = (event) => {
     var ess = [
       // ["START", "STARTHID"],
-      // ["BAND", "BANDHIDE"],
+      ["BAND", "BANDHIDE"],
       // ["PANE", "PANEHIDE"],
       ["WIDG", "WIDGHIDE"],
       // ["CALN", "CALNHIDE"],
@@ -103,8 +104,9 @@ function App() {
                 }
               })} */}
             {/* <StartMenu />
-            <BandPane /> */}
+           */}
             <WidPane />
+            <BandPane />
             {/* <CalnWid /> */}
             {/* <SidePane /> */}
           </div>

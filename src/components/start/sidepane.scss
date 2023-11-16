@@ -11,14 +11,14 @@
   }
 
   position: absolute;
-  bottom: 10px;
-  right: 129px;
+  bottom: 44px;
+  right: 168px;
   background: var(--bgHvr);
   color: var(--dark-txt);
   overflow: hidden;
   transition: cubic-bezier(0.62, 0, 0.32, 1) 250ms;
   z-index: 9999;
-  border-radius: 8px;
+  // border-radius: 8px;
   max-height: fit-content;
 
   &[data-hide="true"] {

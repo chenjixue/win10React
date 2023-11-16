@@ -6,6 +6,7 @@ const initialState = {
         weatherImg: '',
         capAbbr: ''
     },
+    fold: false,
     controlIcons: [
         {
             src: "location",
@@ -68,10 +69,11 @@ export const winpanSlice = createSlice({
             state.controlIcons.forEach(item => {
                 if (item.src == action.payload) {
                     item.isOpen = !item.isOpen
-                } else {
-                    item.isOpen = false
                 }
             })
+        },
+        WIDGFOLD: state => {
+            state.fold = !state.fold
         }
     }
 })

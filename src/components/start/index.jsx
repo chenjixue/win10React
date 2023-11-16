@@ -62,160 +62,39 @@ export const DesktopApp = () => {
     </div>
   );
 };
-
-export const SidePane = () => {
+export const BandPane = () => {
   const sidepane = useSelector((state) => state.sidepane);
-  const setting = useSelector((state) => state.setting);
-  const tasks = useSelector((state) => state.taskbar);
-  const [pnstates, setPnstate] = useState([]);
-  const dispatch = useDispatch();
-
-  let [btlevel, setBtLevel] = useState("");
-  const childToParent = () => {};
-
-  const clickDispatch = (event) => {
-    var action = {
-      type: event.target.dataset.action,
-      payload: event.target.dataset.payload,
-    };
-
-    if (action.type) {
-      if (action.type != action.type.toUpperCase()) {
-        Actions[action.type](action.payload);
-      } else dispatch(action);
-    }
-    // For battery saver
-    if (action.payload === "system.power.saver.state") setBrightness();
-  };
-
-  const vSlider = document.querySelector(".vSlider");
-  const bSlider = document.querySelector(".bSlider");
-
-  const setVolume = (e) => {
-    var aud = 3;
-    if (e.target.value < 70) aud = 2;
-    if (e.target.value < 30) aud = 1;
-    if (e.target.value == 0) aud = 0;
-
-    dispatch({ type: "TASKAUDO", payload: aud });
-
-    sliderBackground(vSlider, e.target.value);
-  };
-
-  function sliderBackground(elem, e) {
-    elem.style.setProperty(
-      "--track-color",
-      `linear-gradient(90deg, var(--clrPrm) ${e - 3}%, #888888 ${e}%)`,
-    );
-  }
-
-  const setBrightness = (e) => {
-    var brgt = document.getElementById("brightnessSlider").value;
-    if (!e) {
-      // Battery saver
-      const state = setting.system.power.saver.state;
-      const factor = state ? 0.7 : 100 / 70;
-      const newBrgt = brgt * factor;
-      setBrightnessValue(newBrgt);
-      document.getElementById("brightnessSlider").value = newBrgt;
-    } else {
-      // Brightness slider
-      setBrightnessValue(brgt);
-    }
-  };
-
-  function setBrightnessValue(brgt) {
-    document.getElementById("brightoverlay").style.opacity = (100 - brgt) / 100;
-    dispatch({
-      type: "STNGSETV",
-      payload: {
-        path: "system.display.brightness",
-        value: brgt,
-      },
-    });
-    sliderBackground(bSlider, brgt);
-  }
-
-  useEffect(() => {
-    sidepane.quicks.map((item, i) => {
-      if (item.src == "nightlight") {
-        if (pnstates[i]) document.body.dataset.sepia = true;
-        else document.body.dataset.sepia = false;
-      }
-    });
-  });
-
-  useEffect(() => {
-    // console.log("ok")
-    var tmp = [];
-    for (var i = 0; i < sidepane.quicks.length; i++) {
-      var val = getTreeValue(setting, sidepane.quicks[i].state);
-      if (sidepane.quicks[i].name == "Theme") val = val == "dark";
-      tmp.push(val);
-    }
-
-    setPnstate(tmp);
-  }, [setting, sidepane]);
 
   return (
     <div
-      className="sidePane dpShad"
-      data-hide={sidepane.hide}
-      style={{ "--prefix": "PANE" }}
+      className="bandpane dpShad"
+      data-hide={sidepane.banhide}
+      style={{ "--prefix": "BAND" }}
     >
-      <div className="quickSettings p-5 pb-8">
-        <div className="qkCont">
-          {sidepane.quicks.map((qk, idx) => {
-            return (
-              <div key={idx} className="qkGrp">
-                <div
-                  className="qkbtn handcr prtclk"
-                  onClick={clickDispatch}
-                  data-action={qk.action}
-                  data-payload={qk.payload || qk.state}
-                  data-state={pnstates[idx]}
-                >
-                  <Icon
-                    className="quickIcon"
-                    ui={qk.ui}
-                    src={qk.src}
-                    width={14}
-                    invert={pnstates[idx] ? true : null}
-                  />
-                </div>
-                <div className="qktext">{qk.name}</div>
-              </div>
-            );
-          })}
-        </div>
-        <div className="sliderCont">
-          <Icon className="mx-2" src="brightness" ui width={20} />
-          <input
-            id="brightnessSlider"
-            className="sliders bSlider"
-            onChange={setBrightness}
-            type="range"
-            min="10"
-            max="100"
-            defaultValue="100"
-          />
-        </div>
-        <div className="sliderCont">
-          <Icon className="mx-2" src={"audio" + tasks.audio} ui width={18} />
-          <input
-            className="sliders vSlider"
-            onChange={setVolume}
-            type="range"
-            min="0"
-            max="100"
-            defaultValue="100"
-          />
-        </div>
-      </div>
-      <div className="p-1 bottomBar">
-        <div className="px-3 battery-sidepane">
-          <Battery pct />
-        </div>
+      <div className="bandContainer">
+        <Icon
+          className="hvlight"
+          width={17}
+          click="CALCUAPP"
+          payload="togg"
+          open="true"
+          src="calculator"
+        />
+        <Icon
+          className="hvlight"
+          width={17}
+          click="SPOTIFY"
+          payload="togg"
+          open="true"
+          src="spotify"
+        />
+        <Icon
+          className="hvlight"
+          width={17}
+          click="NOTEPAD"
+          payload="togg"
+          src="notepad"
+        />
       </div>
     </div>
   );

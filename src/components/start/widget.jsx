@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { Icon, LazyComponent } from "../../utils/general";
 import Styles from "./widget.module.scss";
 import { Actions } from "@/store"
+
 export const ControlIcon = (props) => {
   const dispatch = useDispatch();
   let { src, width, isOpen, text, height } = props
@@ -15,12 +16,19 @@ export const ControlIcon = (props) => {
   </div>)
 }
 export const FunctionalIcon = () => {
-  let controlIconsData = useSelector((state) => state.widpane.controlIcons);
+  // let controlIconsData = useSelector((state) => state.widpane.controlIcons);
+  const dispatch = useDispatch();
+  let widpane = useSelector((state) => state.widpane);
+  let clickFold = () => {
+    console.log("clickFold----")
+    dispatch(Actions.WIDGFOLD())
+  }
+  console.log(widpane, "widpane----")
   return <div className={Styles.functionalIcon}>
-    <div className={Styles.operationText}>折叠</div>
-    <div className={Styles.controlIconsData}>
+    <div className={Styles.operationText} onClick={clickFold}>{widpane.fold ? '展开' : '折叠'}</div>
+    <div className={`${Styles.controlIconsData} ${widpane.fold ? Styles.fold : ""}`}>
       {
-        controlIconsData.map(iconObject => {
+        widpane.controlIcons.map(iconObject => {
           return <ControlIcon key={iconObject.src} {...iconObject} />
         })
       }
@@ -30,13 +38,13 @@ export const FunctionalIcon = () => {
 export const WidPane = () => {
   const dispatch = useDispatch();
   const widget = useSelector((state) => state.widpane);
-  const theme = useSelector((state) => state.setting.person.theme);
-  const getRandom = (x = 0) => {
-    if (theme == "light")
-      return `hsl(${Math.floor(Math.random() * 360)}deg 36% 84%)`;
-    if (theme == "dark")
-      return `hsl(${Math.floor(Math.random() * 360)}deg 36% 16%)`;
-  };
+  // const theme = useSelector((state) => state.setting.person.theme);
+  // const getRandom = (x = 0) => {
+  //   if (theme == "light")
+  //     return `hsl(${Math.floor(Math.random() * 360)}deg 36% 84%)`;
+  //   if (theme == "dark")
+  //     return `hsl(${Math.floor(Math.random() * 360)}deg 36% 16%)`;
+  // };
 
   return (
     <div
@@ -46,7 +54,7 @@ export const WidPane = () => {
     >
       <LazyComponent show={!widget.hide}>
         <div className={`${Styles.WidPane} win11Scroll`}>
-          <div className={Styles.notice}></div>
+          <div className={Styles.notice}>没有新通知</div>
           <FunctionalIcon />
         </div>
       </LazyComponent>

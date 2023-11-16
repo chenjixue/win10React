@@ -128,13 +128,14 @@ const Taskbar = () => {
   };
 
   const clickDispatch = (event) => {
-    var action = {
-      type: event.target.dataset.action,
-      payload: event.target.dataset.payload,
-    };
 
-    if (action.type) {
-      dispatch(action);
+    let type = event.target.dataset.action;
+    let payload = event.target.dataset.payload;
+
+    debugger
+    console.log(type, "clickDispatch")
+    if (type) {
+      dispatch(Actions[type](payload));
     }
   };
   const onTaskIconEnter = (event) => {
@@ -216,7 +217,7 @@ const Taskbar = () => {
                 marginLeft: '10px'
               }}> {widpane.data.capAbbr}</span>
             </div>
-            <Icon src="upArrow" width={24} />
+            <Icon src="upArrow" width={24} click="BANDTOGG" data-action="BANDTOGG" />
             <Icon className="taskIcon" src="wifi" ui width={24} />
             <Icon
               className="taskIcon"

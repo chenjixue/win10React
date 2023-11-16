@@ -37,6 +37,11 @@
 
     .notice {
       flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font: normal 900 14px sans-serif;
+      color: rgb(83,82,82);
     }
 
     .functionalIcon {
@@ -48,6 +53,12 @@
 
         &:hover {
           color: rgb(82, 83, 83);
+        }
+      }
+
+      .fold {
+        &>div:nth-of-type(n+5) {
+          display: none;
         }
       }
 
