@@ -39,7 +39,7 @@
   }
 }
 
-.networkpane {
+.pane {
   --bg1: #dae2f2;
   --bg2: #e6edf8;
   --bgHvr: rgba(208, 208, 208, 0.85);
@@ -142,7 +142,7 @@ body[data-theme="dark"] .bandpane {
   }
 }
 
-body[data-theme="dark"] .networkpane {
+body[data-theme="dark"] .pane {
   --bg1: #1c1c1c;
   --bg2: #242424;
   --bgHvr: #313131;

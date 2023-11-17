@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Icon } from "../../utils/general";
 import { ControlIcon } from "@/components/start/widget.jsx"
+import { Actions } from "@/store"
 import "./startmenu.scss";
 import "./sidepane.scss";
 export * from "./widget";
@@ -38,8 +39,6 @@ export const DesktopApp = () => {
     arr.apps = tmpApps;
     return arr;
   });
-  const dispatch = useDispatch();
-
   return (
     <div className="desktopCont">
       {!deskApps.hide &&
@@ -110,7 +109,7 @@ export const NetWorkPane = () => {
   }
   return (
     <div
-      className="networkpane dpShad"
+      className="pane dpShad"
       data-hide={networkPane.banhide}
       style={{ "--prefix": "NETWORK" }}
     >
@@ -130,6 +129,41 @@ export const NetWorkPane = () => {
         <div className="networkSetTipText">更改设置，例如将某连接设置为按流量计费</div>
         <div className="networkIconContainer">
           <ControlIcon   {...iconOptions} data-action="AIRMODETOGG" />
+        </div>
+      </div>
+    </div>
+  );
+};
+export const SoundPane = () => {
+  const dispatch = useDispatch();
+  const setVolume = (e) => {
+    var aud = 3;
+    if (e.target.value < 70) aud = 2;
+    if (e.target.value < 30) aud = 1;
+    if (e.target.value == 0) aud = 0;
+    
+    dispatch(Actions['TASKAUDO'](aud));
+
+    // sliderBackground(vSlider, e.target.value);
+  };
+  const soundPane = useSelector((state) => state.soundPane);
+  return (
+    <div
+      className="pane dpShad"
+      data-hide={soundPane.banhide}
+      style={{ "--prefix": "SOUND" }}
+    >
+      <div className="bandContainer">
+        <div className="sliderCont">
+          <Icon className="mx-2" src={"audio" + soundPane.audio} ui width={18} />
+          <input
+            className="sliders vSlider"
+            onChange={setVolume}
+            type="range"
+            min="0"
+            max="100"
+            defaultValue="100"
+          />
         </div>
       </div>
     </div>

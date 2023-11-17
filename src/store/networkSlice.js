@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 const initialState = {
-  banhide: false,
+  banhide: true,
   isAirMode: false
 };
 
@@ -20,6 +20,6 @@ export const networkSlice = createSlice({
   }
 })
 // 每个 case reducer 函数会生成对应的 Action creators
-// export const { WALLNEXT } = wallpaperSlice.actions
+// export const { WALLNEXT } = wallpaperSlice.actions 
 export const networkSliceActions = networkSlice.actions
 export default networkSlice.reducer

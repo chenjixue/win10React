@@ -8,7 +8,8 @@ import "./index.css";
 import {
   WidPane,
   BandPane,
-  NetWorkPane
+  NetWorkPane,
+  SoundPane,
 } from "./components/start";
 function ErrorFallback({ error, resetErrorBoundary }) {
   return (
@@ -63,6 +64,7 @@ function App() {
       // ["START", "STARTHID"],
       ["BAND", "BANDHIDE"],
       ["NETWORK", "NETWORKHIDE"],
+      ["SOUND", "SOUNDHIDE"],
       // ["PANE", "PANEHIDE"],
       ["WIDG", "WIDGHIDE"],
       // ["CALN", "CALNHIDE"],
@@ -110,6 +112,7 @@ function App() {
             <WidPane />
             <BandPane />
             <NetWorkPane />
+            <SoundPane />
             {/* <CalnWid /> */}
             {/* <SidePane /> */}
           </div>

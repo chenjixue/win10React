@@ -100,7 +100,9 @@ const Taskbar = () => {
     }
     return tmpApps;
   });
-
+  const soundPane = useSelector((state) => {
+    return state.soundPane;
+  });
   const dispatch = useDispatch();
 
   const showPrev = (event) => {
@@ -221,7 +223,8 @@ const Taskbar = () => {
             <Icon className="taskIcon" src="wifi" click="NETWORKTOGG" ui width={24} />
             <Icon
               className="taskIcon"
-              src={"audio" + tasks.audio}
+              click="SOUNDTOGG" 
+              src={"audio" + soundPane.audio}
               ui
               width={24}
             />
