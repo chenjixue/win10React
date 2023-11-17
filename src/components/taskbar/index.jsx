@@ -133,9 +133,6 @@ const Taskbar = () => {
 
     let type = event.target.dataset.action;
     let payload = event.target.dataset.payload;
-
-    debugger
-    console.log(type, "clickDispatch")
     if (type) {
       dispatch(Actions[type](payload));
     }

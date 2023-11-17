@@ -71,7 +71,7 @@ export const BandPane = () => {
       data-hide={sidepane.banhide}
       style={{ "--prefix": "BAND" }}
     >
-      <div className="bandContainer">
+      <div className="bandpaneContainer">
         <Icon
           className="hvlight"
           width={17}

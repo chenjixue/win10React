@@ -58,7 +58,7 @@ export const WidPane = () => {
       style={{ "--prefix": "WIDG" }}
     >
       <LazyComponent show={!widget.hide}>
-        <div className={`${Styles.WidPane} win11Scroll`}>
+        <div className={`${Styles.WidPane}`}>
           <div className={Styles.notice}>没有新通知</div>
           <FunctionalIcon />
         </div>
