@@ -135,16 +135,22 @@ export const NetWorkPane = () => {
   );
 };
 export const SoundPane = () => {
+  const vSlider = document.querySelector(".vSlider");
   const dispatch = useDispatch();
+  function sliderBackground(elem, e) {
+    elem.style.setProperty(
+      "--track-color",
+      `linear-gradient(90deg, var(--clrPrm) ${e - 3}%, #888888 ${e}%)`,
+    );
+  }
   const setVolume = (e) => {
     var aud = 3;
     if (e.target.value < 70) aud = 2;
     if (e.target.value < 30) aud = 1;
     if (e.target.value == 0) aud = 0;
-    
     dispatch(Actions['TASKAUDO'](aud));
-
-    // sliderBackground(vSlider, e.target.value);
+    dispatch(Actions['SOUNDVALUE'](e.target.value));
+    sliderBackground(vSlider, e.target.value);
   };
   const soundPane = useSelector((state) => state.soundPane);
   return (
@@ -154,8 +160,11 @@ export const SoundPane = () => {
       style={{ "--prefix": "SOUND" }}
     >
       <div className="bandContainer">
+        <div className="soundText">
+          {`扬声器 (High Definition Audio Device)`}
+        </div>
         <div className="sliderCont">
-          <Icon className="mx-2" src={"audio" + soundPane.audio} ui width={18} />
+          <Icon className="soundIcon" src={"audio" + soundPane.audio} ui width={38} />
           <input
             className="sliders vSlider"
             onChange={setVolume}
@@ -164,6 +173,9 @@ export const SoundPane = () => {
             max="100"
             defaultValue="100"
           />
+          <span className="soundValue">
+            {soundPane.value}
+          </span>
         </div>
       </div>
     </div>

@@ -3,6 +3,7 @@ import { ErrorBoundary } from "react-error-boundary";
 import { Background } from "./containers/background";
 import { useDispatch, useSelector } from "react-redux";
 import Taskbar from "./components/taskbar";
+import * as Applications from "./containers/applications";
 import { Actions } from "@/store"
 import "./index.css";
 import {

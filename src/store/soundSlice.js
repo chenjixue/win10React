@@ -1,7 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit'
 const initialState = {
   audio: 3,
-  banhide: true
+  banhide: true,
+  value: 100,
 };
 
 export const soundSlice = createSlice({
@@ -16,6 +17,9 @@ export const soundSlice = createSlice({
     },
     SOUNDTOGG: state => {
       state.banhide = !state.banhide
+    },
+    SOUNDVALUE: (state, action) => {
+      state.value = action.payload
     }
   }
 })
