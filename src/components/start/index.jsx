@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Lunar, HolidayUtil } from 'lunar-typescript';
 import { Icon } from "../../utils/general";
 import { ControlIcon } from "@/components/start/widget.jsx"
 import { Actions } from "@/store"
+import dayjs from "dayjs";
 import "./startmenu.scss";
 import "./sidepane.scss";
 export * from "./widget";
@@ -134,6 +136,93 @@ export const NetWorkPane = () => {
     </div>
   );
 };
+export const CalendarPane = () => {
+  const calendarPane = useSelector((state) => state.calendarPane);
+  debugger
+  let rowNum = 6
+  let colNum = 7
+  let locale = "zh-cn"
+  let viewDate = dayjs()
+  let rows = []
+  let addDate = (date, diff) => date.add(diff, 'day')
+  let getWeekFirstDay = (locale) => {
+    let t = dayjs().locale(locale)
+    return t.localeData().firstDayOfWeek()
+  }
+  let setDate = (date, num) => date.date(num)
+  let getWeekDay = (date) => {
+    const clone = date.locale('en');
+    return clone.weekday() + clone.localeData().firstDayOfWeek();
+  }
+  let getMonth = (date) => date.month()
+  let getDate = (date) => date.date()
+  let getWeekStartDate = (
+    locale,
+    value
+  ) => {
+    const weekFirstDay = getWeekFirstDay(locale);
+    const monthStartDate = setDate(value, 1);
+    const startDateWeekDay = getWeekDay(monthStartDate);
+    let alignStartDate = addDate(monthStartDate, weekFirstDay - startDateWeekDay);
+    if (
+      getMonth(alignStartDate) === getMonth(value) &&
+      getDate(alignStartDate) > 1
+    ) {
+      alignStartDate = addDate(alignStartDate, -7);
+    }
+
+    return alignStartDate;
+  }
+  const disabledDate = (date) => {
+    const currentDate = dayjs();
+    const firstDayOfCurrentMonth = currentDate.startOf('month');
+    const lastDayOfCurrentMonth = currentDate.endOf('month');
+
+    return date.isAfter(firstDayOfCurrentMonth) && date.isBefore(lastDayOfCurrentMonth);
+  }
+  for (let i = 0; i < rowNum; i += 1) {
+    const row = [];
+    for (let j = 0; j < colNum; j += 1) {
+      const offset = i * colNum + j;
+      const baseDate = getWeekStartDate(locale, viewDate);
+      const currentDate = addDate(baseDate, offset + 1);
+      const disabled = disabledDate(currentDate)
+      const d = Lunar.fromDate(currentDate.toDate());
+      const lunar = d.getDayInChinese();
+      const solarTerm = d.getJieQi();
+      const h = HolidayUtil.getHoliday(currentDate.get('year'), currentDate.get('month') + 1, currentDate.get('date'));
+      const displayHoliday = h?.getTarget() === h?.getDay() ? h?.getName() : undefined;
+      row.push(<td><div class="cellBox"><div class="cellContainer" style={{ color: !disabled ? 'rgba(125,125,125,1)' : '' }}>{getDate(currentDate)}<div class="nl">{displayHoliday || solarTerm || lunar}</div></div></div></td>)
+    }
+    rows.push(<tr>{row}</tr>)
+  };
+  return (
+    <div
+      className="pane dpShad"
+      data-hide={calendarPane.banhide}
+      style={{ "--prefix": "CAL" }}
+    >
+      <div className="bandContainer">
+        <div>{calendarPane.currentMouth}</div>
+        <table class="calendar">
+          <thead><tr><th>一</th><th>二</th><th>三</th><th>四</th><th>五</th><th>六</th><th>日</th></tr></thead>
+          <tbody>
+            {/* <tr>
+              <td><div class="cellBox"><div class="cellContainer">30<div class="nl">十六</div></div></div></td>
+              <td><div class="cellBox"><div class="cellContainer">31<div class="nl">十七</div></div></div></td>
+              <td><div class="cellBox"><div class="cellContainer">1<div class="nl">十八</div></div></div></td>
+              <td><div class="cellBox"><div class="cellContainer">2<div class="nl">十九</div></div></div></td>
+              <td><div class="cellBox"><div class="cellContainer">3<div class="nl">二十</div></div></div></td>
+              <td><div class="cellBox"><div class="cellContainer">4<div class="nl">廿一</div></div></div></td>
+              <td><div class="cellBox"><div class="cellContainer">5<div class="nl">廿二</div></div></div></td>
+            </tr> */}
+            {rows}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+}
 export const SoundPane = () => {
   const vSlider = document.querySelector(".vSlider");
   const dispatch = useDispatch();
@@ -151,6 +240,7 @@ export const SoundPane = () => {
     dispatch(Actions['TASKAUDO'](aud));
     dispatch(Actions['SOUNDVALUE'](e.target.value));
     sliderBackground(vSlider, e.target.value);
+
   };
   const soundPane = useSelector((state) => state.soundPane);
   return (

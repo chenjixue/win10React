@@ -93,6 +93,9 @@ const Taskbar = () => {
   const widpane = useSelector((state) => {
     return state.widpane;
   });
+  const languagePane = useSelector((state) => {
+    return state.languagePane;
+  });
   const apps = useSelector((state) => {
     var tmpApps = JSON.parse(JSON.stringify(state.apps));
     for (var i = 0; i < state.taskbar.apps.length; i++) {
@@ -130,9 +133,9 @@ const Taskbar = () => {
   };
 
   const clickDispatch = (event) => {
-
-    let type = event.target.dataset.action;
-    let payload = event.target.dataset.payload;
+    let type = event.currentTarget.dataset.action;
+    let payload = event.currentTarget.dataset.payload;
+    debugger;
     if (type) {
       dispatch(Actions[type](payload));
     }
@@ -220,26 +223,26 @@ const Taskbar = () => {
             <Icon className="taskIcon" src="wifi" click="NETWORKTOGG" ui width={24} />
             <Icon
               className="taskIcon"
-              click="SOUNDTOGG" 
+              click="SOUNDTOGG"
               src={"audio" + soundPane.audio}
               ui
               width={24}
             />
-            <div className="language">{tasks.language ? '中' : '英'}</div>
+            <div className="language" onClick={clickDispatch} data-action="LANGUAGETOGG" data-payload={languagePane.language == 1 ? 2 : 1}>{languagePane.language == 1 ? '中' : '英'}</div>
             {/* <Battery /> */}
 
             <div
               className="taskDate handcr prtclk rounded hvlight"
               onClick={clickDispatch}
-              data-action="CALNTOGG"
+              data-action="CALENDARTOGG"
             >
-              <div>
+              <div style={{ "--prefix": "CAL" }}>
                 {time.toLocaleTimeString("zh-CN", {
                   hour: "numeric",
                   minute: "numeric",
                 })}
               </div>
-              <div>
+              <div style={{ "--prefix": "CAL" }}>
                 {time.toLocaleDateString("zh-CN", {
                   year: "numeric",
                   month: "2-digit",

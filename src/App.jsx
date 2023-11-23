@@ -11,6 +11,7 @@ import {
   BandPane,
   NetWorkPane,
   SoundPane,
+  CalendarPane
 } from "./components/start";
 function ErrorFallback({ error, resetErrorBoundary }) {
   return (
@@ -68,10 +69,12 @@ function App() {
       ["SOUND", "SOUNDHIDE"],
       // ["PANE", "PANEHIDE"],
       ["WIDG", "WIDGHIDE"],
+      ["CAL", "CALENDARHIDE"],
       // ["CALN", "CALNHIDE"],
       // ["MENU", "MENUHIDE"],
     ];
     var actionType = "";
+    debugger;
     try {
       actionType = event.target.dataset.action || "";
     } catch (err) { }
@@ -114,6 +117,7 @@ function App() {
             <BandPane />
             <NetWorkPane />
             <SoundPane />
+            <CalendarPane />
             {/* <CalnWid /> */}
             {/* <SidePane /> */}
           </div>

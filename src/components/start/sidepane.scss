@@ -73,12 +73,37 @@
     background: var(--bgHvr);
     overflow: hidden;
 
+    .calendar {
+      // height: 600px;
+      width: 100%;
+      text-align: center;
+      border-collapse: separate;
+      border-spacing: 0 8px; 
+      th {
+        font-size: 13px;
+        font-weight: 500;
+      }
+
+      tr {
+        margin-top: 10px;
+        .cellContainer {
+          font-size: 15px;
+          line-height: 16px;
+
+          .nl {
+            font-size: 11px;
+          }
+        }
+      }
+    }
+
     .soundText {
       height: 40px;
       line-height: 40px;
       width: 100%;
       margin-top: 2px;
       padding-left: 15px;
+
       &:hover {
         background-color: rgba(235, 235, 235, 1);
       }
