@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Lunar, HolidayUtil } from 'lunar-typescript';
 import { Icon } from "../../utils/general";
@@ -138,7 +138,6 @@ export const NetWorkPane = () => {
 };
 export const CalendarPane = () => {
   const calendarPane = useSelector((state) => state.calendarPane);
-  debugger
   let rowNum = 6
   let colNum = 7
   let locale = "zh-cn"
@@ -196,6 +195,18 @@ export const CalendarPane = () => {
     }
     rows.push(<tr>{row}</tr>)
   };
+  let [currentDate, setCurrentDate] = useState("")
+  let [currentTime, setCurrentTime] = useState("")
+  setInterval(() => {
+    let date = dayjs()
+    let time = date.format("YYYY年MM月DD日")
+    const d = Lunar.fromDate(date.toDate());
+    const lunarDay = d.getDayInChinese();
+    const lunarMonth = d.getMonthInChinese();
+    setCurrentDate(`${time} ${lunarMonth}月${lunarDay}`)
+    let hourMunite = dayjs().format("HH:mm:ss")
+    setCurrentTime(hourMunite)
+  }, 1000)
   return (
     <div
       className="pane dpShad"
@@ -203,7 +214,16 @@ export const CalendarPane = () => {
       style={{ "--prefix": "CAL" }}
     >
       <div className="bandContainer">
-        <div>{calendarPane.currentMouth}</div>
+        <div className="time">
+          <div className="currentTime">{currentTime}</div>
+          <div className="currentDate">{currentDate}</div>
+        </div>
+        <div className="calendarSelectTime">{calendarPane.currentMouth}
+          <div className="arrows">
+            <Icon width={33} src="calendarUpArrow"></Icon>
+            <Icon width={33} src="calendarDownArrow"></Icon>
+          </div>
+        </div>
         <table class="calendar">
           <thead><tr><th>一</th><th>二</th><th>三</th><th>四</th><th>五</th><th>六</th><th>日</th></tr></thead>
           <tbody>
@@ -219,6 +239,9 @@ export const CalendarPane = () => {
             {rows}
           </tbody>
         </table>
+        <div className="operationText">
+          日期和时间设置
+        </div>
       </div>
     </div>
   );

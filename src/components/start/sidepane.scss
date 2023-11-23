@@ -73,12 +73,43 @@
     background: var(--bgHvr);
     overflow: hidden;
 
+    .time {
+      padding: 15px 20px;
+
+      .currentTime {
+        font-size: 45px;
+        font-weight: 300;
+      }
+
+      .currentDate {
+        font-size: 14px;
+        color: rgb(48, 99, 138);
+        margin-left: 5px;
+      }
+    }
+
+    .calendarSelectTime {
+      display: flex;
+      padding: 9px 17px 9px 26px;
+      font-size: 15px;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid rgb(166, 166, 165);
+
+      .arrows {
+        display: flex;
+      }
+    }
+
     .calendar {
       // height: 600px;
       width: 100%;
       text-align: center;
       border-collapse: separate;
-      border-spacing: 0 8px; 
+      border-spacing: 0 8px;
+      box-sizing: border-box;
+      padding: 0 12px;
+
       th {
         font-size: 13px;
         font-weight: 500;
@@ -86,6 +117,7 @@
 
       tr {
         margin-top: 10px;
+
         .cellContainer {
           font-size: 15px;
           line-height: 16px;
@@ -95,6 +127,12 @@
           }
         }
       }
+    }
+
+    .operationText {
+      padding: 5px 0 15px 23px;
+      font-size: 14px;
+      color: rgb(0,66,117);
     }
 
     .soundText {

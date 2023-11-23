@@ -135,7 +135,6 @@ const Taskbar = () => {
   const clickDispatch = (event) => {
     let type = event.currentTarget.dataset.action;
     let payload = event.currentTarget.dataset.payload;
-    debugger;
     if (type) {
       dispatch(Actions[type](payload));
     }

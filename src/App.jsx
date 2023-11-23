@@ -74,7 +74,6 @@ function App() {
       // ["MENU", "MENUHIDE"],
     ];
     var actionType = "";
-    debugger;
     try {
       actionType = event.target.dataset.action || "";
     } catch (err) { }
