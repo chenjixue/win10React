@@ -101,29 +101,54 @@
       }
     }
 
-    .calendar {
-      // height: 600px;
-      width: 100%;
-      text-align: center;
-      border-collapse: separate;
-      border-spacing: 0 8px;
-      box-sizing: border-box;
-      padding: 0 12px;
+    .calendarHeader {
+      display: flex;
+      font-size: 13px;
+      font-weight: 500;
+      padding: 0 10px;
+      justify-content: space-around;
+    }
 
-      th {
-        font-size: 13px;
-        font-weight: 500;
+    .calendarBox {
+      height: 268px;
+      overflow-y: scroll;
+      overflow-x: hidden;
+      position: relative;
+      &::-webkit-scrollbar {
+        width: 0px;
       }
 
-      tr {
-        margin-top: 10px;
+      .calendar {
+        // height: 600px;
+        width: 100%;
+        text-align: center;
+        border-collapse: separate;
+        border-spacing: 0 8px;
+        box-sizing: border-box;
+        padding: 0 12px;
 
-        .cellContainer {
-          font-size: 15px;
-          line-height: 16px;
+        .cellBox {
+          display: flex;
+          justify-content: center;
 
-          .nl {
-            font-size: 11px;
+          .cellContainer {
+            width: 39px;
+          }
+        }
+
+        th {}
+
+        tr {
+          margin-top: 10px;
+
+          .cellContainer {
+            font-size: 15px;
+            line-height: 16px;
+            max-width: 39px;
+
+            .nl {
+              font-size: 11px;
+            }
           }
         }
       }
@@ -132,7 +157,7 @@
     .operationText {
       padding: 5px 0 15px 23px;
       font-size: 14px;
-      color: rgb(0,66,117);
+      color: rgb(0, 66, 117);
     }
 
     .soundText {

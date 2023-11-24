@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Lunar, HolidayUtil } from 'lunar-typescript';
 import { Icon } from "../../utils/general";
@@ -137,11 +137,15 @@ export const NetWorkPane = () => {
   );
 };
 export const CalendarPane = () => {
+  let viewDateInit = dayjs().subtract(2, 'month')
+  let rowNumInit = 40
+  const [viewDate, setViewDate] = useState(viewDateInit)
+  const [rowNum, setRowNum] = useState(rowNumInit)
   const calendarPane = useSelector((state) => state.calendarPane);
-  let rowNum = 6
+
   let colNum = 7
   let locale = "zh-cn"
-  let viewDate = dayjs()
+
   let rows = []
   let addDate = (date, diff) => date.add(diff, 'day')
   let getWeekFirstDay = (locale) => {
@@ -179,6 +183,31 @@ export const CalendarPane = () => {
 
     return date.isAfter(firstDayOfCurrentMonth) && date.isBefore(lastDayOfCurrentMonth);
   }
+  let calendarRef = useRef(); // 
+  let calendarBoxRef = useRef()
+  const calendarScroll = (e) => {
+    let calendar = calendarRef.current
+    let calendarBox = calendarBoxRef.current
+    let boxBottom = calendar.offsetHeight - (calendarBox.scrollTop + calendarBox.offsetHeight)
+    if (boxBottom < 300) {
+      // console.log("box-22222-----", boxBottom)
+    }
+    if (boxBottom > (calendar.offsetHeight - calendarBox.offsetHeight) - 300) {
+      // console.log("触发顶部滚动---")
+      setViewDate(viewDate.subtract(4, "month"))
+
+      setRowNum(rowNum + 24)
+    }
+    // calendarRef
+  }
+  useEffect(() => {
+    calendarBoxRef.current.scrollTop = 375
+  }, [])
+  useEffect(() => {
+    let calendarBox = calendarBoxRef.current
+    calendarBox.scrollTop += 34 * 16
+  }, [viewDate])
+  // console.log("渲染过了")
   for (let i = 0; i < rowNum; i += 1) {
     const row = [];
     for (let j = 0; j < colNum; j += 1) {
@@ -207,6 +236,7 @@ export const CalendarPane = () => {
     let hourMunite = dayjs().format("HH:mm:ss")
     setCurrentTime(hourMunite)
   }, 1000)
+
   return (
     <div
       className="pane dpShad"
@@ -224,10 +254,11 @@ export const CalendarPane = () => {
             <Icon width={33} src="calendarDownArrow"></Icon>
           </div>
         </div>
-        <table class="calendar">
-          <thead><tr><th>一</th><th>二</th><th>三</th><th>四</th><th>五</th><th>六</th><th>日</th></tr></thead>
-          <tbody>
-            {/* <tr>
+        <div className="calendarHeader"><span>一</span><span>二</span><span>三</span><span>四</span><span>五</span><span>六</span><span>日</span></div>
+        <div className="calendarBox" onScroll={calendarScroll} ref={calendarBoxRef}>
+          <table class="calendar" ref={calendarRef}>
+            <tbody>
+              {/* <tr>
               <td><div class="cellBox"><div class="cellContainer">30<div class="nl">十六</div></div></div></td>
               <td><div class="cellBox"><div class="cellContainer">31<div class="nl">十七</div></div></div></td>
               <td><div class="cellBox"><div class="cellContainer">1<div class="nl">十八</div></div></div></td>
@@ -236,9 +267,10 @@ export const CalendarPane = () => {
               <td><div class="cellBox"><div class="cellContainer">4<div class="nl">廿一</div></div></div></td>
               <td><div class="cellBox"><div class="cellContainer">5<div class="nl">廿二</div></div></div></td>
             </tr> */}
-            {rows}
-          </tbody>
-        </table>
+              {rows}
+            </tbody>
+          </table>
+        </div>
         <div className="operationText">
           日期和时间设置
         </div>
