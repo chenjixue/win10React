@@ -136,13 +136,42 @@ export const NetWorkPane = () => {
     </div>
   );
 };
+export const CalendarTime = () => {
+  let [currentDate, setCurrentDate] = useState("")
+  let [currentTime, setCurrentTime] = useState("")
+  setInterval(() => {
+    let date = dayjs()
+    let time = date.format("YYYY年MM月DD日")
+    const d = Lunar.fromDate(date.toDate());
+    const lunarDay = d.getDayInChinese();
+    const lunarMonth = d.getMonthInChinese();
+    setCurrentDate(`${time} ${lunarMonth}月${lunarDay}`)
+    let hourMunite = dayjs().format("HH:mm:ss")
+    setCurrentTime(hourMunite)
+  }, 1000)
+  return (<div className="time">
+    <div className="currentTime">{currentTime}</div>
+    <div className="currentDate">{currentDate}</div>
+  </div>)
+}
 export const CalendarPane = () => {
-  let viewDateInit = dayjs().subtract(2, 'month')
-  let rowNumInit = 40
+  let viewDateInit = dayjs()
+  let rowNumInit = 7
   const [viewDate, setViewDate] = useState(viewDateInit)
   const [rowNum, setRowNum] = useState(rowNumInit)
   const calendarPane = useSelector((state) => state.calendarPane);
 
+  let calendarRef = useRef();
+  let calendarBoxRef = useRef();
+  let scrollDataBoxRef = useRef();
+  let calendarScrollDistanceRef = useRef(600);
+  useEffect(() => {
+    // 每次视图更新让虚拟滚动的滚条归零
+    if (scrollDataBoxRef.current) {
+      scrollDataBoxRef.current.scrollTop = 600
+      calendarScrollDistanceRef.current = 600
+    }
+  }, [viewDate]);
   let colNum = 7
   let locale = "zh-cn"
 
@@ -183,31 +212,6 @@ export const CalendarPane = () => {
 
     return date.isAfter(firstDayOfCurrentMonth) && date.isBefore(lastDayOfCurrentMonth);
   }
-  let calendarRef = useRef(); // 
-  let calendarBoxRef = useRef()
-  const calendarScroll = (e) => {
-    let calendar = calendarRef.current
-    let calendarBox = calendarBoxRef.current
-    let boxBottom = calendar.offsetHeight - (calendarBox.scrollTop + calendarBox.offsetHeight)
-    if (boxBottom < 300) {
-      // console.log("box-22222-----", boxBottom)
-    }
-    if (boxBottom > (calendar.offsetHeight - calendarBox.offsetHeight) - 300) {
-      // console.log("触发顶部滚动---")
-      setViewDate(viewDate.subtract(4, "month"))
-
-      setRowNum(rowNum + 24)
-    }
-    // calendarRef
-  }
-  useEffect(() => {
-    calendarBoxRef.current.scrollTop = 375
-  }, [])
-  useEffect(() => {
-    let calendarBox = calendarBoxRef.current
-    calendarBox.scrollTop += 34 * 16
-  }, [viewDate])
-  // console.log("渲染过了")
   for (let i = 0; i < rowNum; i += 1) {
     const row = [];
     for (let j = 0; j < colNum; j += 1) {
@@ -224,30 +228,25 @@ export const CalendarPane = () => {
     }
     rows.push(<tr>{row}</tr>)
   };
-  let [currentDate, setCurrentDate] = useState("")
-  let [currentTime, setCurrentTime] = useState("")
-  setInterval(() => {
-    let date = dayjs()
-    let time = date.format("YYYY年MM月DD日")
-    const d = Lunar.fromDate(date.toDate());
-    const lunarDay = d.getDayInChinese();
-    const lunarMonth = d.getMonthInChinese();
-    setCurrentDate(`${time} ${lunarMonth}月${lunarDay}`)
-    let hourMunite = dayjs().format("HH:mm:ss")
-    setCurrentTime(hourMunite)
-  }, 1000)
-
+  const scrollContent = (e) => {
+    let distance = (e.target.scrollTop - calendarScrollDistanceRef.current) % 34
+    let scrollNum = parseInt((e.target.scrollTop - calendarScrollDistanceRef.current) / 34)
+    setViewDate(viewDate.add(scrollNum * 7, 'day'))
+    calendarScrollDistanceRef.current = e.target.scrollTop
+    calendarBoxRef.current.scrollTop = distance
+  }
   return (
     <div
       className="pane dpShad"
       data-hide={calendarPane.banhide}
       style={{ "--prefix": "CAL" }}
     >
-      <div className="bandContainer">
-        <div className="time">
-          <div className="currentTime">{currentTime}</div>
-          <div className="currentDate">{currentDate}</div>
+      <div className="scrollDataBox" ref={scrollDataBoxRef} onScroll={scrollContent}>
+        <div className="scrollContent" >
         </div>
+      </div>
+      <div className="bandContainer">
+        <CalendarTime />
         <div className="calendarSelectTime">{calendarPane.currentMouth}
           <div className="arrows">
             <Icon width={33} src="calendarUpArrow"></Icon>
@@ -255,18 +254,9 @@ export const CalendarPane = () => {
           </div>
         </div>
         <div className="calendarHeader"><span>一</span><span>二</span><span>三</span><span>四</span><span>五</span><span>六</span><span>日</span></div>
-        <div className="calendarBox" onScroll={calendarScroll} ref={calendarBoxRef}>
-          <table class="calendar" ref={calendarRef}>
+        <div className="calendarBox" ref={calendarBoxRef}>
+          <table class="calendar" ref={calendarRef} >
             <tbody>
-              {/* <tr>
-              <td><div class="cellBox"><div class="cellContainer">30<div class="nl">十六</div></div></div></td>
-              <td><div class="cellBox"><div class="cellContainer">31<div class="nl">十七</div></div></div></td>
-              <td><div class="cellBox"><div class="cellContainer">1<div class="nl">十八</div></div></div></td>
-              <td><div class="cellBox"><div class="cellContainer">2<div class="nl">十九</div></div></div></td>
-              <td><div class="cellBox"><div class="cellContainer">3<div class="nl">二十</div></div></div></td>
-              <td><div class="cellBox"><div class="cellContainer">4<div class="nl">廿一</div></div></div></td>
-              <td><div class="cellBox"><div class="cellContainer">5<div class="nl">廿二</div></div></div></td>
-            </tr> */}
               {rows}
             </tbody>
           </table>

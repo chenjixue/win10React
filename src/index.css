@@ -45,7 +45,7 @@ body {
 
 @keyframes overflow-hider {
   100% {
-    width: 0;
+   right: 360px;
   }
 }
 
