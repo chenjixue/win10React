@@ -205,29 +205,44 @@ export const CalendarPane = () => {
 
     return alignStartDate;
   }
+  let oneDayBefore = 0
+  let oneDayAfter = 0
+  let baseDate
   const disabledDate = (date) => {
-    const currentDate = dayjs();
-    const firstDayOfCurrentMonth = currentDate.startOf('month');
-    const lastDayOfCurrentMonth = currentDate.endOf('month');
-
+    console.log(oneDayBefore,"oneDayBefore")
+    console.log(oneDayAfter,"oneDayAfter")
+    if(oneDayBefore>oneDayAfter){
+      baseDate.subtract(1,"month")
+    }
+    const firstDayOfCurrentMonth = baseDate.startOf('month');
+    const lastDayOfCurrentMonth = baseDate.endOf('month');
+    // console.log(baseDate.format("YYYY年MM月"))
     return date.isAfter(firstDayOfCurrentMonth) && date.isBefore(lastDayOfCurrentMonth);
   }
   for (let i = 0; i < rowNum; i += 1) {
     const row = [];
     for (let j = 0; j < colNum; j += 1) {
+   
       const offset = i * colNum + j;
-      const baseDate = getWeekStartDate(locale, viewDate);
+      baseDate = getWeekStartDate(locale, viewDate);
       const currentDate = addDate(baseDate, offset + 1);
-      const disabled = disabledDate(currentDate)
+      console.log(currentDate.format("YYYY年MM月DD日"))
+      console.log(baseDate.format("YYYY年MM月DD日"))
+      if (currentDate.isBefore(baseDate)) {
+        oneDayBefore++
+      } else {
+        oneDayAfter++
+      }
       const d = Lunar.fromDate(currentDate.toDate());
       const lunar = d.getDayInChinese();
       const solarTerm = d.getJieQi();
       const h = HolidayUtil.getHoliday(currentDate.get('year'), currentDate.get('month') + 1, currentDate.get('date'));
       const displayHoliday = h?.getTarget() === h?.getDay() ? h?.getName() : undefined;
-      row.push(<td><div class="cellBox"><div class="cellContainer" style={{ color: !disabled ? 'rgba(125,125,125,1)' : '' }}>{getDate(currentDate)}<div class="nl">{displayHoliday || solarTerm || lunar}</div></div></div></td>)
+      row.push(<td><div class="cellBox"><div class="cellContainer" style={{ color: !disabledDate(currentDate) ? 'rgba(125,125,125,1)' : '' }}>{getDate(currentDate)}<div class="nl">{displayHoliday || solarTerm || lunar}</div></div></div></td>)
     }
     rows.push(<tr>{row}</tr>)
   };
+  
   const scrollContent = (e) => {
     let distance = (e.target.scrollTop - calendarScrollDistanceRef.current) % 34
     let scrollNum = parseInt((e.target.scrollTop - calendarScrollDistanceRef.current) / 34)
@@ -247,7 +262,7 @@ export const CalendarPane = () => {
       </div>
       <div className="bandContainer">
         <CalendarTime />
-        <div className="calendarSelectTime">{calendarPane.currentMouth}
+        <div className="calendarSelectTime">{baseDate.format('YYYY年MM月')}
           <div className="arrows">
             <Icon width={33} src="calendarUpArrow"></Icon>
             <Icon width={33} src="calendarDownArrow"></Icon>
