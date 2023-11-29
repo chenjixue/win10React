@@ -154,7 +154,7 @@ export const CalendarTime = () => {
     <div className="currentDate">{currentDate}</div>
   </div>)
 }
-export const CalendarPane = () => {
+export const CalendarMonthPane = () => {
   let viewDateInit = dayjs()
   let rowNumInit = 7
   const [viewDate, setViewDate] = useState(viewDateInit)
@@ -170,6 +170,7 @@ export const CalendarPane = () => {
     if (scrollDataBoxRef.current) {
       scrollDataBoxRef.current.scrollTop = 600
       calendarScrollDistanceRef.current = 600
+      scrollDataBoxRef.current.style.setProperty("pointer-events", "none")
     }
   }, [viewDate]);
   let colNum = 7
@@ -197,8 +198,7 @@ export const CalendarPane = () => {
     const startDateWeekDay = getWeekDay(monthStartDate);
     let alignStartDate = addDate(monthStartDate, weekFirstDay - startDateWeekDay);
     if (
-      getMonth(alignStartDate) === getMonth(value) &&
-      getDate(alignStartDate) > 1
+      getMonth(alignStartDate) === getMonth(value)
     ) {
       alignStartDate = addDate(alignStartDate, -7);
     }
@@ -237,7 +237,104 @@ export const CalendarPane = () => {
     }
     rows.push(<tr key={i}>{row}</tr>)
   };
+}
+export const CalendarPane = () => {
+  let today = dayjs()
+  let viewDateInit = dayjs()
+  let selectDateInit = dayjs()
+  let rowNumInit = 7
+  const [viewDate, setViewDate] = useState(viewDateInit)
+  const [selectDate, setSelectDate] = useState(selectDateInit)
+  const [rowNum, setRowNum] = useState(rowNumInit)
+  const calendarPane = useSelector((state) => state.calendarPane);
 
+  let calendarRef = useRef();
+  let calendarBoxRef = useRef();
+  let scrollDataBoxRef = useRef();
+  let calendarScrollDistanceRef = useRef(600);
+  useEffect(() => {
+    // 每次视图更新让虚拟滚动的滚条归零
+    if (scrollDataBoxRef.current) {
+      scrollDataBoxRef.current.scrollTop = 600
+      calendarScrollDistanceRef.current = 600
+    }
+  }, [viewDate]);
+  let colNum = 7
+  let locale = "zh-cn"
+
+  let rows = []
+  let addDate = (date, diff) => date.add(diff, 'day')
+  let getWeekFirstDay = (locale) => {
+    let t = dayjs().locale(locale)
+    return t.localeData().firstDayOfWeek()
+  }
+  let setDate = (date, num) => date.date(num)
+  let getWeekDay = (date) => {
+    const clone = date.locale('en');
+    return clone.weekday() + clone.localeData().firstDayOfWeek();
+  }
+  let getMonth = (date) => date.month()
+  let getDate = (date) => date.date()
+  let isSame = (date1, date2) => date1.format("YYYYMMDD") === date2.format("YYYYMMDD")
+  let getWeekStartDate = (
+    locale,
+    value
+  ) => {
+    const weekFirstDay = getWeekFirstDay(locale);
+    const monthStartDate = setDate(value, 1);
+    const startDateWeekDay = getWeekDay(monthStartDate);
+    let alignStartDate = addDate(monthStartDate, weekFirstDay - startDateWeekDay);
+    if (
+      getMonth(alignStartDate) === getMonth(value)
+    ) {
+      alignStartDate = addDate(alignStartDate, -7);
+    }
+
+    return alignStartDate;
+  }
+  let oneDayBefore = 0
+  let oneDayAfter = 0
+  let baseDate, monthStartDate
+  const disabledDate = (date) => {
+    if (oneDayBefore > oneDayAfter) {
+      monthStartDate.subtract(1, "month")
+    }
+    const firstDayOfCurrentMonth = monthStartDate.startOf('month');
+    const lastDayOfCurrentMonth = monthStartDate.endOf('month');
+    return date.isAfter(firstDayOfCurrentMonth) && date.isBefore(lastDayOfCurrentMonth);
+  }
+  for (let i = 0; i < rowNum; i += 1) {
+    const row = [];
+    for (let j = 0; j < colNum; j += 1) {
+      const offset = i * colNum + j;
+      baseDate = getWeekStartDate(locale, viewDate);
+      monthStartDate = setDate(viewDate, 1);
+      const currentDate = addDate(baseDate, offset + 1);
+      if (currentDate.isBefore(monthStartDate)) {
+        oneDayBefore++
+      } else {
+        oneDayAfter++
+      }
+      const d = Lunar.fromDate(currentDate.toDate());
+      const lunar = d.getDayInChinese();
+      const solarTerm = d.getJieQi();
+      const h = HolidayUtil.getHoliday(currentDate.get('year'), currentDate.get('month') + 1, currentDate.get('date'));
+      const displayHoliday = h?.getTarget() === h?.getDay() ? h?.getName() : undefined;
+      const isSelectedDate = isSame(currentDate, selectDate)
+      const activeDate = isSame(currentDate, today)
+      const activeClass = activeDate ? "fill" : ""
+      row.push(<td key={j}><div className="cellBox" onClick={() => { setSelectDate(dayjs(currentDate)) }}><div className="today" date-selected={`${isSelectedDate}`}> <div className={activeClass}></div> </div><div className="cellContainer" style={{ color:activeDate ? "rgb(255,255,255)" : !disabledDate(currentDate) ? 'rgba(125,125,125,1)' : '' }}>{getDate(currentDate)}<div className="nl">{displayHoliday || solarTerm || lunar}</div></div></div></td>)
+    }
+    rows.push(<tr key={i}>{row}</tr>)
+  };
+  const changeMonth = (count) => {
+    setViewDate(monthStartDate.add(count, "month"))
+    calendarBoxRef.current.scrollTop = 0;
+  }
+  const scrollMouse = () => {
+    //关闭模拟滚动的遮罩点击穿透样式让滚动重新回到遮罩上
+    scrollDataBoxRef.current.style.setProperty("pointer-events", "auto")
+  }
   const scrollContent = (e) => {
     if (scrollDataBoxRef.current.scrollTop == calendarScrollDistanceRef.current) {
       return
@@ -247,6 +344,7 @@ export const CalendarPane = () => {
     setViewDate(viewDate.add(scrollNum * 7, 'day'))
     calendarScrollDistanceRef.current = e.target.scrollTop
     calendarBoxRef.current.scrollTop = distance
+    scrollDataBoxRef.current.style.setProperty("pointer-events", "none")
   }
   return (
     <div
@@ -262,12 +360,12 @@ export const CalendarPane = () => {
         <CalendarTime />
         <div className="calendarSelectTime">{monthStartDate.format('YYYY年MM月')}
           <div className="arrows">
-            <Icon width={33} src="calendarUpArrow"></Icon>
-            <Icon width={33} src="calendarDownArrow"></Icon>
+            <Icon width={33} src="calendarUpArrow" onClick={() => changeMonth(-1)}></Icon>
+            <Icon width={33} src="calendarDownArrow" onClick={() => changeMonth(1)}></Icon>
           </div>
         </div>
         <div className="calendarHeader"><span>一</span><span>二</span><span>三</span><span>四</span><span>五</span><span>六</span><span>日</span></div>
-        <div className="calendarBox" ref={calendarBoxRef}>
+        <div className="calendarBox" ref={calendarBoxRef} onWheel={scrollMouse}>
           <table className="calendar" ref={calendarRef} >
             <tbody>
               {rows}
