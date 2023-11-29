@@ -26,7 +26,6 @@ export const appSlice = createSlice({
   reducers: {
   }
 })
-console.log(appSlice,"appSlice---")
 // 每个 case reducer 函数会生成对应的 Action creators
 // export const { WALLNEXT } = wallpaperSlice.actions
 

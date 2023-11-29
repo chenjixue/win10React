@@ -8,7 +8,6 @@ export const ControlIcon = (props) => {
   const dispatch = useDispatch();
   let { src, width, isOpen, text, height } = props
   let dataAction = props["data-action"]
-  console.log(isOpen, "isOpen---")
   const onOpen = (src) => {
     if (dataAction) {
       dispatch(Actions[dataAction]())

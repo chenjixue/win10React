@@ -207,28 +207,23 @@ export const CalendarPane = () => {
   }
   let oneDayBefore = 0
   let oneDayAfter = 0
-  let baseDate
+  let baseDate, monthStartDate
   const disabledDate = (date) => {
-    console.log(oneDayBefore,"oneDayBefore")
-    console.log(oneDayAfter,"oneDayAfter")
-    if(oneDayBefore>oneDayAfter){
-      baseDate.subtract(1,"month")
+    if (oneDayBefore > oneDayAfter) {
+      monthStartDate.subtract(1, "month")
     }
-    const firstDayOfCurrentMonth = baseDate.startOf('month');
-    const lastDayOfCurrentMonth = baseDate.endOf('month');
-    // console.log(baseDate.format("YYYY年MM月"))
+    const firstDayOfCurrentMonth = monthStartDate.startOf('month');
+    const lastDayOfCurrentMonth = monthStartDate.endOf('month');
     return date.isAfter(firstDayOfCurrentMonth) && date.isBefore(lastDayOfCurrentMonth);
   }
   for (let i = 0; i < rowNum; i += 1) {
     const row = [];
     for (let j = 0; j < colNum; j += 1) {
-   
       const offset = i * colNum + j;
       baseDate = getWeekStartDate(locale, viewDate);
+      monthStartDate = setDate(viewDate, 1);
       const currentDate = addDate(baseDate, offset + 1);
-      console.log(currentDate.format("YYYY年MM月DD日"))
-      console.log(baseDate.format("YYYY年MM月DD日"))
-      if (currentDate.isBefore(baseDate)) {
+      if (currentDate.isBefore(monthStartDate)) {
         oneDayBefore++
       } else {
         oneDayAfter++
@@ -238,12 +233,15 @@ export const CalendarPane = () => {
       const solarTerm = d.getJieQi();
       const h = HolidayUtil.getHoliday(currentDate.get('year'), currentDate.get('month') + 1, currentDate.get('date'));
       const displayHoliday = h?.getTarget() === h?.getDay() ? h?.getName() : undefined;
-      row.push(<td><div class="cellBox"><div class="cellContainer" style={{ color: !disabledDate(currentDate) ? 'rgba(125,125,125,1)' : '' }}>{getDate(currentDate)}<div class="nl">{displayHoliday || solarTerm || lunar}</div></div></div></td>)
+      row.push(<td key={j}><div className="cellBox"><div className="cellContainer" style={{ color: !disabledDate(currentDate) ? 'rgba(125,125,125,1)' : '' }}>{getDate(currentDate)}<div className="nl">{displayHoliday || solarTerm || lunar}</div></div></div></td>)
     }
-    rows.push(<tr>{row}</tr>)
+    rows.push(<tr key={i}>{row}</tr>)
   };
-  
+
   const scrollContent = (e) => {
+    if (scrollDataBoxRef.current.scrollTop == calendarScrollDistanceRef.current) {
+      return
+    }
     let distance = (e.target.scrollTop - calendarScrollDistanceRef.current) % 34
     let scrollNum = parseInt((e.target.scrollTop - calendarScrollDistanceRef.current) / 34)
     setViewDate(viewDate.add(scrollNum * 7, 'day'))
@@ -262,7 +260,7 @@ export const CalendarPane = () => {
       </div>
       <div className="bandContainer">
         <CalendarTime />
-        <div className="calendarSelectTime">{baseDate.format('YYYY年MM月')}
+        <div className="calendarSelectTime">{monthStartDate.format('YYYY年MM月')}
           <div className="arrows">
             <Icon width={33} src="calendarUpArrow"></Icon>
             <Icon width={33} src="calendarDownArrow"></Icon>
@@ -270,7 +268,7 @@ export const CalendarPane = () => {
         </div>
         <div className="calendarHeader"><span>一</span><span>二</span><span>三</span><span>四</span><span>五</span><span>六</span><span>日</span></div>
         <div className="calendarBox" ref={calendarBoxRef}>
-          <table class="calendar" ref={calendarRef} >
+          <table className="calendar" ref={calendarRef} >
             <tbody>
               {rows}
             </tbody>
