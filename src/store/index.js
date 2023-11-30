@@ -10,19 +10,22 @@ import soundReducer from "./soundSlice"
 import languageReducer from "./languageSlice"
 import networkReducer from "./networkSlice"
 import calendarReducer from "./calendarSlice"
+import deskTopReducer from "./deskTopSlice"
 import { winpanSliceActions } from "./winpanSlice"
 import { paneSliceActions } from "./paneSlice"
 import { networkSliceActions } from "./networkSlice"
 import { soundSliceActions } from "./soundSlice"
 import { languageSliceActions } from "./languageSlice"
 import { calendarSliceActions } from "./calendarSlice"
+import { deskTopSliceActions } from "./deskTopSlice"
 export let Actions = {
   ...winpanSliceActions,
   ...paneSliceActions,
   ...networkSliceActions,
   ...soundSliceActions,
   ...languageSliceActions,
-  ...calendarSliceActions
+  ...calendarSliceActions,
+  ...deskTopSliceActions
 }
 export default configureStore({
   reducer: {
@@ -32,6 +35,7 @@ export default configureStore({
     languagePane: languageReducer,
     wallpaper: wallReducer,
     taskbar: taskReducer,
+    desktop: deskTopReducer,
     apps: appReducer,
     setting: settingsReducer,
     widpane: widReducer,

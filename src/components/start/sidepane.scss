@@ -11,7 +11,7 @@
   }
 
   position: absolute;
-  bottom: 44px;
+  bottom: 0px;
   right: 168px;
   background: var(--bgHvr);
   color: var(--dark-txt);
@@ -52,7 +52,7 @@
   }
 
   position: absolute;
-  bottom: 44px;
+  bottom: 0px;
   right: 0px;
   width: 360px;
   background: var(--bgHvr);
@@ -147,7 +147,7 @@
         border-collapse: separate;
         border-spacing: 0 8px;
         box-sizing: border-box;
-        padding: 0 12px 800px 12px;
+        padding: 0 12px;
 
         .cellBox {
           display: flex;

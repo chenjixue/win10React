@@ -10,6 +10,7 @@ import {
   WidPane,
   BandPane,
   NetWorkPane,
+  DesktopApp,
   SoundPane,
   CalendarPane
 } from "./components/start";
@@ -96,7 +97,7 @@ function App() {
         <div className="appwrap">
           <Background />
           <div className="desktop" data-menu="desk">
-            {/* <DesktopApp /> */}
+            <DesktopApp />
             {/* {Object.keys(Applications).map((key, idx) => {
               var WinApp = Applications[key];
               return <WinApp key={idx} />;

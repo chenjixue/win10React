@@ -18,6 +18,14 @@
   height: 100vh;
 }
 
+.desktop {
+  position: absolute;
+  width: 100vw;
+  height: calc(100vh - 44px);
+  top: 0;
+  overflow: hidden;
+}
+
 body {
   margin: 0;
   padding: 0;
@@ -45,7 +53,7 @@ body {
 
 @keyframes overflow-hider {
   100% {
-   right: 360px;
+    right: -360px;
   }
 }
 

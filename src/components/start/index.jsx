@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState, useReducer } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Lunar, HolidayUtil } from 'lunar-typescript';
 import { Icon } from "../../utils/general";
@@ -41,6 +41,7 @@ export const DesktopApp = () => {
     arr.apps = tmpApps;
     return arr;
   });
+  console.log(deskApps,"deskApps---")
   return (
     <div className="desktopCont">
       {!deskApps.hide &&
@@ -323,7 +324,7 @@ export const CalendarPane = () => {
       const isSelectedDate = isSame(currentDate, selectDate)
       const activeDate = isSame(currentDate, today)
       const activeClass = activeDate ? "fill" : ""
-      row.push(<td key={j}><div className="cellBox" onClick={() => { setSelectDate(dayjs(currentDate)) }}><div className="today" date-selected={`${isSelectedDate}`}> <div className={activeClass}></div> </div><div className="cellContainer" style={{ color:activeDate ? "rgb(255,255,255)" : !disabledDate(currentDate) ? 'rgba(125,125,125,1)' : '' }}>{getDate(currentDate)}<div className="nl">{displayHoliday || solarTerm || lunar}</div></div></div></td>)
+      row.push(<td key={j}><div className="cellBox" onClick={() => { setSelectDate(dayjs(currentDate)) }}><div className="today" date-selected={`${isSelectedDate}`}> <div className={activeClass}></div> </div><div className="cellContainer" style={{ color: activeDate ? "rgb(255,255,255)" : !disabledDate(currentDate) ? 'rgba(125,125,125,1)' : '' }}>{getDate(currentDate)}<div className="nl">{displayHoliday || solarTerm || lunar}</div></div></div></td>)
     }
     rows.push(<tr key={i}>{row}</tr>)
   };

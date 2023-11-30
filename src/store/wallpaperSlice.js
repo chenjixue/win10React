@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-var wps = localStorage.getItem("wps") || 0;
+var wps = localStorage.getItem("wps") || 3;
 const walls = [
     "default/img0.jpg",
     "dark/img0.jpg",
