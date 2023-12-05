@@ -24,7 +24,6 @@ initialState.hz = 2;
 const appReducer = (state = initialState, action) => {
   let t = Object.getOwnPropertyDescriptors(state)
   var tmpState = { ...state };
-  console.log("🚀 ~ file: appSlice.js:28 ~ appReducer ~ tmpState:", Object.getOwnPropertyDescriptors(tmpState))
   if (action.type == "EDGELINK") {
     var obj = { ...tmpState["edge"] };
     if (action.payload && action.payload.startsWith("http")) {
@@ -163,12 +162,8 @@ export const appSlice = createSlice({
   name: 'app',
   initialState,
   reducers: {
-    TEST: (state, action) => {
-      console.log(action, "action----")
-    }
   }
 })
-// console.log(appSlice.reducer.toString(),"appSlice.reducer---")
 // 每个 case reducer 函数会生成对应的 Action creators
 // export const { WALLNEXT } = wallpaperSlice.actions
 export const appSliceActions = appSlice.actions

@@ -41,7 +41,6 @@ export const DesktopApp = () => {
     arr.apps = tmpApps;
     return arr;
   });
-  console.log(deskApps,"deskApps---")
   return (
     <div className="desktopCont">
       {!deskApps.hide &&

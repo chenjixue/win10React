@@ -24,10 +24,8 @@ export const FunctionalIcon = () => {
   const dispatch = useDispatch();
   let widpane = useSelector((state) => state.widpane);
   let clickFold = () => {
-    console.log("clickFold----")
     dispatch(Actions.WIDGFOLD())
   }
-  console.log(widpane, "widpane----")
   return <div className={Styles.functionalIcon}>
     <div className={Styles.operationText} onClick={clickFold}>{widpane.fold ? '展开' : '折叠'}</div>
     <div className={`${Styles.controlIconsData} ${widpane.fold ? Styles.fold : ""}`}>

@@ -87,20 +87,12 @@ export const Icon = (props) => {
   }
 
   const clickDispatch = (event) => {
-    // var action = {
-    //   type: event.currentTarget.dataset.action,
-    //   payload: event.currentTarget.dataset.payload,
-    // };
-    debugger
     let actionName = event.currentTarget.dataset.action
     let createAction = Actions[actionName]
     let payload = event.currentTarget.dataset.payload
-    // console.log("🚀 ~ file: general.jsx:98 ~ clickDispatch ~ createAction:", createAction())
     if (createAction) {
-      debugger;
       dispatch(createAction(payload));
     } else if (actionName){
-      debugger;
       let action = {
         type:actionName,
         payload

@@ -18,7 +18,6 @@ export const taskbarSlice = createSlice({
     initialState,
     reducers: {
         MOUSELEAVE: (state) => {
-            console.log(state)
             state.taskIconMoveEnter = false
         },
         MOUSEENTER: (state) => {
