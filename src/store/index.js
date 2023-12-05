@@ -11,6 +11,8 @@ import languageReducer from "./languageSlice"
 import networkReducer from "./networkSlice"
 import calendarReducer from "./calendarSlice"
 import deskTopReducer from "./deskTopSlice"
+import fileReducer from "./fileSlice"
+import globalsReducer from "./globalsSlice"
 import { winpanSliceActions } from "./winpanSlice"
 import { paneSliceActions } from "./paneSlice"
 import { networkSliceActions } from "./networkSlice"
@@ -18,6 +20,8 @@ import { soundSliceActions } from "./soundSlice"
 import { languageSliceActions } from "./languageSlice"
 import { calendarSliceActions } from "./calendarSlice"
 import { deskTopSliceActions } from "./deskTopSlice"
+import { fileSliceActions } from "./fileSlice"
+import { globalsSliceActions } from "./globalsSlice"
 export let Actions = {
   ...winpanSliceActions,
   ...paneSliceActions,
@@ -25,7 +29,9 @@ export let Actions = {
   ...soundSliceActions,
   ...languageSliceActions,
   ...calendarSliceActions,
-  ...deskTopSliceActions
+  ...deskTopSliceActions,
+  ...fileSliceActions,
+  ...globalsSliceActions
 }
 export default configureStore({
   reducer: {
@@ -40,5 +46,11 @@ export default configureStore({
     setting: settingsReducer,
     widpane: widReducer,
     calendarPane: calendarReducer,
-  }
+    files: fileReducer,
+    globals: globalsReducer
+  },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: false,
+    }),
 })

@@ -4,7 +4,6 @@ import { Background } from "./containers/background";
 import { useDispatch, useSelector } from "react-redux";
 import Taskbar from "./components/taskbar";
 import * as Applications from "./containers/applications";
-import { Actions } from "@/store"
 import "./index.css";
 import {
   WidPane,
@@ -14,6 +13,7 @@ import {
   SoundPane,
   CalendarPane
 } from "./components/start";
+import { Actions } from "@/store"
 function ErrorFallback({ error, resetErrorBoundary }) {
   return (
     <div>
@@ -98,6 +98,10 @@ function App() {
           <Background />
           <div className="desktop" data-menu="desk">
             <DesktopApp />
+            {Object.keys(Applications).map((key, idx) => {
+              var WinApp = Applications[key];
+              return <WinApp key={idx} />;
+            })}
             {/* {Object.keys(Applications).map((key, idx) => {
               var WinApp = Applications[key];
               return <WinApp key={idx} />;

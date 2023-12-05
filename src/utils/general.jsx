@@ -2,10 +2,75 @@ import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useSelector, useDispatch } from "react-redux";
 import "./general.scss";
-import { Actions } from "@/store"
 import * as FaIcons from "@fortawesome/free-solid-svg-icons";
 import * as FaRegIcons from "@fortawesome/free-regular-svg-icons";
 import * as AllIcons from "./icons";
+import { Actions } from "@/store"
+export const Image = (props) => {
+  const dispatch = useDispatch();
+  var src = `img/${(props.dir ? props.dir + "/" : "") + props.src}.png`;
+  if (props.ext != null) {
+    src = props.src;
+  }
+
+  const errorHandler = (e) => {
+    if (props.err) {
+      e.currentTarget.src = props.err;
+    }
+  };
+
+  const clickDispatch = (event) => {
+    var action = {
+      type: event.currentTarget.dataset.action,
+      payload: event.currentTarget.dataset.payload,
+    };
+
+    if (action.type) {
+      dispatch(action);
+    }
+  };
+
+  return (
+    <div
+      className={`imageCont prtclk ${props.className || ""}`}
+      id={props.id}
+      style={{
+        backgroundImage: props.back && `url(${src})`,
+      }}
+      data-back={props.back != null}
+      onClick={props.onClick || (props.click && clickDispatch)}
+      data-action={props.click}
+      data-payload={props.payload}
+      data-var={props.var}
+    >
+      {!props.back ? (
+        props.lazy ? (
+          <LazyLoadImage
+            width={props.w}
+            height={props.h}
+            data-free={props.free != null}
+            data-var={props.var}
+            loading={props.lazy ? "lazy" : null}
+            src={src}
+            alt=""
+            onError={errorHandler}
+          />
+        ) : (
+          <img
+            width={props.w}
+            height={props.h}
+            data-free={props.free != null}
+            data-var={props.var}
+            loading={props.lazy ? "lazy" : null}
+            src={src}
+            alt=""
+            onError={errorHandler}
+          />
+        )
+      ) : null}
+    </div>
+  );
+};
 
 export const Icon = (props) => {
   const dispatch = useDispatch();
@@ -26,10 +91,22 @@ export const Icon = (props) => {
     //   type: event.currentTarget.dataset.action,
     //   payload: event.currentTarget.dataset.payload,
     // };
-    let createAction = Actions[event.currentTarget.dataset.action]
+    debugger
+    let actionName = event.currentTarget.dataset.action
+    let createAction = Actions[actionName]
     let payload = event.currentTarget.dataset.payload
+    // console.log("🚀 ~ file: general.jsx:98 ~ clickDispatch ~ createAction:", createAction())
     if (createAction) {
+      debugger;
       dispatch(createAction(payload));
+    } else if (actionName){
+      debugger;
+      let action = {
+        type:actionName,
+        payload
+      }
+    
+      dispatch(action)
     }
   };
   if (props.fafa != null) {
@@ -143,6 +220,304 @@ export const Icon = (props) => {
     );
   }
 };
+export const SnapScreen = (props) => {
+  const dispatch = useDispatch();
+  const [delay, setDelay] = useState(false);
+  const lays = useSelector((state) => state.globals.lays);
+
+  const vr = "var(--radii)";
+
+  const clickDispatch = (event) => {
+    var action = {
+      type: event.currentTarget.dataset.action,
+      payload: event.currentTarget.dataset.payload,
+      dim: JSON.parse(event.currentTarget.dataset.dim),
+    };
+
+    if (action.dim && action.type) {
+      dispatch(action);
+      props.closeSnap();
+    }
+  };
+
+  useEffect(() => {
+    if (delay && props.snap) {
+      setTimeout(() => {
+        setDelay(false);
+      }, 500);
+    } else if (props.snap) {
+      setDelay(true);
+    }
+  });
+
+  return props.snap || delay ? (
+    <div className="snapcont mdShad" data-dark={props.invert != null}>
+      {lays.map((x, i) => {
+        return (
+          <div key={i} className="snapLay">
+            {x.map((y, j) => (
+              <div
+                key={j}
+                className="snapper"
+                style={{
+                  borderTopLeftRadius: (y.br % 2 == 0) * 4,
+                  borderTopRightRadius: (y.br % 3 == 0) * 4,
+                  borderBottomRightRadius: (y.br % 5 == 0) * 4,
+                  borderBottomLeftRadius: (y.br % 7 == 0) * 4,
+                }}
+                onClick={clickDispatch}
+                data-dim={JSON.stringify(y.dim)}
+                data-action={props.app}
+                data-payload="resize"
+              ></div>
+            ))}
+          </div>
+        );
+      })}
+    </div>
+  ) : null;
+};
+export const ToolBar = (props) => {
+  const dispatch = useDispatch();
+  const [snap, setSnap] = useState(false);
+
+  const openSnap = () => {
+    setSnap(true);
+  };
+
+  const closeSnap = () => {
+    setSnap(false);
+  };
+
+  const toolClick = () => {
+    dispatch({
+      type: props.app,
+      payload: "front",
+    });
+  };
+
+  var posP = [0, 0],
+    dimP = [0, 0],
+    posM = [0, 0],
+    wnapp = {},
+    op = 0,
+    vec = [0, 0];
+
+  const toolDrag = (e) => {
+    e = e || window.event;
+    e.preventDefault();
+    posM = [e.clientY, e.clientX];
+    op = e.currentTarget.dataset.op;
+
+    if (op == 0) {
+      wnapp =
+        e.currentTarget.parentElement &&
+        e.currentTarget.parentElement.parentElement;
+    } else {
+      vec = e.currentTarget.dataset.vec.split(",");
+      wnapp =
+        e.currentTarget.parentElement &&
+        e.currentTarget.parentElement.parentElement &&
+        e.currentTarget.parentElement.parentElement.parentElement;
+    }
+
+    if (wnapp) {
+      wnapp.classList.add("notrans");
+      wnapp.classList.add("z9900");
+      posP = [wnapp.offsetTop, wnapp.offsetLeft];
+      dimP = [
+        parseFloat(getComputedStyle(wnapp).height.replaceAll("px", "")),
+        parseFloat(getComputedStyle(wnapp).width.replaceAll("px", "")),
+      ];
+    }
+
+    document.onmouseup = closeDrag;
+    document.onmousemove = eleDrag;
+  };
+
+  const setPos = (pos0, pos1) => {
+    wnapp.style.top = pos0 + "px";
+    wnapp.style.left = pos1 + "px";
+  };
+
+  const setDim = (dim0, dim1) => {
+    wnapp.style.height = dim0 + "px";
+    wnapp.style.width = dim1 + "px";
+  };
+
+  const eleDrag = (e) => {
+    e = e || window.event;
+    e.preventDefault();
+
+    var pos0 = posP[0] + e.clientY - posM[0],
+      pos1 = posP[1] + e.clientX - posM[1],
+      dim0 = dimP[0] + vec[0] * (e.clientY - posM[0]),
+      dim1 = dimP[1] + vec[1] * (e.clientX - posM[1]);
+
+    if (op == 0) setPos(pos0, pos1);
+    else {
+      dim0 = Math.max(dim0, 320);
+      dim1 = Math.max(dim1, 320);
+      pos0 = posP[0] + Math.min(vec[0], 0) * (dim0 - dimP[0]);
+      pos1 = posP[1] + Math.min(vec[1], 0) * (dim1 - dimP[1]);
+      setPos(pos0, pos1);
+      setDim(dim0, dim1);
+    }
+  };
+
+  const closeDrag = () => {
+    document.onmouseup = null;
+    document.onmousemove = null;
+
+    wnapp.classList.remove("notrans");
+    wnapp.classList.remove("z9900");
+
+    var action = {
+      type: props.app,
+      payload: "resize",
+      dim: {
+        width: getComputedStyle(wnapp).width,
+        height: getComputedStyle(wnapp).height,
+        top: getComputedStyle(wnapp).top,
+        left: getComputedStyle(wnapp).left,
+      },
+    };
+
+    dispatch(action);
+  };
+
+  return (
+    <>
+      <div
+        className="toolbar"
+        data-float={props.float != null}
+        data-noinvert={props.noinvert != null}
+        style={{
+          background: props.bg,
+        }}
+      >
+        <div
+          className="topInfo flex flex-grow items-center"
+          data-float={props.float != null}
+          onClick={toolClick}
+          onMouseDown={toolDrag}
+          data-op="0"
+        >
+          <Icon src={props.icon} width={14} />
+          <div
+            className="appFullName text-xss"
+            data-white={props.invert != null}
+          >
+            {props.name}
+          </div>
+        </div>
+        <div className="actbtns flex items-center">
+          <Icon
+            invert={props.invert}
+            click={props.app}
+            payload="mnmz"
+            pr
+            src="minimize"
+            ui
+            width={12}
+          />
+          <div
+            className="snapbox h-full"
+            data-hv={snap}
+            onMouseOver={openSnap}
+            onMouseLeave={closeSnap}
+          >
+            <Icon
+              invert={props.invert}
+              click={props.app}
+              ui
+              pr
+              width={12}
+              payload="mxmz"
+              src={props.size == "full" ? "maximize" : "maxmin"}
+            />
+            <SnapScreen
+              invert={props.invert}
+              app={props.app}
+              snap={snap}
+              closeSnap={closeSnap}
+            />
+            {/* {snap?<SnapScreen app={props.app} closeSnap={closeSnap}/>:null} */}
+          </div>
+          <Icon
+            className="closeBtn"
+            invert={props.invert}
+            click={props.app}
+            payload="close"
+            pr
+            src="close"
+            ui
+            width={14}
+          />
+        </div>
+      </div>
+      <div className="resizecont topone">
+        <div className="flex">
+          <div
+            className="conrsz cursor-nw-resize"
+            data-op="1"
+            onMouseDown={toolDrag}
+            data-vec="-1,-1"
+          ></div>
+          <div
+            className="edgrsz cursor-n-resize wdws"
+            data-op="1"
+            onMouseDown={toolDrag}
+            data-vec="-1,0"
+          ></div>
+        </div>
+      </div>
+      <div className="resizecont leftone">
+        <div className="h-full">
+          <div
+            className="edgrsz cursor-w-resize hdws"
+            data-op="1"
+            onMouseDown={toolDrag}
+            data-vec="0,-1"
+          ></div>
+        </div>
+      </div>
+      <div className="resizecont rightone">
+        <div className="h-full">
+          <div
+            className="edgrsz cursor-w-resize hdws"
+            data-op="1"
+            onMouseDown={toolDrag}
+            data-vec="0,1"
+          ></div>
+        </div>
+      </div>
+      <div className="resizecont bottomone">
+        <div className="flex">
+          <div
+            className="conrsz cursor-ne-resize"
+            data-op="1"
+            onMouseDown={toolDrag}
+            data-vec="1,-1"
+          ></div>
+          <div
+            className="edgrsz cursor-n-resize wdws"
+            data-op="1"
+            onMouseDown={toolDrag}
+            data-vec="1,0"
+          ></div>
+          <div
+            className="conrsz cursor-nw-resize"
+            data-op="1"
+            onMouseDown={toolDrag}
+            data-vec="1,1"
+          ></div>
+        </div>
+      </div>
+    </>
+  );
+};
+
 export const LazyComponent = ({ show, children }) => {
   const [loaded, setLoad] = useState(false);
 

@@ -1,6 +1,5 @@
 import React, { Suspense } from 'react'
 import ReactDOM from 'react-dom/client'
-import store from './store'
 import { Provider } from 'react-redux'
 import dayjs from 'dayjs';
 import localeData from 'dayjs/plugin/localeData';
@@ -9,7 +8,7 @@ dayjs.extend(localeData);
 dayjs.extend(weekday);
 import App from './App.jsx'
 import './index.css'
-
+import store from './store'
 ReactDOM.createRoot(document.getElementById('root')).render(
   <Suspense
     fallback={
