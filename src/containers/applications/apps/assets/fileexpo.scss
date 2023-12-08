@@ -15,6 +15,25 @@
   }
 }
 
+.ribbon {
+  display: flex;
+  height: 23px;
+  font-size: 12px;
+  border-bottom: 1px solid rgb(205, 205, 205);
+
+  &>div {
+    width: 50px;
+    line-height: 23px;
+    text-align: center;
+  }
+
+  div:nth-child(1) {
+    color: #fff;
+    background-color: rgb(0, 102, 180);
+  }
+
+}
+
 .ribsec {
   display: flex;
   color: var(--txt-col);
@@ -25,7 +44,7 @@
   border-right-width: 1px;
   padding: 0.4em 0.8em;
 
-  & > .uicon {
+  &>.uicon {
     margin: 0 0.5em;
   }
 }
@@ -93,12 +112,13 @@
 
 .sec1 {
   display: flex;
-  padding: 0.5em 0.5em 0.5em 0;
+  padding: 5px 0.5em;
+  height: 28px;
 
   .navIcon {
     color: var(--gray-txt);
     padding: 0 0.5em;
-    margin-left: 0.5em;
+    // margin-left: 0.5em;
     border-radius: 4px;
     transition: all 200ms ease-in-out;
   }
@@ -106,7 +126,7 @@
   .path-bar {
     flex-grow: 1;
     overflow: scroll;
-    margin: 0 0.6em;
+    margin: 0 0 0 0.6em;
     padding: 0 0.6em;
     font-size: 0.8em;
     color: var(--med-txt);
@@ -119,6 +139,7 @@
       padding-right: 1em;
 
       .dirCont:hover {
+
         .dirchev,
         .dncont {
           background: rgba(136, 136, 136, 0.3);
@@ -151,13 +172,15 @@
       padding-bottom: 4px;
       width: 100%;
       height: 100%;
+      border: none;
+      outline: none;
       display: none;
 
       &:active,
       &:focus {
         display: block;
 
-        & + .dirfbox {
+        &+.dirfbox {
           display: none;
         }
       }
@@ -174,8 +197,18 @@
     }
   }
 
+  .fileRefresh {
+    border: 1px solid var(--gray1);
+    border-left: 0px;
+    width: 28px ;
+    display: flex;
+    margin-right: 0.5em;
+    align-items: center;
+    justify-content: center;
+  }
+
   .srchbar {
-    width: 20%;
+    width: 250px;
     padding: 0.6em 0.2em;
     font-size: 0.8em;
     color: var(--txt-col);
@@ -183,7 +216,7 @@
     display: flex;
 
     .searchIcon {
-      margin: 0 1em;
+      margin: 0 0.5em 0 0.7em;
     }
 
     input {
@@ -191,6 +224,8 @@
       font-size: inherit;
       background: inherit;
       color: var(--med-dark);
+      border: none;
+      outline: none;
     }
   }
 }
@@ -224,7 +259,7 @@
   width: 100%;
   height: max-content;
 
-  & > .dropdownmenu {
+  &>.dropdownmenu {
     margin-bottom: 0.5em;
   }
 }
@@ -290,6 +325,7 @@
     .conticon {
       align-self: flex-start;
     }
+
     grid-template-columns: repeat(auto-fill, var(--cwidth));
     justify-content: space-between;
     align-items: flex-end;

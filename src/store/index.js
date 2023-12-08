@@ -20,7 +20,6 @@ import { soundSliceActions } from "./soundSlice"
 import { languageSliceActions } from "./languageSlice"
 import { calendarSliceActions } from "./calendarSlice"
 import { deskTopSliceActions } from "./deskTopSlice"
-import { fileSliceActions } from "./fileSlice"
 import { globalsSliceActions } from "./globalsSlice"
 export let Actions = {
   ...winpanSliceActions,
@@ -30,7 +29,6 @@ export let Actions = {
   ...languageSliceActions,
   ...calendarSliceActions,
   ...deskTopSliceActions,
-  ...fileSliceActions,
   ...globalsSliceActions
 }
 export default configureStore({

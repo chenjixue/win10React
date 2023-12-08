@@ -3,6 +3,7 @@
   flex-shrink: 0;
   width: 100%;
   height: 28px;
+  padding-left:8px;
   justify-content: space-between;
   align-items: center;
   position: relative;
@@ -23,14 +24,23 @@
 
 .topInfo {
   height: 100%;
-
+  .splitLine{
+    width: 1px;
+    height: 14px;
+    margin: 0 5px;
+    background: rgb(165,165,165);
+  }
+  .appFullName{
+    margin-left:5px;
+    font-size: 13px;
+  }
   &[data-float="true"] {
     opacity: 0;
   }
 
-  .uicon {
-    margin: 0 10px 0 6px;
-  }
+  // .uicon {
+  //   margin: 0 10px 0 6px;
+  // }
 }
 
 .actbtns {
@@ -227,11 +237,6 @@ body[data-theme="dark"] .toolbar[data-noinvert="false"] {
       }
     }
   }
-
-  .appFullName {
-    color: #fefefe;
-  }
-
   .actbtns {
     .uicon img {
       filter: invert(1);

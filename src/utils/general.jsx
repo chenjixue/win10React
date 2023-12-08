@@ -92,12 +92,12 @@ export const Icon = (props) => {
     let payload = event.currentTarget.dataset.payload
     if (createAction) {
       dispatch(createAction(payload));
-    } else if (actionName){
+    } else if (actionName) {
       let action = {
-        type:actionName,
+        type: actionName,
         payload
       }
-    
+
       dispatch(action)
     }
   };
@@ -396,6 +396,11 @@ export const ToolBar = (props) => {
           data-op="0"
         >
           <Icon src={props.icon} width={14} />
+          <div className="splitLine"></div>
+          <Icon src="newBuildFileIcon" width={14} />
+          <Icon src="statsIcon" margin="0 5px" width={14} />
+          <Icon src="selectFileOption" width={14} />
+          <div className="splitLine"></div>
           <div
             className="appFullName text-xss"
             data-white={props.invert != null}

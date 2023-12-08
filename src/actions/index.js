@@ -3,10 +3,18 @@ import { gene_name } from "@/utils/apps";
 import { Actions } from "@/store"
 import store from "@/store";
 export const dispatchAction = (event) => {
-  let createAction = Actions[event.currentTarget.dataset.action]
+  let actionName = event.currentTarget.dataset.action
+  let createAction = Actions[actionName]
   let payload = event.currentTarget.dataset.payload
   if (createAction) {
     store.dispatch(createAction(payload));
+  } else if (actionName) {
+    let action = {
+      type: actionName,
+      payload
+    }
+
+    store.dispatch(action)
   }
 };
 // mostly file explorer
