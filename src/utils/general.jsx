@@ -87,6 +87,7 @@ export const Icon = (props) => {
   }
 
   const clickDispatch = (event) => {
+    event.stopPropagation()
     let actionName = event.currentTarget.dataset.action
     let createAction = Actions[actionName]
     let payload = event.currentTarget.dataset.payload
@@ -303,8 +304,9 @@ export const ToolBar = (props) => {
 
     if (op == 0) {
       wnapp =
-        e.currentTarget.parentElement &&
-        e.currentTarget.parentElement.parentElement;
+      e.currentTarget.parentElement &&
+      e.currentTarget.parentElement.parentElement;
+
     } else {
       vec = e.currentTarget.dataset.vec.split(",");
       wnapp =
@@ -322,7 +324,6 @@ export const ToolBar = (props) => {
         parseFloat(getComputedStyle(wnapp).width.replaceAll("px", "")),
       ];
     }
-
     document.onmouseup = closeDrag;
     document.onmousemove = eleDrag;
   };
@@ -336,7 +337,6 @@ export const ToolBar = (props) => {
     wnapp.style.height = dim0 + "px";
     wnapp.style.width = dim1 + "px";
   };
-
   const eleDrag = (e) => {
     e = e || window.event;
     e.preventDefault();
@@ -345,8 +345,7 @@ export const ToolBar = (props) => {
       pos1 = posP[1] + e.clientX - posM[1],
       dim0 = dimP[0] + vec[0] * (e.clientY - posM[0]),
       dim1 = dimP[1] + vec[1] * (e.clientX - posM[1]);
-
-    if (op == 0) setPos(pos0, pos1);
+    if (op == 0) setPos(pos0, pos1)
     else {
       dim0 = Math.max(dim0, 320);
       dim1 = Math.max(dim1, 320);
@@ -363,7 +362,6 @@ export const ToolBar = (props) => {
 
     wnapp.classList.remove("notrans");
     wnapp.classList.remove("z9900");
-
     var action = {
       type: props.app,
       payload: "resize",

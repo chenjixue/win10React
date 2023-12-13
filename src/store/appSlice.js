@@ -4,7 +4,6 @@ var dev = "";
 if (import.meta.env.MODE == "development") {
   dev = ""; // set the name (lowercase) of the app you are developing so that it will be opened on refresh
 }
-
 const initialState = {};
 for (var i = 0; i < allApps.length; i++) {
   initialState[allApps[i].icon] = { ...allApps[i] };

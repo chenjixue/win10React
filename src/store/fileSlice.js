@@ -10,7 +10,6 @@ let initialState = {
 };
 initialState.hist.push(initialState.cdir);
 initialState.data = new Bin();
-debugger;
 initialState.data.parse(fdata);
 const fileReducer = (state = initialState, action) => {
   // Object.preventExtensions(state)
@@ -37,7 +36,6 @@ const fileReducer = (state = initialState, action) => {
     if (tmp.hid > tmp.hist.length - 1) tmp.hid = tmp.hist.length - 1;
     navHist = true;
   }
-
   if (!navHist && tmp.cdir != tmp.hist[tmp.hid]) {
     tmp.hist.splice(tmp.hid + 1);
     tmp.hist.push(tmp.cdir);

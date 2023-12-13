@@ -26,7 +26,6 @@ const NavTitle = (props) => {
 
 const FolderDrop = ({ dir }) => {
   const files = useSelector((state) => state.files);
-  console.log(files,"FolderDrop-----")
   const folder = files.data.getId(dir);
 
   return (
@@ -243,23 +242,23 @@ export const Explorer = () => {
             <ContentArea searchtxt={searchtxt} />
           </div>
           <div className="sec3">
-            <div className="item-count text-xs">{fdata.data.length} items</div>
+            <div className="item-count text-xs">{fdata.data.length} 个项目</div>
             <div className="view-opts flex">
               <Icon
-                className="viewicon hvtheme p-1"
+                className="viewicon hvtheme"
                 click="FILEVIEW"
                 payload="5"
                 open={files.view == 5}
-                src="win/viewinfo"
-                width={16}
+                src="fileDisplay1"
+                width={22}
               />
               <Icon
-                className="viewicon hvtheme p-1"
+                className="viewicon hvtheme"
                 click="FILEVIEW"
                 payload="1"
                 open={files.view == 1}
-                src="win/viewlarge"
-                width={16}
+                src="fileDisplay2"
+                width={22}
               />
             </div>
           </div>
@@ -271,7 +270,6 @@ export const Explorer = () => {
 
 const ContentArea = ({ searchtxt }) => {
   const files = useSelector((state) => state.files);
-  console.log("🚀 ~ file: explorer.jsx:274 ~ ContentArea ~ files:", files)
   const special = useSelector((state) => state.files.data.special);
   const [selected, setSelect] = useState(null);
   const fdata = files.data.getId(files.cdir);
@@ -296,7 +294,6 @@ const ContentArea = ({ searchtxt }) => {
       dispatch({ type: "FILEPREV" });
     }
   };
-
   return (
     <div
       className="contentarea"
