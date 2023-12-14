@@ -8,7 +8,7 @@ const initialState = {
   abOpen: false,
 };
 export const deskTopSlice = createSlice({
-  name: 'language',
+  name: 'deskTop',
   initialState,
   reducers: {
     DESKREM: (state, action) => {

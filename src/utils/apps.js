@@ -63,11 +63,13 @@ const apps = [
     name: "Recycle Bin",
     icon: "bin0",
     type: "app",
+    action: "EXPLORER",
   },
   {
     name: "Blue",
     icon: "win/user",
-    type: "short",
+    type: "app",
+    action: "EXPLORER",
   },
   {
     name: "Alarms",
@@ -305,5 +307,6 @@ for (let i = 0; i < installed.length; i++) {
   installed[i].action = gene_name();
   apps.push(installed[i]);
 }
-
+debugger;
+console.log("🚀 ~ file: apps.js:310 ~ apps:", apps)
 export default apps;
