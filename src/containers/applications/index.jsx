@@ -14,7 +14,7 @@ export * from "./apps/explorer";
 // export * from "./apps/notepad";
 // export * from "./apps/settings";
 // export * from "./apps/spotify";
-// export * from "./apps/store";
+export * from "./apps/store";
 // export * from "./apps/taskmanager";
 // export * from "./apps/terminal";
 // export * from "./apps/whiteboard";

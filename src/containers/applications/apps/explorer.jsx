@@ -180,10 +180,20 @@ export const Explorer = () => {
     >
       <ToolBar
         app={wnapp.action}
-        icon={wnapp.icon}
         size={wnapp.size}
-        name="文件资源管理"
-      />
+      >
+        <Icon src={wnapp.icon} width={14} />
+        <div className="splitLine"></div>
+        <Icon src="newBuildFileIcon" width={14} />
+        <Icon src="statsIcon" margin="0 5px" width={14} />
+        <Icon src="selectFileOption" width={14} />
+        <div className="splitLine"></div>
+        <div
+          className="appFullName text-xss"
+        >
+          文件资源管理
+        </div>
+      </ToolBar>
       <div className="windowScreen flex flex-col">
         <Ribbon />
         <div className="restWindow flex-grow flex flex-col">

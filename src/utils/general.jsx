@@ -393,18 +393,7 @@ export const ToolBar = (props) => {
           onMouseDown={toolDrag}
           data-op="0"
         >
-          <Icon src={props.icon} width={14} />
-          <div className="splitLine"></div>
-          <Icon src="newBuildFileIcon" width={14} />
-          <Icon src="statsIcon" margin="0 5px" width={14} />
-          <Icon src="selectFileOption" width={14} />
-          <div className="splitLine"></div>
-          <div
-            className="appFullName text-xss"
-            data-white={props.invert != null}
-          >
-            {props.name}
-          </div>
+          {props.children}
         </div>
         <div className="actbtns flex items-center">
           <Icon

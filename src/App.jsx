@@ -61,6 +61,7 @@ function ErrorFallback({ error, resetErrorBoundary }) {
   );
 }
 function App() {
+  const apps = useSelector((state) => state.apps);
   const dispatch = useDispatch();
   const afterMath = (event) => {
     var ess = [
@@ -105,7 +106,7 @@ function App() {
             {/* {Object.keys(Applications).map((key, idx) => {
               var WinApp = Applications[key];
               return <WinApp key={idx} />;
-            })}
+            })} */}
             {Object.keys(apps)
               .filter((x) => x != "hz")
               .map((key) => apps[key])
@@ -114,7 +115,7 @@ function App() {
                   var WinApp = Drafts[app.data.type];
                   return <WinApp key={i} icon={app.icon} {...app.data} />;
                 }
-              })} */}
+              })}
             {/* <StartMenu />
            */}
             <WidPane />
