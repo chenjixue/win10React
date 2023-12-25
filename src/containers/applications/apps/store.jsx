@@ -149,13 +149,16 @@ export const MicroStore = () => {
         size={wnapp.size}
       >
         <div className="storeToolBar">
-          <Icon src={wnapp.icon} width={16}></Icon>
+          <Icon className="storeIcon" src={wnapp.icon} width={16}></Icon>
           <div className="text">Microsoft Store</div>
-          <div className="search">
-          <input type="text" placeholder="搜索应用、游戏、电影、设备等"/>
-          <Icon src="search" width={16}/>
+          <div className="searchBox">
+            <div className="search">
+              <input type="text" placeholder="搜索应用、游戏、电影、设备等" />
+              <Icon className="refresh" src="search" width={16} />
+            </div>
+            <Icon className="acount" src="acount" width={36} />
           </div>
-          <Icon src="acount" width={16}/>
+        
         </div>
       </ToolBar>
       <div className="windowScreen flex">

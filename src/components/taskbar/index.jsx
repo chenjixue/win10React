@@ -66,6 +66,25 @@ const TaskIcon = (props) => {
     }
   }));
   const opacity = isDragging ? 0 : 1
+  const showPrev = (event) => {
+    var ele = event.target;
+    while (ele && ele.getAttribute("value") == null) {
+      ele = ele.parentElement;
+    }
+
+    var appPrev = ele.getAttribute("value");
+    var xpos = window.scrollX + ele.getBoundingClientRect().left;
+
+    var offsetx = Math.round((xpos * 10000) / window.innerWidth) / 100;
+
+    dispatch({
+      type: "TASKPSHOW",
+      payload: {
+        app: appPrev,
+        pos: offsetx,
+      },
+    });
+  };
   return (
     <div
       key={task.icon}
@@ -108,25 +127,7 @@ const Taskbar = () => {
   });
   const dispatch = useDispatch();
 
-  const showPrev = (event) => {
-    var ele = event.target;
-    while (ele && ele.getAttribute("value") == null) {
-      ele = ele.parentElement;
-    }
 
-    var appPrev = ele.getAttribute("value");
-    var xpos = window.scrollX + ele.getBoundingClientRect().left;
-
-    var offsetx = Math.round((xpos * 10000) / window.innerWidth) / 100;
-
-    dispatch({
-      type: "TASKPSHOW",
-      payload: {
-        app: appPrev,
-        pos: offsetx,
-      },
-    });
-  };
 
   const hidePrev = () => {
     dispatch({ type: "TASKPHIDE" });

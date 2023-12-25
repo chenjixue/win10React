@@ -82,14 +82,14 @@ export const BandPane = () => {
           open="true"
           src="calculator"
         />
-        <Icon
+        {/* <Icon
           className="hvlight"
           width={17}
           click="SPOTIFY"
           payload="togg"
           open="true"
           src="spotify"
-        />
+        /> */}
         <Icon
           className="hvlight"
           width={17}

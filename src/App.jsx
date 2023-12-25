@@ -4,6 +4,7 @@ import { Background } from "./containers/background";
 import { useDispatch, useSelector } from "react-redux";
 import Taskbar from "./components/taskbar";
 import * as Applications from "./containers/applications";
+import * as Drafts from "./containers/applications/draft";
 import "./index.css";
 import {
   WidPane,

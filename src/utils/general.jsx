@@ -395,7 +395,7 @@ export const ToolBar = (props) => {
         >
           {props.children}
         </div>
-        <div className="actbtns flex items-center">
+        <div className="actbtns flex">
           <Icon
             invert={props.invert}
             click={props.app}

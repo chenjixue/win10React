@@ -172,7 +172,7 @@ const initialState = {
         "unescape",
         "essential apps",
         "xbox gamepass",
-        "spotify",
+        // "spotify",
         "social media",
         "security",
         "utility apps",

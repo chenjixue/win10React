@@ -46,13 +46,13 @@ const apps = [
     type: "app",
     action: "MSEDGE",
   },
-  {
-    name: "Buy me a coffee",
-    icon: "buyme",
-    type: "app",
-    action: "EXTERNAL",
-    payload: "https://www.buymeacoffee.com/blueedgetechno",
-  },
+  // {
+  //   name: "Buy me a coffee",
+  //   icon: "buyme",
+  //   type: "app",
+  //   action: "EXTERNAL",
+  //   payload: "https://www.buymeacoffee.com/blueedgetechno",
+  // },
   {
     name: "Store",
     icon: "store",
@@ -206,12 +206,12 @@ const apps = [
     icon: "security",
     type: "app",
   },
-  {
-    name: "Spotify",
-    icon: "spotify",
-    type: "app",
-    action: "SPOTIFY",
-  },
+  // {
+  //   name: "Spotify",
+  //   icon: "spotify",
+  //   type: "app",
+  //   action: "SPOTIFY",
+  // },
   {
     name: "Sharepoint",
     icon: "share",
@@ -307,6 +307,4 @@ for (let i = 0; i < installed.length; i++) {
   installed[i].action = gene_name();
   apps.push(installed[i]);
 }
-debugger;
-console.log("🚀 ~ file: apps.js:310 ~ apps:", apps)
 export default apps;

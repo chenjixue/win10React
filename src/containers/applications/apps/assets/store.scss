@@ -37,16 +37,58 @@
     }
   }
 }
-.storeToolBar{
+
+.storeToolBar {
   display: flex;
   align-items: center;
   justify-content: center;
-  .text{
-    font-size: 13px;
-    color: rgb(149,149,149);
-    margin: 0 50px 0 5px ;
+  width: 100%;
+
+  .storeIcon {
+    padding: 0 10px;
+  }
+
+  .text {
+    font-size: 12px;
+    // color: rgb(149,149,149);
+    margin: 0 0px 0 5px;
+  }
+
+  .searchBox {
+    flex: 1;
+    display: flex;
+    align-items: center;
+
+   
+    justify-content: center;
+
+    .search {
+      width: 70%;
+      border: 1px solid rgb(229, 229, 229);
+      border-radius: 5px;
+      margin: 10px 0px;
+      display: flex;
+      align-items: center;
+      background-color: rgb(255, 255, 255);
+
+      // height: 40px;
+      input {
+        height: 30px;
+        flex: 1;
+        border: none;
+        outline: medium;
+      }
+
+      .refresh {
+        padding: 0 8px;
+      }
+    }
+    .acount{
+      margin-left: 20px;
+    }
   }
 }
+
 .frontPage {
   position: relative;
   max-height: calc(100vh - 150px);
@@ -58,12 +100,10 @@
     height: 100px;
     position: absolute;
     bottom: 0;
-    background: linear-gradient(
-      to top,
-      var(--page-bg) 10%,
-      #87888766 50%,
-      transparent 100%
-    );
+    background: linear-gradient(to top,
+        var(--page-bg) 10%,
+        #87888766 50%,
+        transparent 100%);
   }
 }
 
@@ -129,11 +169,9 @@
 
 .amzApps {
   background: #670cd7;
-  background: -webkit-linear-gradient(
-    48deg,
-    #522f8b 0%,
-    rgba(113, 35, 133, 1) 100%
-  );
+  background: -webkit-linear-gradient(48deg,
+      #522f8b 0%,
+      rgba(113, 35, 133, 1) 100%);
   background: -o-linear-gradient(48deg, #522f8b 0%, rgba(113, 35, 133, 1) 100%);
   background: linear-gradient(138deg, #522f8b 0%, rgba(113, 35, 133, 1) 100%);
 }
@@ -275,12 +313,12 @@
     white-space: pre-wrap;
   }
 
-  & > div {
+  &>div {
     padding: 0 16px;
     padding-bottom: 6px;
   }
 
-  & > div:nth-child(1) {
+  &>div:nth-child(1) {
     border: 0 solid var(--comp-txt);
     border-bottom-width: 1px;
   }

@@ -6,7 +6,7 @@ var { taskbar, desktop } = {
             "File Explorer",
             "Browser",
             "Store",
-            "Spotify",
+            // "Spotify",
         ],
     desktop: (localStorage.getItem("desktop") &&
         JSON.parse(localStorage.getItem("desktop"))) || [
@@ -17,8 +17,8 @@ var { taskbar, desktop } = {
             "Store",
             "Browser",
             "Github",
-            "Spotify",
-            "Buy me a coffee",
+            // "Spotify",
+            // "Buy me a coffee",
         ]
 };
 export const taskApps = icons.filter((x) => taskbar.includes(x.name));
