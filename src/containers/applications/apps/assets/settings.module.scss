@@ -1,0 +1,102 @@
+.settingsApp {
+
+  // --bg: #f3f3f3;
+  .settingContent {
+    height: calc(100% - 35px);
+    overflow-y: auto;
+
+    /* 定义滚动条样式 */
+    &::-webkit-scrollbar {
+      width: 3px;
+      height: 6px;
+    }
+
+    /*定义滚动条轨道 内阴影+圆角*/
+    &::-webkit-scrollbar-track {
+      box-shadow: inset 0 0 0px rgba(240, 240, 240, 0.5);
+      border-radius: 10px;
+      // background-color: #272d44;
+    }
+
+    /*定义滑块 内阴影+圆角*/
+    &::-webkit-scrollbar-thumb {
+      border-radius: 10px;
+      box-shadow: inset 0 0 0px rgba(240, 240, 240, 0.5);
+      background-color: rgba(122, 122, 122, 1);
+    }
+
+  }
+
+  background: #f3f3f3;
+  min-width: 720px;
+
+  .title {
+    font-size: 12px;
+  }
+
+  .titleName {
+    font-size: 26px;
+    font-weight: 300;
+    text-align: center;
+  }
+
+  .search {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    input {
+      height: 25px;
+      width: 280px;
+      border: 2px solid rgb(153, 153, 153);
+      outline-color: rgb(0, 120, 215);
+      border-radius: 0px;
+    }
+  }
+
+  .settingTaskBox {
+    // overflow: hidden;
+    // display: flex;
+    // justify-content: center;
+    // flex-wrap: wrap;
+    // .settingTaskBoxContent{
+
+    // }
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 200px);
+    grid-gap: 10px;
+    justify-content: center;
+    // background: blue;
+  }
+
+  .SettingTask {
+    display: flex;
+    // float: left;
+    height: 100px;
+    min-width: 200px;
+    width: 25%;
+
+    // background-color: red;
+    .icon {
+      display: flex;
+    }
+
+    .SettingTaskContent {
+      flex: 1;
+
+      .titleText {
+        margin-top: 35px;
+        margin-left: 15px;
+        font-size: 16px;
+      }
+
+      .contentText {
+        margin-left: 15px;
+        font-size: 13px;
+        color: rgb(102, 102, 102);
+      }
+    }
+
+  }
+}
