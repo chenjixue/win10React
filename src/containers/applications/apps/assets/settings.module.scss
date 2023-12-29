@@ -2,6 +2,7 @@
 
   // --bg: #f3f3f3;
   .settingContent {
+    padding: 0 50px;
     height: calc(100% - 35px);
     overflow-y: auto;
 
@@ -32,6 +33,7 @@
 
   .title {
     font-size: 12px;
+    margin-left: 10px;
   }
 
   .titleName {
@@ -65,7 +67,9 @@
     // }
     display: grid;
     grid-template-columns: repeat(auto-fill, 200px);
-    grid-gap: 10px;
+    // grid-gap: 100px;
+    grid-column-gap: 50px;
+    grid-row-gap: 20px;
     justify-content: center;
     // background: blue;
   }

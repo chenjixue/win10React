@@ -12,7 +12,8 @@ import {
   NetWorkPane,
   DesktopApp,
   SoundPane,
-  CalendarPane
+  CalendarPane,
+  StartMenu
 } from "./components/start";
 import { Actions } from "@/store"
 function ErrorFallback({ error, resetErrorBoundary }) {
@@ -65,29 +66,33 @@ function App() {
   const apps = useSelector((state) => state.apps);
   const dispatch = useDispatch();
   const afterMath = (event) => {
+    console.log("")
     var ess = [
-      // ["START", "STARTHID"],
       ["BAND", "BANDHIDE"],
       ["NETWORK", "NETWORKHIDE"],
       ["SOUND", "SOUNDHIDE"],
       // ["PANE", "PANEHIDE"],
       ["WIDG", "WIDGHIDE"],
       ["CAL", "CALENDARHIDE"],
+      ["START", "STARTHIDE"],
       // ["CALN", "CALNHIDE"],
       // ["MENU", "MENUHIDE"],
     ];
     var actionType = "";
     try {
       actionType = event.target.dataset.action || "";
+      console.log("actionType---", actionType)
     } catch (err) { }
 
     var actionType0 = getComputedStyle(event.target).getPropertyValue(
       "--prefix",
     );
-
+    debugger
+    console.log(actionType,actionType0,"actionType0----")
     ess.forEach((item, i) => {
       if (!actionType.startsWith(item[0]) && !actionType0.startsWith(item[0])) {
-        dispatch(Actions[item[1]]())
+        console.log(actionType,actionType0,"actionType0----")
+        item[1] && dispatch(Actions[item[1]]())
       }
     });
   };
@@ -117,8 +122,7 @@ function App() {
                   return <WinApp key={i} icon={app.icon} {...app.data} />;
                 }
               })}
-            {/* <StartMenu />
-           */}
+            <StartMenu />
             <WidPane />
             <BandPane />
             <NetWorkPane />

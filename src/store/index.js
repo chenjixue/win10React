@@ -13,6 +13,7 @@ import calendarReducer from "./calendarSlice"
 import deskTopReducer from "./deskTopSlice"
 import fileReducer from "./fileSlice"
 import globalsReducer from "./globalsSlice"
+import startmenuReducer from "./startmenuSlice"
 import { winpanSliceActions } from "./winpanSlice"
 import { paneSliceActions } from "./paneSlice"
 import { networkSliceActions } from "./networkSlice"
@@ -21,6 +22,7 @@ import { languageSliceActions } from "./languageSlice"
 import { calendarSliceActions } from "./calendarSlice"
 import { deskTopSliceActions } from "./deskTopSlice"
 import { globalsSliceActions } from "./globalsSlice"
+import { startmenuSliceActions } from "./startmenuSlice"
 export let Actions = {
   ...winpanSliceActions,
   ...paneSliceActions,
@@ -29,7 +31,8 @@ export let Actions = {
   ...languageSliceActions,
   ...calendarSliceActions,
   ...deskTopSliceActions,
-  ...globalsSliceActions
+  ...globalsSliceActions,
+  ...startmenuSliceActions
 }
 export default configureStore({
   reducer: {
@@ -45,7 +48,8 @@ export default configureStore({
     widpane: widReducer,
     calendarPane: calendarReducer,
     files: fileReducer,
-    globals: globalsReducer
+    globals: globalsReducer,
+    startmenu: startmenuReducer
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

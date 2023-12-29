@@ -87,7 +87,8 @@ export const Icon = (props) => {
   }
 
   const clickDispatch = (event) => {
-    event.stopPropagation()
+    // event.stopPropagation()
+    console.log("clickDispatch2")
     let actionName = event.currentTarget.dataset.action
     let createAction = Actions[actionName]
     let payload = event.currentTarget.dataset.payload

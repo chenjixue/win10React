@@ -107,7 +107,7 @@ export const Settings = () => {
         size={wnapp.size}
         name="Settings"
       >
-        <span className="title">
+        <span className={Styles.title}>
           设置
         </span>
       </ToolBar>

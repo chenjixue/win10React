@@ -179,6 +179,7 @@ const Taskbar = () => {
           {tasks.winStart ? (
             <Icon
               icon="winStart"
+              click="STARTOGG"
               width={16}
               className={`tsIcon win-start-icon`}
             />

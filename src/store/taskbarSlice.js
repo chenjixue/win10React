@@ -7,7 +7,7 @@ let appObjects = Object.keys(temApps).filter(isShowApp).map(key => temApps[key])
 let appOrder = [...taskApps, ...appObjects]
 const initialState = {
     apps: taskApps,
-    align: "center",
+    align: "left",
     winStart: true,
     taskIconMoveEnter: false,
     audio: 3,
