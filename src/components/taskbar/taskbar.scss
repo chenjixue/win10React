@@ -1,7 +1,7 @@
 .taskbar {
   --bg1: rgba(235, 235, 235, 1);
   --bg2: rgba(255, 255, 255, 0.67);
-
+  --bg3: rgba(255, 255, 255, 1);
   position: absolute;
   width: 100vw;
   height: 44px;
@@ -143,16 +143,25 @@ body[data-theme="dark"] {
     transition: all 0.2s ease-in-out;
   }
 
-  &[data-open="true"]:after {
-    width: 6px;
+  &[data-open="true"]:hover:after {
+    // background: var(--bg3);
+       width: 100%;
   }
 
-  &[data-active="true"]:after {
-    width: 12px;
+  &[data-open="true"]:after {
+    width: 80%;
     background: var(--clrPrm);
   }
 
-  &:hover,
+  &[data-active="true"]:after {
+    width: 100%;
+    background: var(--clrPrm);
+  }
+
+  &:hover {
+    background: var(--bg3) !important;
+  }
+
   &[data-active="true"] {
     background: var(--bg2);
   }
@@ -214,6 +223,7 @@ body[data-theme="dark"] {
 
   &>div {
     height: 100%;
+    margin-right: 2px;
   }
 }
 

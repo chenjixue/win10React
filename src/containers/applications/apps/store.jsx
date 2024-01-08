@@ -54,7 +54,6 @@ export const MicroStore = () => {
     if (action.type) dispatch(action);
   };
   useEffect(() => {
-    console.log("🚀 ~ file: store.jsx:59 ~ MicroStore ~ page:", page)
   }, [page])
   const action = (e) => {
     var act = e.target.dataset.action,
@@ -115,7 +114,6 @@ export const MicroStore = () => {
   useEffect(() => {
     if (!wnapp.hide && fetchState == 0) {
       var url = queryParams.get("customstore");
-      console.log("🚀 ~ file: store.jsx:118 ~ useEffect ~ url:", url)
       if (!url) url = "https://store.win11react.com/store/index.json";
 
       axios
@@ -125,7 +123,6 @@ export const MicroStore = () => {
           if (data) setApps(data);
         })
         .catch((err) => {
-          console.log(err);
         });
 
       setFetch(1);

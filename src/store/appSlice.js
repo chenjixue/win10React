@@ -1,4 +1,4 @@
-import { allApps } from "../utils";
+import { allApps, taskApps } from "@/utils";
 import { createSlice } from '@reduxjs/toolkit'
 var dev = "";
 if (import.meta.env.MODE == "development") {
@@ -20,9 +20,9 @@ for (var i = 0; i < allApps.length; i++) {
   }
 }
 initialState.hz = 2;
+initialState.appOrder = taskApps
 const appReducer = (state = initialState, action) => {
-  let t = Object.getOwnPropertyDescriptors(state)
-  var tmpState = { ...state };
+  var tmpState = { ...state }
   if (action.type == "EDGELINK") {
     var obj = { ...tmpState["edge"] };
     if (action.payload && action.payload.startsWith("http")) {
@@ -80,24 +80,41 @@ const appReducer = (state = initialState, action) => {
   } else if (action.type == "DELAPP") {
     delete tmpState[action.payload];
     return tmpState;
+  } else if (action.type == "ORDERAPP") {
+    tmpState.appOrder = action.payload
+    return tmpState
   } else {
     var keys = Object.keys(state);
     for (var i = 0; i < keys.length; i++) {
       var obj = { ...state[keys[i]] };
       if (obj.action == action.type) {
-        tmpState = { ...state };
-
         if (action.payload == "full") {
+          debugger
+          let closeAppIndex = tmpState.appOrder.findIndex(item => item.action == obj.action)
+          if (obj.hide && closeAppIndex === -1) {
+            let newAppOrder = [...tmpState.appOrder]
+            newAppOrder.push(obj)
+            tmpState.appOrder = newAppOrder
+          }
           obj.size = "full";
           obj.hide = false;
           obj.max = true;
           tmpState.hz += 1;
           obj.z = tmpState.hz;
         } else if (action.payload == "close") {
+          if (!obj.hide) {
+            let closeAppIndex = tmpState.appOrder.findIndex(item => item.action == obj.action)
+            if (closeAppIndex !== -1) {
+              let newAppOrder = [...tmpState.appOrder]
+              newAppOrder.splice(closeAppIndex, 1)
+              tmpState.appOrder = newAppOrder
+            }
+          }
           obj.hide = true;
           obj.max = null;
           obj.z = -1;
           tmpState.hz -= 1;
+
         } else if (action.payload == "mxmz") {
           obj.size = ["mini", "full"][obj.size != "full" ? 1 : 0];
           obj.hide = false;
@@ -165,5 +182,6 @@ export const appSlice = createSlice({
 })
 // 每个 case reducer 函数会生成对应的 Action creators
 // export const { WALLNEXT } = wallpaperSlice.actions
-export const appSliceActions = appSlice.actions
-export default appReducer
+// export const appSliceActions = appSlice.actions
+// export const temApps = initialState
+export default appReducer;

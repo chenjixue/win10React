@@ -7,7 +7,6 @@ export const EfficientWorkApp = ({ src, title, iconSize, payload, click }) => {
   const dispatch = useDispatch();
   const clickDispatch = (event) => {
     // event.stopPropagation()
-    console.log("clickDispatch2")
     let actionName = event.currentTarget.dataset.action
     let createAction = Actions[actionName]
     let payload = event.currentTarget.dataset.payload
@@ -53,10 +52,9 @@ export const StartMenu = () => {
           Math.floor(arr.rcApps[i].lastUsed / 60) + "h ago";
       }
     }
-
     var allApps = [],
       tmpApps = Object.keys(state.apps)
-        .filter((x) => x != "hz")
+        .filter((x) => x != "hz" && x != "appOrder")
         .map((key) => {
           return state.apps[key];
         });

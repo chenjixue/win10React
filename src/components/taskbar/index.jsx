@@ -12,7 +12,7 @@ const TaskIcon = (props) => {
     let appOrder = [...showApps]
     let dragObject = appOrder.splice(dragIndex, 1)
     appOrder.splice(hoverIndex, 0, ...dragObject)
-    dispatch(ORDERAPP(appOrder))
+    // dispatch(ORDERAPP(appOrder))
   }, [])
   let { apps, task, isOpen, showApps } = props
   let isHidden = apps[task.icon].hide;
@@ -122,6 +122,19 @@ const Taskbar = () => {
     }
     return tmpApps;
   });
+  // let getAppOrder = () => {
+//     let temApps = isInit ? appSlice.getInitialState() : store.getState().apps
+//     let isShowApp = key => {
+//         console.log("🚀 ~ file: taskbarSlice.js:9 ~ isShowApp ~ temApps[key].hide:", temApps[key].hide)
+//         return key != "hz" && key != "undefined" && !temApps[key].task && !temApps[key].hide
+//     }
+//     let appObjects = Object.keys(temApps).filter(isShowApp).map(key => temApps[key])
+//     let appOrder = [...taskApps, ...appObjects]
+//     return appOrder
+// }
+  const appOrder = useSelector((state) => {
+    return state.apps.appOrder;
+  });
   const soundPane = useSelector((state) => {
     return state.soundPane;
   });
@@ -205,7 +218,7 @@ const Taskbar = () => {
           </div>
           <div className="fix-icon">
             <DndProvider backend={HTML5Backend}>
-              {tasks.appOrder.map((task, i) => (<TaskIcon key={task.icon} apps={apps} task={task} isOpen={isOpen} showApps={tasks.appOrder}></TaskIcon>)
+              {appOrder.map((task, i) => (<TaskIcon key={task.icon} apps={apps} task={task} isOpen={isOpen} showApps={appOrder}></TaskIcon>)
               )}
             </DndProvider>
           </div>
