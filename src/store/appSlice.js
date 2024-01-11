@@ -81,6 +81,8 @@ const appReducer = (state = initialState, action) => {
     delete tmpState[action.payload];
     return tmpState;
   } else if (action.type == "ORDERAPP") {
+    console.log("orderapp-test")
+    console.log("🚀 ~ appReducer ~ action.payload:", action.payload)
     tmpState.appOrder = action.payload
     return tmpState
   } else {
@@ -89,7 +91,6 @@ const appReducer = (state = initialState, action) => {
       var obj = { ...state[keys[i]] };
       if (obj.action == action.type) {
         if (action.payload == "full") {
-          debugger
           let closeAppIndex = tmpState.appOrder.findIndex(item => item.action == obj.action)
           if (obj.hide && closeAppIndex === -1) {
             let newAppOrder = [...tmpState.appOrder]
@@ -102,14 +103,17 @@ const appReducer = (state = initialState, action) => {
           tmpState.hz += 1;
           obj.z = tmpState.hz;
         } else if (action.payload == "close") {
-          if (!obj.hide) {
+          let isTaskbarIcon = taskApps.findIndex(item => item.action == obj.action)
+          if (!obj.hide && isTaskbarIcon == -1) {
             let closeAppIndex = tmpState.appOrder.findIndex(item => item.action == obj.action)
             if (closeAppIndex !== -1) {
+
               let newAppOrder = [...tmpState.appOrder]
               newAppOrder.splice(closeAppIndex, 1)
               tmpState.appOrder = newAppOrder
             }
           }
+
           obj.hide = true;
           obj.max = null;
           obj.z = -1;

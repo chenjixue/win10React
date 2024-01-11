@@ -32,9 +32,6 @@ export const taskbarSlice = createSlice({
         MOUSEENTER: (state) => {
             state.taskIconMoveEnter = true
         },
-        ORDERAPP: (state, action) => {
-            state.appOrder = action.payload
-        },
         //refresh taskbar bottom icon
         // REFRESH: (state, action) => {
         //     isInit = false
