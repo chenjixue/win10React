@@ -30,7 +30,7 @@ export const searchmenuSlice = createSlice({
             state.showAll = false;
             state.pwctrl = false;
         },
-        SEARCHOGG: (state, action) => {
+        SEARCHTOGG: state => {
             state.hide = !(state.hide || !state.menu);
             state.menu = true;
             state.alpha = false;

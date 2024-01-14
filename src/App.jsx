@@ -75,6 +75,7 @@ function App() {
       ["WIDG", "WIDGHIDE"],
       ["CAL", "CALENDARHIDE"],
       ["START", "STARTHIDE"],
+      ["SEARCH", "SEARCHHIDE"],
       // ["CALN", "CALNHIDE"],
       // ["MENU", "MENUHIDE"],
     ];

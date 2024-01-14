@@ -1,17 +1,17 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Icon } from "../../utils/general";
-import { Actions } from "@/store"
+import { Actions } from "@/store";
 export const SearchMenu = () => {
   const { align } = useSelector((state) => state.taskbar);
   const start = useSelector((state) => {
     var arr = JSON.parse(JSON.stringify(state.searchmenu)),
       ln = (6 - (arr.pnApps.length % 6)) % 6;
-   
+
     for (var i = 0; i < ln; i++) {
       arr.pnApps.push({
         empty: true,
-      })
+      });
     }
     for (i = 0; i < arr.rcApps.length; i++) {
       if (arr.rcApps[i].lastUsed < 0) {
@@ -67,8 +67,8 @@ export const SearchMenu = () => {
     let payload = event.currentTarget.dataset.payload;
     let action = {
       type,
-      payload
-    }
+      payload,
+    };
     if (type) {
       dispatch(Actions[type](payload));
     }
@@ -77,9 +77,7 @@ export const SearchMenu = () => {
       action.type &&
       (action.payload == "full" || action.type == "EDGELINK")
     ) {
-      dispatch(
-        Actions["STARTHIDE"]
-      );
+      dispatch(Actions["STARTHIDE"]);
     }
 
     if (action.type == "STARTALPHA") {
@@ -110,7 +108,7 @@ export const SearchMenu = () => {
     <div
       className="searchMenu dpShad"
       data-hide={start.hide}
-      style={{ "--prefix": "START" }}
+      style={{ "--prefix": "SEARCH" }}
       data-align={align}
     >
       {start.menu ? (
@@ -217,7 +215,7 @@ export const SearchMenu = () => {
                         <div className="ltName">
                           {i == 0 ? "#" : String.fromCharCode(i + 64)}
                         </div>
-                      </div>,
+                      </div>
                     );
 
                     ldx.forEach((app, j) => {
@@ -231,7 +229,7 @@ export const SearchMenu = () => {
                         >
                           <Icon className="pnIcon" src={app.icon} width={24} />
                           <div className="appName">{app.name}</div>
-                        </div>,
+                        </div>
                       );
                     });
 

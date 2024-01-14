@@ -7,6 +7,7 @@ import dayjs from "dayjs";
 import { Actions } from "@/store"
 import "./startmenu.scss";
 import "./sidepane.scss";
+import "./searchmenu.scss";
 
 export * from "./widget";
 export * from "./start";
@@ -240,7 +241,7 @@ export const CalendarMonthPane = () => {
       row.push(<td key={j}><div className="cellBox"><div className="cellContainer" style={{ color: !disabledDate(currentDate) ? 'rgba(125,125,125,1)' : '' }}>{getDate(currentDate)}<div className="nl">{displayHoliday || solarTerm || lunar}</div></div></div></td>)
     }
     rows.push(<tr key={i}>{row}</tr>)
-  };
+  }
 }
 export const CalendarPane = () => {
   let today = dayjs()
@@ -330,7 +331,7 @@ export const CalendarPane = () => {
       row.push(<td key={j}><div className="cellBox" onClick={() => { setSelectDate(dayjs(currentDate)) }}><div className="today" date-selected={`${isSelectedDate}`}> <div className={activeClass}></div> </div><div className="cellContainer" style={{ color: activeDate ? "rgb(255,255,255)" : !disabledDate(currentDate) ? 'rgba(125,125,125,1)' : '' }}>{getDate(currentDate)}<div className="nl">{displayHoliday || solarTerm || lunar}</div></div></div></td>)
     }
     rows.push(<tr key={i}>{row}</tr>)
-  };
+  }
   const changeMonth = (count) => {
     setViewDate(monthStartDate.add(count, "month"))
     calendarBoxRef.current.scrollTop = 0;
