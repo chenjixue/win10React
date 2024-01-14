@@ -2,38 +2,10 @@ import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Icon } from "../../utils/general";
 import { Actions } from "@/store"
-
-export const EfficientWorkApp = ({ src, title, iconSize, payload, click }) => {
-  const dispatch = useDispatch();
-  const clickDispatch = (event) => {
-    // event.stopPropagation()
-    let actionName = event.currentTarget.dataset.action
-    let createAction = Actions[actionName]
-    let payload = event.currentTarget.dataset.payload
-    if (createAction) {
-      dispatch(createAction(payload));
-    } else if (actionName) {
-      let action = {
-        type: actionName,
-        payload
-      }
-
-      dispatch(action)
-    }
-  };
-  return (
-    <div className="efficientWorkApp" style={{ "--prefix": "no" }} data-payload={payload} data-action={click} onClick={clickDispatch}>
-      <div className="efficientWorkAppIcon">
-        <Icon src={src} width={iconSize} ></Icon>
-      </div>
-      <div className="efficientWorkAppTitle">{title}</div>
-    </div>
-  )
-}
-export const StartMenu = () => {
+export const SearchMenu = () => {
   const { align } = useSelector((state) => state.taskbar);
   const start = useSelector((state) => {
-    var arr = JSON.parse(JSON.stringify(state.startmenu)),
+    var arr = JSON.parse(JSON.stringify(state.searchmenu)),
       ln = (6 - (arr.pnApps.length % 6)) % 6;
    
     for (var i = 0; i < ln; i++) {
@@ -136,7 +108,7 @@ export const StartMenu = () => {
 
   return (
     <div
-      className="startMenu dpShad"
+      className="searchMenu dpShad"
       data-hide={start.hide}
       style={{ "--prefix": "START" }}
       data-align={align}
@@ -294,7 +266,7 @@ export const StartMenu = () => {
                 </div>
               </div>
             </div>
-            <div className="highEfficientWork">
+            {/* <div className="highEfficientWork">
               <div className="title">高效工作</div>
               <div className="efficientWorkAppBox">
                 <EfficientWorkApp src="efficientWorkOffice" title="Microsoft 365 应用" iconSize={34} payload={"full"} />
@@ -304,7 +276,7 @@ export const StartMenu = () => {
               <div className="efficientWorkAppBox">
                 <EfficientWorkApp src="efficientWorkStore" title="Microsoft store" iconSize={34} click={"WNSTORE"} payload={"full"} />
               </div>
-            </div>
+            </div> */}
           </div>
           {/* <div className="menuBar">
             <div className="profile handcr">

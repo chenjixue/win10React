@@ -13,7 +13,8 @@ import {
   DesktopApp,
   SoundPane,
   CalendarPane,
-  StartMenu
+  StartMenu,
+  SearchMenu
 } from "./components/start";
 import { Actions } from "@/store"
 function ErrorFallback({ error, resetErrorBoundary }) {
@@ -118,6 +119,7 @@ function App() {
                 }
               })}
             <StartMenu />
+            <SearchMenu />
             <WidPane />
             <BandPane />
             <NetWorkPane />

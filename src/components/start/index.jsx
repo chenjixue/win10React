@@ -4,12 +4,14 @@ import { Lunar, HolidayUtil } from 'lunar-typescript';
 import { Icon } from "../../utils/general";
 import { ControlIcon } from "@/components/start/widget.jsx"
 import dayjs from "dayjs";
-import "./sidepane.scss";
-export * from "./widget";
 import { Actions } from "@/store"
 import "./startmenu.scss";
+import "./sidepane.scss";
 
+export * from "./widget";
 export * from "./start";
+export * from "./search";
+// export * from "./start";
 export const DesktopApp = () => {
   const deskApps = useSelector((state) => {
     var arr = { ...state.desktop };
