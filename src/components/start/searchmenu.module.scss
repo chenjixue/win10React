@@ -1,0 +1,39 @@
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center
+}
+
+.searchTab {
+  height: 50px;
+  border: 1px solid rgb(212, 220, 226);
+  padding: 0 20px;
+  overflow: hidden;
+
+  .chooses {
+    @include flex-center;
+    float: left;
+    height: 100%;
+    .tab{
+      width: 50px;
+      height: 100%;
+      font-size: 12px;
+      color: rgb(96,97,98);
+      box-sizing: border-box;
+      @include flex-center;
+      &[value="true"] {
+        border-bottom: 2px solid rgb(0,120,215);
+        border-bottom-width: 3px;
+        color: #000;
+      }
+    }
+  }
+
+  .close {
+    @include flex-center;
+    float: right;
+    height: 100%;
+    width: 65px;
+    justify-content: space-between;
+  }
+}

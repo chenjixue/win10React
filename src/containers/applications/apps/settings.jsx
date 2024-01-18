@@ -120,7 +120,7 @@ export const Settings = () => {
         </div>
         <div className={Styles.settingTaskBox}>
           {
-            settingsArr.map(settingOption => (<SettingTask {...settingOption} />))
+            settingsArr.map(settingOption => (<SettingTask key={settingOption.iconSrc} {...settingOption} />))
           }
         </div>
       </div>
