@@ -8,48 +8,6 @@ export const SearchMenu = () => {
   const start = useSelector((state) => {
     var arr = JSON.parse(JSON.stringify(state.searchmenu)),
       ln = (6 - (arr.pnApps.length % 6)) % 6;
-
-    for (var i = 0; i < ln; i++) {
-      arr.pnApps.push({
-        empty: true,
-      });
-    }
-    for (i = 0; i < arr.rcApps.length; i++) {
-      if (arr.rcApps[i].lastUsed < 0) {
-        arr.rcApps[i].lastUsed = "Recently Added";
-      } else if (arr.rcApps[i].lastUsed < 10) {
-        arr.rcApps[i].lastUsed = "Just Now";
-      } else if (arr.rcApps[i].lastUsed < 60) {
-        arr.rcApps[i].lastUsed += "m ago";
-      } else if (arr.rcApps[i].lastUsed < 360) {
-        arr.rcApps[i].lastUsed =
-          Math.floor(arr.rcApps[i].lastUsed / 60) + "h ago";
-      }
-    }
-    var allApps = [],
-      tmpApps = Object.keys(state.apps)
-        .filter((x) => x != "hz" && x != "appOrder")
-        .map((key) => {
-          return state.apps[key];
-        });
-
-    tmpApps.sort((a, b) => (a.name > b.name ? 1 : b.name > a.name ? -1 : 0));
-
-    for (i = 0; i < 27; i++) {
-      allApps[i] = [];
-    }
-
-    for (i = 0; i < tmpApps.length; i++) {
-      var t1 = tmpApps[i].name.trim().toUpperCase().charCodeAt(0);
-      if (t1 > 64 && t1 < 91) {
-        allApps[t1 - 64].push(tmpApps[i]);
-      } else {
-        allApps[0].push(tmpApps[i]);
-      }
-    }
-
-    arr.contApps = allApps;
-    arr.allApps = tmpApps;
     return arr;
   });
 
@@ -130,6 +88,17 @@ export const SearchMenu = () => {
             width={18}
           />
         </div>
+      </div>
+      <div className={Styles.searchContent}>
+        <div className={Styles.recommand}>
+          <div className={Styles.title}>
+            推荐
+          </div>
+          <div className={Styles.content}>
+            <div className={Styles.item}></div>
+          </div>
+        </div>
+        <div className={Styles.hotContent}></div>
       </div>
     </div>
   );

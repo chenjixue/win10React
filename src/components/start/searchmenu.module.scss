@@ -7,22 +7,24 @@
 .searchTab {
   height: 50px;
   border: 1px solid rgb(212, 220, 226);
-  padding: 0 20px;
+  padding: 0 20px 0 10px;
   overflow: hidden;
 
   .chooses {
     @include flex-center;
     float: left;
     height: 100%;
-    .tab{
+
+    .tab {
       width: 50px;
       height: 100%;
       font-size: 12px;
-      color: rgb(96,97,98);
+      color: rgb(96, 97, 98);
       box-sizing: border-box;
       @include flex-center;
+
       &[value="true"] {
-        border-bottom: 2px solid rgb(0,120,215);
+        border-bottom: 2px solid rgb(0, 120, 215);
         border-bottom-width: 3px;
         color: #000;
       }
@@ -35,5 +37,37 @@
     height: 100%;
     width: 65px;
     justify-content: space-between;
+  }
+}
+
+.searchContent {
+  height: calc(100% - 50px);
+
+  .recommand {
+    width: 45%;
+    height: 100%;
+
+    .title {
+      padding: 20px 0 20px 40px;
+      font-weight: 700;
+      font-size: 12px;
+    }
+
+    .content {
+      padding: 0px 80px;
+
+      .item {
+        border: 1px solid rgb(212, 220, 226);
+        height: 80px;
+        @include flex-center;
+        padding-left: 20px;
+        justify-content: flex-start;
+      }
+    }
+  }
+
+  .hotContent {
+    width: 55%;
+    height: 100%;
   }
 }

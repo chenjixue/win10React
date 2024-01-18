@@ -2,19 +2,8 @@ import { createSlice } from '@reduxjs/toolkit'
 import { pinnedApps, recentApps } from "../utils";
 const initialState = {
     pnApps: pinnedApps,
-    rcApps: recentApps,
+    rcApps: pinnedApps,
     hide: true,
-    menu: false,
-    showAll: false,
-    alpha: false,
-    pwctrl: false,
-    curAlpha: "A",
-    qksrch: [
-        ["faClock", 1, "Today in history"],
-        ["faChartLine", null, "Markets today"],
-        ["faFilm", null, "New movies"],
-        ["faNewspaper", 1, "Top news"],
-    ],
 };
 export const searchmenuSlice = createSlice({
     name: 'searchmenu',
