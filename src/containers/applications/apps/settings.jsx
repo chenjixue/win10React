@@ -113,7 +113,7 @@ export const Settings = () => {
       </ToolBar>
       <div className={Styles.settingContent} >
         <div className={Styles.titleName}>
-          window设置
+          Windows 设置
         </div>
         <div className={Styles.search}>
           <input type="text" placeholder="查找设置" />

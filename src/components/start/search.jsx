@@ -40,10 +40,17 @@ export const SearchMenu = () => {
   const { align } = useSelector((state) => state.taskbar);
   const search = useSelector((state) => {
     var arr = JSON.parse(JSON.stringify(state.searchmenu))
+    let tmpApps = Object.keys(state.apps)
+      .filter((x) => x != "hz" && x != "appOrder")
+      .map((key) => {
+        return state.apps[key];
+      });
+    tmpApps.sort((a, b) => (a.name > b.name ? 1 : b.name > a.name ? -1 : 0));
+    arr.allApps = tmpApps;
     return arr;
   });
   const [query, setQuery] = useState("");
-  const [match, setMatch] = useState({});
+  const [match, setMatch] = useState([]);
   const [tab, setTab] = useState("all");
   // const [pwctrl, setPowCtrl] = useState
 
@@ -82,16 +89,16 @@ export const SearchMenu = () => {
   };
 
   useEffect(() => {
-    if (query.length) {
+    if (search.query.length) {
+      let matches = []
       for (var i = 0; i < search.allApps.length; i++) {
-        if (search.allApps[i].name.toLowerCase().includes(query.toLowerCase())) {
-          setMatch(search.allApps[i]);
-          break;
+        if (search.allApps[i].name.toLowerCase().includes(search.query.toLowerCase())) {
+          matches.push(search.allApps[i])
         }
       }
+      setMatch(matches);
     }
-  }, [query]);
-
+  }, [search.query]);
   const speedSearchTipApps = [
     {
       name: "新闻",
@@ -129,43 +136,51 @@ export const SearchMenu = () => {
         </div>
       </div>
       <div className={Styles.searchContent}>
-        <div className={Styles.recommand}>
-          <div className={Styles.title}>
-            推荐
-          </div>
-          <div className={Styles.content}>{
-            search.rcApps.map(app => (
-              // <div key={app.name} className={Styles.item}>
-              //   <Icon src={app.icon} width={32} />
-              //   <span className={Styles.text}>{app.name}</span>
-              // </div>
-              <AppItem key={app.name} app={app} />
-            ))
-          }
-          </div>
-        </div>
-        <div className={Styles.hotContent}>
-          <div className={Styles.hotApp}>
-            <div className={Styles.title}>
-              热门应用
-            </div>
-            <div className={Styles.appBox}>
-              {
-                search.pnApps.slice(0, 6).map(app => (
-                  <PnApp key={app.name} {...app} />
-                ))
-              }
-            </div>
-          </div>
-          <div className={Styles.hotSearch}>
-            <div className={Styles.title}>
-              快速搜索
-            </div>
-            {
-              speedSearchTipApps.map(app => (<AppItem key={app.name} app={app} />))
-            }
-          </div>
-        </div>
+        {
+          search.query ? <>
+
+          </> :
+            <>
+              <div className={Styles.recommand}>
+                <div className={Styles.title}>
+                  推荐
+                </div>
+                <div className={Styles.content}>{
+                  search.rcApps.map(app => (
+                    // <div key={app.name} className={Styles.item}>
+                    //   <Icon src={app.icon} width={32} />
+                    //   <span className={Styles.text}>{app.name}</span>
+                    // </div>
+                    <AppItem key={app.name} app={app} />
+                  ))
+                }
+                </div>
+              </div>
+              <div className={Styles.hotContent}>
+                <div className={Styles.hotApp}>
+                  <div className={Styles.title}>
+                    热门应用
+                  </div>
+                  <div className={Styles.appBox}>
+                    {
+                      search.pnApps.slice(0, 6).map(app => (
+                        <PnApp key={app.name} {...app} />
+                      ))
+                    }
+                  </div>
+                </div>
+                <div className={Styles.hotSearch}>
+                  <div className={Styles.title}>
+                    快速搜索
+                  </div>
+                  {
+                    speedSearchTipApps.map(app => (<AppItem key={app.name} app={app} />))
+                  }
+                </div>
+              </div>
+
+            </>
+        }
       </div>
     </div>
   );

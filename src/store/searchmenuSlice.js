@@ -3,12 +3,16 @@ import { pinnedApps, recentApps } from "../utils";
 const initialState = {
     pnApps: pinnedApps,
     rcApps: recentApps,
+    query: "",
     hide: true,
 };
 export const searchmenuSlice = createSlice({
     name: 'searchmenu',
     initialState,
     reducers: {
+        SEARCHCHAGE: (state, action) => {
+            state.query = action.payload;
+        },
         SEARCHSHOW: state => {
             state.menu = true;
             state.hide = false;

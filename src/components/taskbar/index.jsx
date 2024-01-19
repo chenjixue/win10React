@@ -274,6 +274,10 @@ const Taskbar = () => {
             <input
               style={{ "--prefix": "SEARCH" }}
               placeholder="搜索"
+              onChange={(event) => {
+                const action = Actions.SEARCHCHAGE(event.target.value.trim())
+                dispatch(action)
+              }}
               onFocus={inputFocus}
             ></input>
           </div>
