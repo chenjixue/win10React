@@ -61,13 +61,13 @@ export const desktopApps = icons
     .sort((a, b) => {
         return desktop.indexOf(a.name) > desktop.indexOf(b.name) ? 1 : -1;
     });
-export const pinnedApps = icons
+export const recentApps = icons
     .filter((x) => pinned.includes(x.name))
     .sort((a, b) => {
         return pinned.indexOf(a.name) > pinned.indexOf(b.name) ? 1 : -1;
     });
 
-export const recentApps = icons
+export const pinnedApps = icons
     .filter((x) => recent.includes(x.name))
     .sort((a, b) => {
         return recent.indexOf(a.name) > recent.indexOf(b.name) ? 1 : -1;

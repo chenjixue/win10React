@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit'
 import { pinnedApps, recentApps } from "../utils";
 const initialState = {
     pnApps: pinnedApps,
-    rcApps: pinnedApps,
+    rcApps: recentApps,
     hide: true,
 };
 export const searchmenuSlice = createSlice({

@@ -3,14 +3,45 @@ import { useSelector, useDispatch } from "react-redux";
 import { Icon } from "@/utils/general";
 import { Actions } from "@/store";
 import Styles from "./searchmenu.module.scss"
+const PnApp = ({ icon, iconSize = 30, payload, action, name }) => {
+  const dispatch = useDispatch();
+  const clickDispatch = (event) => {
+    // event.stopPropagation()
+    let actionName = event.currentTarget.dataset.action
+    let createAction = Actions[actionName]
+    let payload = event.currentTarget.dataset.payload
+    if (createAction) {
+      dispatch(createAction(payload));
+    } else if (actionName) {
+      let action = {
+        type: actionName,
+        payload
+      }
+
+      dispatch(action)
+    }
+  };
+  return (
+    <div className={Styles.app} style={{ "--prefix": "no" }} data-payload={payload} data-action={action} onClick={clickDispatch}>
+      <div className={Styles.iconBox}>
+        <Icon src={icon} width={iconSize} ></Icon>
+      </div>
+      <div className={Styles.name}>{name}</div>
+    </div>
+  )
+}
+const AppItem = ({ app }) => {
+  return (<div key={app.name} className={Styles.appItem}>
+    <Icon src={app.icon} width={32} />
+    <span className={Styles.text}>{app.name}</span>
+  </div>)
+}
 export const SearchMenu = () => {
   const { align } = useSelector((state) => state.taskbar);
-  const start = useSelector((state) => {
-    var arr = JSON.parse(JSON.stringify(state.searchmenu)),
-      ln = (6 - (arr.pnApps.length % 6)) % 6;
+  const search = useSelector((state) => {
+    var arr = JSON.parse(JSON.stringify(state.searchmenu))
     return arr;
   });
-
   const [query, setQuery] = useState("");
   const [match, setMatch] = useState({});
   const [tab, setTab] = useState("all");
@@ -52,21 +83,29 @@ export const SearchMenu = () => {
 
   useEffect(() => {
     if (query.length) {
-      for (var i = 0; i < start.allApps.length; i++) {
-        if (start.allApps[i].name.toLowerCase().includes(query.toLowerCase())) {
-          setMatch(start.allApps[i]);
+      for (var i = 0; i < search.allApps.length; i++) {
+        if (search.allApps[i].name.toLowerCase().includes(query.toLowerCase())) {
+          setMatch(search.allApps[i]);
           break;
         }
       }
     }
   }, [query]);
 
-  const userName = useSelector((state) => state.setting.person.name);
-
+  const speedSearchTipApps = [
+    {
+      name: "新闻",
+      icon: "newsSearch",
+    },
+    {
+      name: "天气",
+      icon: "weatherSearch",
+    },
+  ]
   return (
     <div
       className="searchMenu dpShad"
-      data-hide={start.hide}
+      data-hide={search.hide}
       style={{ "--prefix": "SEARCH" }}
       data-align={align}
     >
@@ -94,11 +133,39 @@ export const SearchMenu = () => {
           <div className={Styles.title}>
             推荐
           </div>
-          <div className={Styles.content}>
-            <div className={Styles.item}></div>
+          <div className={Styles.content}>{
+            search.rcApps.map(app => (
+              // <div key={app.name} className={Styles.item}>
+              //   <Icon src={app.icon} width={32} />
+              //   <span className={Styles.text}>{app.name}</span>
+              // </div>
+              <AppItem key={app.name} app={app} />
+            ))
+          }
           </div>
         </div>
-        <div className={Styles.hotContent}></div>
+        <div className={Styles.hotContent}>
+          <div className={Styles.hotApp}>
+            <div className={Styles.title}>
+              热门应用
+            </div>
+            <div className={Styles.appBox}>
+              {
+                search.pnApps.slice(0, 6).map(app => (
+                  <PnApp key={app.name} {...app} />
+                ))
+              }
+            </div>
+          </div>
+          <div className={Styles.hotSearch}>
+            <div className={Styles.title}>
+              快速搜索
+            </div>
+            {
+              speedSearchTipApps.map(app => (<AppItem key={app.name} app={app} />))
+            }
+          </div>
+        </div>
       </div>
     </div>
   );
