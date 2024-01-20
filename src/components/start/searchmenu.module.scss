@@ -44,21 +44,128 @@
   height: calc(100% - 50px);
   display: flex;
 
-  .appItem {
-    border-bottom: 1px solid rgb(212, 220, 226);
-    height: 55px;
-    @include flex-center;
-    justify-content: flex-start;
-    padding-left: 10px;
 
-    .text {
-      margin-left: 10px;
+
+  .bestMatch {
+    width: 47%;
+    height: 100%;
+    overflow-y: auto;
+    .bestText {
+      padding-top: 10px;
+      padding-left: 10px;
+      font-size: 13px;
+      font-weight: 900;
     }
+
+    .bestApp {
+      height: 70px;
+      @include flex-center;
+      justify-content: flex-start;
+
+      &[data-active="true"] {
+        background-color: rgb(143, 181, 208);
+      }
+
+      .iconBox {
+        @include flex-center;
+        width: 50px;
+      }
+
+      .infoBox {
+        margin-left: 5px;
+
+        .appName {
+          margin-bottom: 5px;
+        }
+
+        .appType {
+          font-size: 13px;
+          color: rgb(8, 8, 8, 0.7);
+        }
+      }
+    }
+
+    .appListText {
+      padding-top: 10px;
+      padding-left: 10px;
+      font-size: 13px;
+      font-weight: 900;
+    }
+
+    .matchAppItem {
+      &:hover {
+        background-color: rgb(183, 183, 183);
+
+        .rightBox {
+          border-left: 1px solid #fff;
+        }
+      }
+
+      height: 35px;
+      @include flex-center;
+      justify-content: flex-start;
+
+      &[data-active="true"] {
+        background-color: rgb(143, 181, 208);
+
+        .appContent {
+          &:hover {
+            background-color: rgb(130, 186, 229);
+          }
+        }
+
+        .rightBox {
+          border-left: 1px solid #fff;
+
+          &:hover {
+            background-color: rgb(130, 186, 229);
+          }
+        }
+      }
+
+      .appContent {
+        padding-left: 15px;
+        flex: 1;
+        height: 100%;
+        @include flex-center;
+        justify-content: flex-start;
+
+        &:hover {
+          background-color: rgb(163, 163, 163);
+        }
+
+        .text {
+          margin-left: 15px;
+        }
+      }
+
+      .rightBox {
+
+        @include flex-center;
+
+        &:hover {
+          background-color: rgb(163, 163, 163);
+        }
+
+        width: 60px;
+        height: 100%;
+        margin-left: auto;
+      }
+    }
+  }
+
+  .info {
+    width: 53%;
+    height: 100%;
+    box-sizing: border-box;
+    margin: 10px 10px 0 10px;
+    background-color: #fff;
   }
 
   .recommand {
     width: 47%;
     height: 100%;
+
 
     .title {
       padding: 20px 0 20px 25px;
@@ -70,7 +177,17 @@
     .content {
       padding: 0px 25px;
 
+      .appItem {
+        border-bottom: 1px solid rgb(212, 220, 226);
+        height: 55px;
+        @include flex-center;
+        justify-content: flex-start;
+        padding-left: 10px;
 
+        .text {
+          margin-left: 10px;
+        }
+      }
     }
   }
 
@@ -108,6 +225,18 @@
             text-align: center;
           }
         }
+      }
+    }
+
+    .appItem {
+      border-bottom: 1px solid rgb(212, 220, 226);
+      height: 55px;
+      @include flex-center;
+      justify-content: flex-start;
+      padding-left: 10px;
+
+      .text {
+        margin-left: 10px;
       }
     }
 

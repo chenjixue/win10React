@@ -4,6 +4,7 @@ const initialState = {
     pnApps: pinnedApps,
     rcApps: recentApps,
     query: "",
+    activeName:"",
     hide: true,
 };
 export const searchmenuSlice = createSlice({
@@ -12,6 +13,9 @@ export const searchmenuSlice = createSlice({
     reducers: {
         SEARCHCHAGE: (state, action) => {
             state.query = action.payload;
+        },
+        SEARCHACTIVE: (state, action) => {
+            state.activeName = action.payload;
         },
         SEARCHSHOW: state => {
             state.menu = true;

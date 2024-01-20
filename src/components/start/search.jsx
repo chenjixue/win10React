@@ -36,6 +36,36 @@ const AppItem = ({ app }) => {
     <span className={Styles.text}>{app.name}</span>
   </div>)
 }
+const MatchApp = ({ app }) => {
+  const dispatch = useDispatch();
+  const activeName = useSelector(state => {
+    return state.searchmenu.activeName
+  })
+  return (
+    <div key={app.name} className={Styles.matchAppItem} data-active={activeName === app.name} onClick={() => {
+      dispatch(Actions.SEARCHACTIVE(app.name))
+    }}>
+      <div className={Styles.appContent}>
+        <Icon src={app.icon} width={18} />
+        <span className={Styles.text}>{app.name}</span>
+      </div>
+      <div className={Styles.rightBox}>
+        <Icon src="rightArrow" className={Styles.rightArrow} width={18} />
+      </div>
+    </div>
+  )
+}
+const MatchListApp = ({ match }) => {
+  return match.length > 0 ?
+    <>
+      <div className={Styles.appListText}>
+        应用
+      </div>
+      {
+        match.slice(1).map(app => <MatchApp app={app} />)
+      }
+    </> : null
+}
 export const SearchMenu = () => {
   const { align } = useSelector((state) => state.taskbar);
   const search = useSelector((state) => {
@@ -49,7 +79,6 @@ export const SearchMenu = () => {
     arr.allApps = tmpApps;
     return arr;
   });
-  const [query, setQuery] = useState("");
   const [match, setMatch] = useState([]);
   const [tab, setTab] = useState("all");
   // const [pwctrl, setPowCtrl] = useState
@@ -96,6 +125,7 @@ export const SearchMenu = () => {
           matches.push(search.allApps[i])
         }
       }
+      matches.length > 0 && dispatch(Actions.SEARCHACTIVE(matches[0].name))
       setMatch(matches);
     }
   }, [search.query]);
@@ -138,7 +168,28 @@ export const SearchMenu = () => {
       <div className={Styles.searchContent}>
         {
           search.query ? <>
+            <div className={Styles.bestMatch}>
+              <div className={Styles.bestText}>
+                最佳匹配
+              </div>
+              <div className={Styles.bestApp} data-active={match[0]?.name == search.activeName}>
+                <div className={Styles.iconBox}>
+                  <Icon src={match.length > 0 ? match[0].icon : "search"} width={35} height={35} />
+                </div>
+                <div className={Styles.infoBox}>
+                  <div className={Styles.appName}>
+                    {match.length > 0 ? match[0].name : search.query}
+                  </div>
+                  <div className={Styles.appType}>
 
+                    {match.length > 0 ? "应用" : "查看更多搜索结果"}
+                  </div>
+                </div>
+              </div>
+              <MatchListApp match={match} />
+            </div>
+            <div className={Styles.info}>
+            </div>
           </> :
             <>
               <div className={Styles.recommand}>
