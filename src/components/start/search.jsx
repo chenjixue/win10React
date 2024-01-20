@@ -8,8 +8,8 @@ const PnApp = ({ icon, iconSize = 30, payload, action, name }) => {
   const clickDispatch = (event) => {
     // event.stopPropagation()
     let actionName = event.currentTarget.dataset.action
-    let createAction = Actions[actionName]
     let payload = event.currentTarget.dataset.payload
+    let createAction = Actions[actionName]
     if (createAction) {
       dispatch(createAction(payload));
     } else if (actionName) {
@@ -95,10 +95,20 @@ export const SearchMenu = () => {
       type,
       payload,
     };
-    if (type) {
-      dispatch(Actions[type](payload));
-    }
+    // if (type) {
+    //   dispatch(Actions[type](payload));
+    // }
+    let createAction = Actions[type]
+    if (createAction) {
+      dispatch(createAction(payload));
+    } else if (type) {
+      let action = {
+        type,
+        payload
+      }
 
+      dispatch(action)
+    }
     if (
       action.type &&
       (action.payload == "full" || action.type == "EDGELINK")
@@ -139,6 +149,7 @@ export const SearchMenu = () => {
       icon: "weatherSearch",
     },
   ]
+  const currentSelectApp = search.allApps.find(app => (app.name === search.activeName))
   return (
     <div
       className="searchMenu dpShad"
@@ -172,7 +183,9 @@ export const SearchMenu = () => {
               <div className={Styles.bestText}>
                 最佳匹配
               </div>
-              <div className={Styles.bestApp} data-active={match[0]?.name == search.activeName}>
+              <div className={Styles.bestApp} data-active={match[0]?.name == search.activeName} onClick={() => {
+                dispatch(Actions.SEARCHACTIVE(match[0]?.name))
+              }}>
                 <div className={Styles.iconBox}>
                   <Icon src={match.length > 0 ? match[0].icon : "search"} width={35} height={35} />
                 </div>
@@ -181,7 +194,6 @@ export const SearchMenu = () => {
                     {match.length > 0 ? match[0].name : search.query}
                   </div>
                   <div className={Styles.appType}>
-
                     {match.length > 0 ? "应用" : "查看更多搜索结果"}
                   </div>
                 </div>
@@ -189,6 +201,19 @@ export const SearchMenu = () => {
               <MatchListApp match={match} />
             </div>
             <div className={Styles.info}>
+              <div className={Styles.appBox}>
+                <div className={Styles.appIcon}>
+                  <Icon src={currentSelectApp?.icon} width={55} height={55}></Icon>
+                </div>
+                <div className={Styles.appName}>{currentSelectApp?.name}</div>
+                <div className={Styles.appType}>应用</div>
+              </div>
+              <div className={Styles.operationList}>
+                <div className={Styles.operation} data-payload="full" data-action={currentSelectApp?.action} onClick={clickDispatch}>
+                  <Icon src="openApp" className={Styles.operationIcon} width={20} />
+                  打开
+                </div>
+              </div>
             </div>
           </> :
             <>
