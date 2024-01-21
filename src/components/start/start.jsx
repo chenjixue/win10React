@@ -91,14 +91,14 @@ export const StartMenu = () => {
     let createAction = Actions[type]
     if (createAction) {
       dispatch(createAction(payload));
-      dispatch(Actions.STARTHIDE())
+      // dispatch(Actions.STARTHIDE())
     } else if (type) {
       let action = {
         type,
         payload
       }
       dispatch(action)
-      dispatch(Actions.STARTHIDE())
+      // dispatch(Actions.STARTHIDE())
     }
 
     if (
@@ -130,11 +130,31 @@ export const StartMenu = () => {
     >
       <div className="menuBox">
         <div className="startControlBox">
-          <Icon className="settingIcon" src="startAcount" width={26} />
-          <Icon className="settingIcon" src="startFile" width={22} />
-          <Icon className="settingIcon" src="startImage" width={18} />
-          <Icon className="settingIcon" src="startSetting" width={16} />
-          <Icon className="settingIcon" src="startKaijijian" width={16} />
+          <div className="startItem" style={{ marginBottom: "auto" }}>
+            <Icon className="settingIcon" src="startLine" width={20} />
+            <span style={{ color: "#000", fontWeight: "550" }}>开始</span>
+          </div>
+          <div className="startItem">
+            <Icon className="settingIcon" src="startAcount" width={26} />
+            <span>admin</span>
+          </div>
+          <div className="startItem">
+            <Icon className="settingIcon" src="startFile" width={22} />
+            <span>文档</span>
+          </div>
+          <div className="startItem">
+            <Icon className="settingIcon" src="startImage" width={18} />
+            <span>图片</span>
+          </div>
+          <div className="startItem">
+            <Icon className="settingIcon" src="startSetting" width={16} />
+            <span>设置</span>
+          </div>
+          <div className="startItem">
+            <Icon className="settingIcon" src="startKaijijian" width={16} />
+            <span>电源</span>
+          </div>
+          <div className="rightShadow"></div>
         </div>
         <div className="allCont" data-allapps={true}>
           <div className="appCont">

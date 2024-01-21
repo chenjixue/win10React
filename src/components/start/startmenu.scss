@@ -66,18 +66,52 @@
     display: flex;
     width: 100%;
     height: 100%;
+    padding-left: 40px;
+    position: relative;
 
     .startControlBox {
       display: flex;
       flex-direction: column;
-      align-items: center;
+      // align-items: center;
       justify-content: flex-end;
       padding-left: 2px;
-      width: 40px;
+      width: 47px;
+      left: 0px;
+      bottom: 0px;
+      height: 100%;
+      position: absolute;
+      transition: width 0.2s;
 
-      .settingIcon {
-        margin: 13px 0;
+      .startItem{
+        z-index: 3;
+        &:hover{
+          background-color: rgb(255,255,255);
+        }
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        white-space: nowrap;
+        .settingIcon {
+          margin: 13px 4px 13px 0;
+          flex-shrink: 0;
+          width: 45px;
+        }
       }
+      &:hover {
+        width: 255px;
+        background-color: rgba(242, 242, 242, 1);
+        z-index: 2;
+
+        .rightShadow {
+          height: 100%;
+          position: absolute;
+          right: 0px;
+          width: 1px;
+          box-shadow: 2px 0 3px  rgba(0, 0, 0, 0.3);
+        }
+      }
+
+     
     }
 
     .allCont {
@@ -108,8 +142,9 @@
           margin-right: 5px;
           display: flex;
           flex-direction: column;
-          background-color: rgba(255,255,255,0.7);
+          background-color: rgba(255, 255, 255, 0.7);
           justify-content: flex-end;
+
           .efficientWorkAppIcon {
             // flex: 1;
           }
