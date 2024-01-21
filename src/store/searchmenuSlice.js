@@ -4,7 +4,7 @@ const initialState = {
     pnApps: pinnedApps,
     rcApps: recentApps,
     query: "",
-    activeName:"",
+    activeName: "",
     hide: true,
 };
 export const searchmenuSlice = createSlice({
@@ -24,11 +24,18 @@ export const searchmenuSlice = createSlice({
         },
         SEARCHHIDE: state => {
             state.hide = true;
+            state.query = "";
             state.showAll = false;
             state.pwctrl = false;
         },
         SEARCHTOGG: state => {
             state.hide = !(state.hide || !state.menu);
+            if (state.hide) {
+                state.query = ""
+            } else {
+
+                state.query = action.payload;
+            }
             state.menu = true;
             state.alpha = false;
             state.curAlpha = "A";

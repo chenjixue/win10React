@@ -22,7 +22,7 @@ const PnApp = ({ icon, iconSize = 30, payload, action, name }) => {
     }
   };
   return (
-    <div className={Styles.app} style={{ "--prefix": "no" }} data-payload={payload} data-action={action} onClick={clickDispatch}>
+    <div className={Styles.app} style={{ "--prefix": "no" }} data-payload="full" data-action={action} onClick={clickDispatch}>
       <div className={Styles.iconBox}>
         <Icon src={icon} width={iconSize} ></Icon>
       </div>
@@ -31,7 +31,11 @@ const PnApp = ({ icon, iconSize = 30, payload, action, name }) => {
   )
 }
 const AppItem = ({ app }) => {
-  return (<div key={app.name} className={Styles.appItem}>
+  const dispatch = useDispatch();
+  return (<div key={app.name} className={Styles.appItem} onClick={() => {
+    dispatch({ type: app.action, payload: "full" })
+    dispatch(Actions.SEARCHHIDE())
+  }}>
     <Icon src={app.icon} width={32} />
     <span className={Styles.text}>{app.name}</span>
   </div>)
@@ -172,6 +176,7 @@ export const SearchMenu = () => {
           <Icon
             src="close"
             ui
+            click={"SEARCHHIDE"}
             width={18}
           />
         </div>
@@ -201,19 +206,24 @@ export const SearchMenu = () => {
               <MatchListApp match={match} />
             </div>
             <div className={Styles.info}>
-              <div className={Styles.appBox}>
-                <div className={Styles.appIcon}>
-                  <Icon src={currentSelectApp?.icon} width={55} height={55}></Icon>
-                </div>
-                <div className={Styles.appName}>{currentSelectApp?.name}</div>
-                <div className={Styles.appType}>应用</div>
-              </div>
-              <div className={Styles.operationList}>
-                <div className={Styles.operation} data-payload="full" data-action={currentSelectApp?.action} onClick={clickDispatch}>
-                  <Icon src="openApp" className={Styles.operationIcon} width={20} />
-                  打开
-                </div>
-              </div>
+              {match.length > 0 ?
+                <>
+                  <div className={Styles.appBox}>
+                    <div className={Styles.appIcon}>
+                      <Icon src={currentSelectApp?.icon} width={55} height={55}></Icon>
+                    </div>
+                    <div className={Styles.appName}>{currentSelectApp?.name}</div>
+                    <div className={Styles.appType}>应用</div>
+                  </div>
+                  <div className={Styles.operationList}>
+                    <div className={Styles.operation} data-payload="full" data-action={currentSelectApp?.action} onClick={clickDispatch}>
+                      <Icon src="openApp" className={Styles.operationIcon} width={20} />
+                      打开
+                    </div>
+                  </div>
+                </>
+                : null
+              }
             </div>
           </> :
             <>

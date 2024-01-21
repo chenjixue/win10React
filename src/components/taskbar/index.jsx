@@ -187,6 +187,9 @@ const Taskbar = () => {
   const languagePane = useSelector((state) => {
     return state.languagePane;
   });
+  const query = useSelector(state => {
+    return state.searchmenu.query
+  })
   const apps = useSelector((state) => {
     var tmpApps = JSON.parse(JSON.stringify(state.apps));
     for (var i = 0; i < state.taskbar.apps.length; i++) {
@@ -274,6 +277,7 @@ const Taskbar = () => {
             <input
               style={{ "--prefix": "SEARCH" }}
               placeholder="搜索"
+              value={query}
               onChange={(event) => {
                 const action = Actions.SEARCHCHAGE(event.target.value.trim())
                 dispatch(action)
