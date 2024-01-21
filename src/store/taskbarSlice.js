@@ -1,19 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { taskApps } from "../utils";
-import { appSlice } from "./appSlice"
-import store from "@/store";
-let isInit = true
-// let getAppOrder = () => {
-//     let temApps = isInit ? appSlice.getInitialState() : store.getState().apps
-//     let isShowApp = key => {
-//         console.log("🚀 ~ file: taskbarSlice.js:9 ~ isShowApp ~ temApps[key].hide:", temApps[key].hide)
-//         return key != "hz" && key != "undefined" && !temApps[key].task && !temApps[key].hide
-//     }
-//     let appObjects = Object.keys(temApps).filter(isShowApp).map(key => temApps[key])
-//     let appOrder = [...taskApps, ...appObjects]
-//     return appOrder
-// }
-
 const initialState = {
     apps: taskApps,
     align: "left",

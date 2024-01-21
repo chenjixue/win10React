@@ -3,7 +3,6 @@ import { ErrorBoundary } from "react-error-boundary";
 import { Background } from "./containers/background";
 import { useDispatch, useSelector } from "react-redux";
 import Taskbar from "./components/taskbar";
-import * as Applications from "./containers/applications";
 import * as Drafts from "./containers/applications/draft";
 import "./index.css";
 import {
@@ -17,6 +16,7 @@ import {
   SearchMenu
 } from "./components/start";
 import { Actions } from "@/store"
+import * as Applications from "./containers/applications";
 function ErrorFallback({ error, resetErrorBoundary }) {
   return (
     <div>

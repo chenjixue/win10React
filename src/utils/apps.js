@@ -46,13 +46,13 @@ const apps = [
     type: "app",
     action: "MSEDGE",
   },
-  // {
-  //   name: "Buy me a coffee",
-  //   icon: "buyme",
-  //   type: "app",
-  //   action: "EXTERNAL",
-  //   payload: "https://www.buymeacoffee.com/blueedgetechno",
-  // },
+  {
+    name: "Buy me a coffee",
+    icon: "buyme",
+    type: "app",
+    action: "EXTERNAL",
+    payload: "https://www.buymeacoffee.com/blueedgetechno",
+  },
   {
     name: "Store",
     icon: "store",
@@ -63,7 +63,6 @@ const apps = [
     name: "Recycle Bin",
     icon: "bin0",
     type: "app",
-    action: "EXPLORER",
   },
   {
     name: "Blue",
@@ -206,12 +205,12 @@ const apps = [
     icon: "security",
     type: "app",
   },
-  // {
-  //   name: "Spotify",
-  //   icon: "spotify",
-  //   type: "app",
-  //   action: "SPOTIFY",
-  // },
+  {
+    name: "Spotify",
+    icon: "spotify",
+    type: "app",
+    action: "SPOTIFY",
+  },
   {
     name: "Sharepoint",
     icon: "share",
@@ -270,12 +269,12 @@ const apps = [
     icon: "weather",
     type: "app",
   },
-  {
-    name: "Whiteboard",
-    icon: "board",
-    type: "app",
-    action: "WHITEBOARD",
-  },
+  // {
+  //   name: "Whiteboard",
+  //   icon: "board",
+  //   type: "app",
+  //   action: "WHITEBOARD",
+  // },
   {
     name: "Cortana",
     icon: "cortana",

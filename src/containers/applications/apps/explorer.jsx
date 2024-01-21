@@ -95,7 +95,6 @@ const Dropdown = (props) => {
 export const Explorer = () => {
   const apps = useSelector((state) => state.apps);
   const wnapp = useSelector((state) => state.apps.explorer);
-  console.log(wnapp,"wnapp----")
   const files = useSelector((state) => state.files);
   const fdata = files.data.getId(files.cdir);
   const [cpath, setPath] = useState(files.cpath);

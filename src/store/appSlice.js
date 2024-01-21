@@ -81,8 +81,6 @@ const appReducer = (state = initialState, action) => {
     delete tmpState[action.payload];
     return tmpState;
   } else if (action.type == "ORDERAPP") {
-    console.log("orderapp-test")
-    console.log("🚀 ~ appReducer ~ action.payload:", action.payload)
     tmpState.appOrder = action.payload
     return tmpState
   } else {

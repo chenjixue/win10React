@@ -12,7 +12,6 @@ import "./searchmenu.scss";
 export * from "./widget";
 export * from "./start";
 export * from "./search";
-// export * from "./start";
 export const DesktopApp = () => {
   const deskApps = useSelector((state) => {
     var arr = { ...state.desktop };
