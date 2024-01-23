@@ -30,6 +30,20 @@ export const EfficientWorkApp = ({ src, title, iconSize, payload, click }) => {
     </div>
   )
 }
+const MenuItemSelects = ({ options }) => {
+
+  let options = options.map(
+    option => {
+      return <div className="startItem">
+        <Icon className="settingIcon" src="startKaijijian" width={16} />
+        <span>电源</span>
+      </div>
+    }
+  )
+  return (<div>
+    {options}
+  </div>)
+}
 export const StartMenu = () => {
   const { align } = useSelector((state) => state.taskbar);
   const start = useSelector((state) => {

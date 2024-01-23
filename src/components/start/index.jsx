@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState, useReducer } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Lunar, HolidayUtil } from 'lunar-typescript';
 import { Icon } from "../../utils/general";
@@ -158,90 +158,6 @@ export const CalendarTime = () => {
     <div className="currentDate">{currentDate}</div>
   </div>)
 }
-export const CalendarMonthPane = () => {
-  let viewDateInit = dayjs()
-  let rowNumInit = 7
-  const [viewDate, setViewDate] = useState(viewDateInit)
-  const [rowNum, setRowNum] = useState(rowNumInit)
-  const calendarPane = useSelector((state) => state.calendarPane);
-
-  let calendarRef = useRef();
-  let calendarBoxRef = useRef();
-  let scrollDataBoxRef = useRef();
-  let calendarScrollDistanceRef = useRef(600);
-  useEffect(() => {
-    // 每次视图更新让虚拟滚动的滚条归零
-    if (scrollDataBoxRef.current) {
-      scrollDataBoxRef.current.scrollTop = 600
-      calendarScrollDistanceRef.current = 600
-      scrollDataBoxRef.current.style.setProperty("pointer-events", "none")
-    }
-  }, [viewDate]);
-  let colNum = 7
-  let locale = "zh-cn"
-
-  let rows = []
-  let addDate = (date, diff) => date.add(diff, 'day')
-  let getWeekFirstDay = (locale) => {
-    let t = dayjs().locale(locale)
-    return t.localeData().firstDayOfWeek()
-  }
-  let setDate = (date, num) => date.date(num)
-  let getWeekDay = (date) => {
-    const clone = date.locale('en');
-    return clone.weekday() + clone.localeData().firstDayOfWeek();
-  }
-  let getMonth = (date) => date.month()
-  let getDate = (date) => date.date()
-  let getWeekStartDate = (
-    locale,
-    value
-  ) => {
-    const weekFirstDay = getWeekFirstDay(locale);
-    const monthStartDate = setDate(value, 1);
-    const startDateWeekDay = getWeekDay(monthStartDate);
-    let alignStartDate = addDate(monthStartDate, weekFirstDay - startDateWeekDay);
-    if (
-      getMonth(alignStartDate) === getMonth(value)
-    ) {
-      alignStartDate = addDate(alignStartDate, -7);
-    }
-
-    return alignStartDate;
-  }
-  let oneDayBefore = 0
-  let oneDayAfter = 0
-  let baseDate, monthStartDate
-  const disabledDate = (date) => {
-    if (oneDayBefore > oneDayAfter) {
-      monthStartDate.subtract(1, "month")
-    }
-    const firstDayOfCurrentMonth = monthStartDate.startOf('month');
-    const lastDayOfCurrentMonth = monthStartDate.endOf('month');
-    return date.isAfter(firstDayOfCurrentMonth) && date.isBefore(lastDayOfCurrentMonth);
-  }
-  for (let i = 0; i < rowNum; i += 1) {
-    const row = [];
-    for (let j = 0; j < colNum; j += 1) {
-      const offset = i * colNum + j;
-      baseDate = getWeekStartDate(locale, viewDate);
-      monthStartDate = setDate(viewDate, 1);
-      const currentDate = addDate(baseDate, offset + 1);
-      if (currentDate.isBefore(monthStartDate)) {
-        oneDayBefore++
-      } else {
-        oneDayAfter++
-      }
-      const d = Lunar.fromDate(currentDate.toDate());
-      const lunar = d.getDayInChinese();
-      const solarTerm = d.getJieQi();
-      const h = HolidayUtil.getHoliday(currentDate.get('year'), currentDate.get('month') + 1, currentDate.get('date'));
-      const displayHoliday = h?.getTarget() === h?.getDay() ? h?.getName() : undefined;
-      row.push(<td key={j}><div className="cellBox"><div className="cellContainer" style={{ color: !disabledDate(currentDate) ? 'rgba(125,125,125,1)' : '' }}>{getDate(currentDate)}<div className="nl">{displayHoliday || solarTerm || lunar}</div></div></div></td>)
-    }
-    rows.push(<tr key={i}>{row}</tr>)
-  }
-}
 export const CalendarPane = () => {
   let today = dayjs()
   let viewDateInit = dayjs()
@@ -251,21 +167,11 @@ export const CalendarPane = () => {
   const [selectDate, setSelectDate] = useState(selectDateInit)
   const [rowNum, setRowNum] = useState(rowNumInit)
   const calendarPane = useSelector((state) => state.calendarPane);
-
   let calendarRef = useRef();
   let calendarBoxRef = useRef();
-  let scrollDataBoxRef = useRef();
-  let calendarScrollDistanceRef = useRef(600);
-  useEffect(() => {
-    // 每次视图更新让虚拟滚动的滚条归零
-    if (scrollDataBoxRef.current) {
-      scrollDataBoxRef.current.scrollTop = 600
-      calendarScrollDistanceRef.current = 600
-    }
-  }, [viewDate]);
+  let calendarBoxContentRef = useRef();
   let colNum = 7
   let locale = "zh-cn"
-
   let rows = []
   let addDate = (date, diff) => date.add(diff, 'day')
   let getWeekFirstDay = (locale) => {
@@ -333,22 +239,38 @@ export const CalendarPane = () => {
   }
   const changeMonth = (count) => {
     setViewDate(monthStartDate.add(count, "month"))
-    calendarBoxRef.current.scrollTop = 0;
+    console.log("🚀 ~ changeMonth ~ monthStartDate:", monthStartDate)
+    // calendarBoxRef.current.scrollTop = 0;
   }
-  const scrollMouse = () => {
-    //关闭模拟滚动的遮罩点击穿透样式让滚动重新回到遮罩上
-    scrollDataBoxRef.current.style.setProperty("pointer-events", "auto")
-  }
-  const scrollContent = (e) => {
-    if (scrollDataBoxRef.current.scrollTop == calendarScrollDistanceRef.current) {
+  // setInterval(() => {
+  //   console.log("1111")
+  //   debugger
+  //   calendarBoxContentRef.current.style.marginTop = parseInt(calendarBoxContentRef.current.style.marginTop.replace("px", "")||0) - 10 + "px"
+  // },1000)
+  let oldScrollTop = useRef(900)
+  let oldDistance = useRef(0)
+  let isInitAcitve = useRef(true)
+  useEffect(() => {
+    isInitAcitve.current = false
+    calendarBoxRef.current.scrollTop = oldScrollTop.current
+    calendarBoxContentRef.current.style.marginTop = `${oldScrollTop.current}px`
+
+  }, [])
+
+
+  const scrollMouse = (e) => {
+    if (!isInitAcitve.current) {
+      isInitAcitve.current = true
       return
     }
-    let distance = (e.target.scrollTop - calendarScrollDistanceRef.current) % 34
-    let scrollNum = parseInt((e.target.scrollTop - calendarScrollDistanceRef.current) / 34)
+    let scrollTop = e.target.scrollTop - oldScrollTop.current
+    oldDistance.current += (scrollTop) % 34
+    let distanceNum = parseInt(oldDistance.current / 34)
+    oldDistance.current = oldDistance.current % 34
+    let scrollNum = parseInt((scrollTop) / 34) + distanceNum
+    calendarBoxContentRef.current.style.marginTop = `${e.target.scrollTop - Math.abs(oldDistance.current)}px`
     setViewDate(viewDate.add(scrollNum * 7, 'day'))
-    calendarScrollDistanceRef.current = e.target.scrollTop
-    calendarBoxRef.current.scrollTop = distance
-    scrollDataBoxRef.current.style.setProperty("pointer-events", "none")
+    oldScrollTop.current = e.target.scrollTop
   }
   return (
     <div
@@ -356,10 +278,6 @@ export const CalendarPane = () => {
       data-hide={calendarPane.banhide}
       style={{ "--prefix": "CAL" }}
     >
-      <div className="scrollDataBox" ref={scrollDataBoxRef} onScroll={scrollContent}>
-        <div className="scrollContent" >
-        </div>
-      </div>
       <div className="bandContainer">
         <CalendarTime />
         <div className="calendarSelectTime">{monthStartDate.format('YYYY年MM月')}
@@ -369,12 +287,15 @@ export const CalendarPane = () => {
           </div>
         </div>
         <div className="calendarHeader"><span>一</span><span>二</span><span>三</span><span>四</span><span>五</span><span>六</span><span>日</span></div>
-        <div className="calendarBox" ref={calendarBoxRef} onWheel={scrollMouse}>
-          <table className="calendar" ref={calendarRef} >
-            <tbody>
-              {rows}
-            </tbody>
-          </table>
+
+        <div className="calendarBox" ref={calendarBoxRef} onScroll={scrollMouse}>
+          <div className="calendarBoxContent" ref={calendarBoxContentRef}>
+            <table className="calendar" ref={calendarRef} >
+              <tbody>
+                {rows}
+              </tbody>
+            </table>
+          </div>
         </div>
         <div className="operationText">
           日期和时间设置
