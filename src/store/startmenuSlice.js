@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { pinnedApps, recentApps } from "../utils";
 const initialState = {
+    activeControlButton: "",
     pnApps: pinnedApps,
     rcApps: recentApps,
     hide: true,
@@ -20,6 +21,9 @@ export const startmenuSlice = createSlice({
     name: 'startmenu',
     initialState,
     reducers: {
+        STARTCHANGECONTROL: (state, action) => {
+            state.activeControlButton = action.payload
+        },
         STARTSHW: state => {
             state.menu = true;
             state.hide = false;

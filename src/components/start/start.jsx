@@ -30,18 +30,17 @@ export const EfficientWorkApp = ({ src, title, iconSize, payload, click }) => {
     </div>
   )
 }
-const MenuItemSelects = ({ options }) => {
-
-  let options = options.map(
-    option => {
-      return <div className="startItem">
-        <Icon className="settingIcon" src="startKaijijian" width={16} />
-        <span>电源</span>
+const MenuItemSelects = ({ options, className }) => {
+  let items = options.map(
+    ({ icon, width, name, action, payload }) => {
+      return <div className={`MenuItemSelect`}>
+        <Icon className={`menuItemIcon`} src={icon} payload={payload} click={action} width={width} />
+        <span>{name}</span>
       </div>
     }
   )
-  return (<div>
-    {options}
+  return (<div className={`MenuItemBox ${className}`}>
+    {items}
   </div>)
 }
 export const StartMenu = () => {
@@ -135,6 +134,63 @@ export const StartMenu = () => {
     }
 
   };
+  let acountOptions = [
+    {
+      icon: "changeAcountSetting",
+      name: "更改账户设置",
+      width: "",
+      payload: "",
+      aciton: "",
+      width: ""
+    },
+    {
+      icon: "screenLock",
+      name: "锁定",
+      width: "",
+      payload: "",
+      aciton: "",
+      width: ""
+    },
+    {
+      icon: "signLogout",
+      name: "注销",
+      width: "",
+      payload: "",
+      aciton: "",
+      width: ""
+    }
+  ]
+  let startOptions = [
+    {
+      icon: "sleep",
+      width: "",
+      name: "睡眠",
+      payload: "",
+      aciton: "",
+      width: ""
+    },
+    {
+      icon: "shutdown",
+      name: "关机",
+      width: "",
+      payload: "",
+      aciton: "",
+      width: ""
+    },
+    {
+      icon: "restart",
+      name: "重启",
+      width: "",
+      payload: "",
+      aciton: "",
+      width: ""
+    }
+  ]
+  // let activeMenuItem =  acountOptions startOptions
+  // let [activeControlBottom, setActive] = useState("")
+  let activeControlBottom = useSelector(state => {
+    return state.startmenu.activeControlButton
+  })
   return (
     <div
       className="startMenu dpShad"
@@ -142,13 +198,20 @@ export const StartMenu = () => {
       style={{ "--prefix": "START" }}
       data-align={align}
     >
-      <div className="menuBox">
-        <div className="startControlBox">
+      <div className="menuBox" onClick={() => {
+        dispatch(Actions.STARTCHANGECONTROL(""))
+      }}>
+        <div className={`startControlBox ${activeControlBottom ? "hoverStyle" : ""}`}>
+          <MenuItemSelects className={activeControlBottom == "acount" && `acountPosition`} options={acountOptions} />
+          <MenuItemSelects className={activeControlBottom == "start" && `startPosition`} options={startOptions} />
           <div className="startItem" style={{ marginBottom: "auto" }}>
             <Icon className="settingIcon" src="startLine" width={20} />
             <span style={{ color: "#000", fontWeight: "550" }}>开始</span>
           </div>
-          <div className="startItem">
+          <div className="startItem" onClick={(event) => {
+            event.stopPropagation()
+            dispatch(Actions.STARTCHANGECONTROL("acount"))
+          }}>
             <Icon className="settingIcon" src="startAcount" width={26} />
             <span>admin</span>
           </div>
@@ -164,7 +227,11 @@ export const StartMenu = () => {
             <Icon className="settingIcon" src="startSetting" width={16} />
             <span>设置</span>
           </div>
-          <div className="startItem">
+          <div className="startItem" onClick={(event) => {
+            // setActive("start")
+            event.stopPropagation()
+            dispatch(Actions.STARTCHANGECONTROL("start"))
+          }}>
             <Icon className="settingIcon" src="startKaijijian" width={16} />
             <span>电源</span>
           </div>
