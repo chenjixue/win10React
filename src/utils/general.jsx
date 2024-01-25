@@ -233,17 +233,16 @@ export const SnapScreen = (props) => {
     }
   };
 
-  useEffect(() => {
-    if (delay && props.snap) {
-      setTimeout(() => {
-        setDelay(false);
-      }, 500);
-    } else if (props.snap) {
-      setDelay(true);
-    }
-  });
-
-  return props.snap || delay ? (
+  // useEffect(() => {
+  // if (delay && props.snap) {
+    // setTimeout(() => {
+    // setDelay(false);
+    // });
+  // } else if (props.snap) {
+  //   setDelay(true);
+  // }
+  // });
+  return props.snap ? (
     <div className="snapcont mdShad" data-dark={props.invert != null}>
       {lays.map((x, i) => {
         return (
@@ -304,8 +303,8 @@ export const ToolBar = (props) => {
 
     if (op == 0) {
       wnapp =
-      e.currentTarget.parentElement &&
-      e.currentTarget.parentElement.parentElement;
+        e.currentTarget.parentElement &&
+        e.currentTarget.parentElement.parentElement;
 
     } else {
       vec = e.currentTarget.dataset.vec.split(",");

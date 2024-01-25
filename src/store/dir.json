@@ -193,28 +193,6 @@
                   "Sanfoundary": {}
                 }
               },
-              "OneDrive": {
-                "type": "folder",
-                "name": "OneDrive",
-                "info": {
-                  "spid": "%onedrive%",
-                  "icon": "onedrive"
-                },
-                "data": {
-                  "Atom": {
-                    "data": {
-                      "Codeforces": {},
-                      "JavaScript": {},
-                      "Github": {}
-                    }
-                  },
-                  "Attachments": {},
-                  "october": {},
-                  "Office": {},
-                  "party": {},
-                  "New Folder": {}
-                }
-              },
               "Contacts": {},
               "Favorites": {},
               "gif": {},

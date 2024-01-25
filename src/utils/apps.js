@@ -168,11 +168,11 @@ const apps = [
     icon: "notes",
     type: "app",
   },
-  {
-    name: "OneDrive",
-    icon: "oneDrive",
-    type: "app",
-  },
+  // {
+  //   name: "OneDrive",
+  //   icon: "oneDrive",
+  //   type: "app",
+  // },
   {
     name: "OneNote",
     icon: "onenote",
