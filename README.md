@@ -1,10 +1,10 @@
-#Win10React
-##安装与使用
+# Win10React
+## 安装与使用
 ```
 npm i 
 npm run dev
 ```
-##功能模块演示
+## 功能模块演示
 开始菜单
 ![](./doc/example1.gif)  
 搜索菜单
