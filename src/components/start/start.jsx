@@ -33,7 +33,7 @@ export const EfficientWorkApp = ({ src, title, iconSize, payload, click }) => {
 const MenuItemSelects = ({ options, className }) => {
   let items = options.map(
     ({ icon, width, name, action, payload }) => {
-      return <div className={`MenuItemSelect`}>
+      return <div className={`MenuItemSelect`} key={name}>
         <Icon className={`menuItemIcon`} src={icon} payload={payload} click={action} width={width} />
         <span>{name}</span>
       </div>
