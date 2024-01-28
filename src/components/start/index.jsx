@@ -13,6 +13,23 @@ export * from "./widget";
 export * from "./start";
 export * from "./search";
 export const DesktopApp = () => {
+  const dispatch = useDispatch();
+  const clickDispatch = (event) => {
+    // event.stopPropagation()
+    let actionName = event.currentTarget.dataset.action
+    let payload = event.currentTarget.dataset.payload
+    let createAction = Actions[actionName]
+    if (createAction) {
+      dispatch(createAction(payload));
+    } else if (actionName) {
+      let action = {
+        type: actionName,
+        payload
+      }
+
+      dispatch(action)
+    }
+  };
   const deskApps = useSelector((state) => {
     var arr = { ...state.desktop };
     var tmpApps = [...arr.apps];
@@ -45,18 +62,19 @@ export const DesktopApp = () => {
     arr.apps = tmpApps;
     return arr;
   });
+
   return (
     <div className="desktopCont">
       {!deskApps.hide &&
         deskApps.apps.map((app, i) => {
           return (
             // to allow it to be focusable (:focus)
-            <div key={i} className="dskApp" tabIndex={0}>
+            <div key={i} className="dskApp" tabIndex={0} data-action={app.action} data-payload={app.payload || "full"} onClick={clickDispatch}>
               <Icon
-                click={app.action}
+                // click={app.action}
                 className="dskIcon prtclk"
                 src={app.icon}
-                payload={app.payload || "full"}
+                // payload={app.payload || "full"}
                 pr
                 width={Math.round(deskApps.size * 36)}
                 menu="app"

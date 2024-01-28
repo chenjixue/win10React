@@ -13,27 +13,28 @@ const TaskIcon = (props) => {
   let showApps = useSelector((state) => {
     return JSON.parse(JSON.stringify(state.apps.appOrder));
   });
+  const clickDispatch = (event) => {
+    // event.stopPropagation()
+    let actionName = event.currentTarget.dataset.action
+    let payload = event.currentTarget.dataset.payload
+    let createAction = Actions[actionName]
+    if (createAction) {
+      dispatch(createAction(payload));
+    } else if (actionName) {
+      let action = {
+        type: actionName,
+        payload
+      }
+
+      dispatch(action)
+    }
+  };
   const moveCard = useCallback(
     (dragIndex, hoverIndex) => {
       let appOrder = [...showApps];
-      console.log("🚀 ~ moveCard ~ dragIndex:", dragIndex);
-      console.log("🚀 ~ moveCard ~ hoverIndex:", hoverIndex);
-      console.log(
-        "🚀 ~ moveCard ~ appOrder0:",
-        JSON.parse(JSON.stringify(appOrder))
-      );
       let dragObject = appOrder.splice(dragIndex, 1);
-      console.log("🚀 ~ moveCard ~ dragObject:", dragObject);
-      console.log(
-        "🚀 ~ moveCard ~ appOrder1:",
-        JSON.parse(JSON.stringify(appOrder))
-      );
       appOrder.splice(hoverIndex, 0, ...dragObject);
       // let appOrder = [...taskApps, ...appObjects]
-      console.log(
-        "🚀 ~ moveCard ~ appOrder2:",
-        JSON.parse(JSON.stringify(appOrder))
-      );
       dispatch({
         type: "ORDERAPP",
         payload: appOrder,
@@ -52,7 +53,7 @@ const TaskIcon = (props) => {
     collect: (monitor) => ({
       isDragging: monitor.isDragging(), //是否拖拽状态
     }),
-  }));
+  }), [showApps]);
   let hover = (item, monitor) => {
     if (!ref.current) {
       return;
@@ -90,7 +91,6 @@ const TaskIcon = (props) => {
     item.icon = showApps[hoverIndex].icon;
   };
   const [{ isOver }, drop] = useDrop(() => {
-    console.log("重新生成--");
     return {
       //accept:只接受类型为BOX的拖拽组件,否则不能感应
       accept: "BOX",
@@ -124,14 +124,17 @@ const TaskIcon = (props) => {
       style={{ opacity }}
       onMouseOver={(!isActive && !isHidden && showPrev) || null}
       value={task.icon}
+      data-payload="togg"
+      data-action={task.action}
+      onClick={clickDispatch}
     >
       <Icon
         className="tsIcon"
         width={24}
         open={isOpen(task)}
-        click={task.action}
+        // click={task.action}
         active={isActive}
-        payload="togg"
+        // payload="togg"
         src={task.icon}
       />
     </div>
