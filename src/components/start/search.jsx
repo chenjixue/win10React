@@ -24,7 +24,7 @@ const PnApp = ({ icon, iconSize = 30, payload, action, name }) => {
   return (
     <div className={Styles.app} style={{ "--prefix": "no" }} data-payload="full" data-action={action} onClick={clickDispatch}>
       <div className={Styles.iconBox}>
-        <Icon src={icon} width={iconSize} ></Icon>
+        <Icon src={icon} width={iconSize} height={iconSize}></Icon>
       </div>
       <div className={Styles.name}>{name}</div>
     </div>
