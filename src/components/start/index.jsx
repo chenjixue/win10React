@@ -275,18 +275,19 @@ export const CalendarPane = () => {
 
 
   const scrollMouse = (e) => {
+    let calendarBox  = calendarBoxRef.current
     if (!isInitAcitve.current) {
       isInitAcitve.current = true
       return
     }
-    let scrollTop = e.target.scrollTop - oldScrollTop.current
+    let scrollTop = calendarBox - oldScrollTop.current
     oldDistance.current += (scrollTop) % 34
     let distanceNum = parseInt(oldDistance.current / 34)
     oldDistance.current = oldDistance.current % 34
     let scrollNum = parseInt((scrollTop) / 34) + distanceNum
-    calendarBoxContentRef.current.style.marginTop = `${e.target.scrollTop - Math.abs(oldDistance.current)}px`
+    calendarBoxContentRef.current.style.marginTop = `${calendarBox - Math.abs(oldDistance.current)}px`
     setViewDate(viewDate.add(scrollNum * 7, 'day'))
-    oldScrollTop.current = e.target.scrollTop
+    oldScrollTop.current = calendarBox
   }
   return (
     <div
