@@ -255,39 +255,40 @@ export const CalendarPane = () => {
     }
     rows.push(<tr key={i}>{row}</tr>)
   }
-
-  let oldScrollTop = useRef(900)
-  let oldDistance = useRef(0)
   let isInitAcitve = useRef(true)
+  // 一但到达数据顶部便开始重置滚动距离
+  const resetScrollDistance = () => {
+    isInitAcitve.current = false;
+    calendarBoxRef.current.scrollTop = 900
+    calendarBoxContentRef.current.style.marginTop = `900px`
+  }
   const changeMonth = (count) => {
     setViewDate(monthStartDate.add(count, "month"))
-    oldScrollTop.current = 900
-    oldDistance.current = 0
-    calendarBoxRef.current.scrollTop = oldScrollTop.current
-    calendarBoxContentRef.current.style.marginTop = `${oldScrollTop.current}px`
+    resetScrollDistance()
   }
   useEffect(() => {
     isInitAcitve.current = false
-    calendarBoxRef.current.scrollTop = oldScrollTop.current
-    calendarBoxContentRef.current.style.marginTop = `${oldScrollTop.current}px`
-
+    calendarBoxRef.current.scrollTop = 900
+    calendarBoxContentRef.current.style.marginTop = `900px`
   }, [])
-
-
+  let lastViewDateRef = useRef(dayjs())
   const scrollMouse = (e) => {
-    let calendarBox  = calendarBoxRef.current
+    let newViewDate = lastViewDateRef.current.clone()
+    let calendarBox = calendarBoxRef.current
     if (!isInitAcitve.current) {
       isInitAcitve.current = true
       return
     }
-    let scrollTop = calendarBox - oldScrollTop.current
-    oldDistance.current += (scrollTop) % 34
-    let distanceNum = parseInt(oldDistance.current / 34)
-    oldDistance.current = oldDistance.current % 34
-    let scrollNum = parseInt((scrollTop) / 34) + distanceNum
-    calendarBoxContentRef.current.style.marginTop = `${calendarBox - Math.abs(oldDistance.current)}px`
-    setViewDate(viewDate.add(scrollNum * 7, 'day'))
-    oldScrollTop.current = calendarBox
+    if (calendarBox.scrollTop < 200) {
+      resetScrollDistance()
+      lastViewDateRef.current = viewDate.clone()
+      return
+    }
+    let scrollTop = calendarBox.scrollTop
+    let offset = (scrollTop) % 34
+    let scrollNum = parseInt((scrollTop - 900) / 34)
+    calendarBoxContentRef.current.style.marginTop = `${scrollTop - offset}px`
+    setViewDate(newViewDate.add(scrollNum * 7, 'day'))
   }
   return (
     <div
