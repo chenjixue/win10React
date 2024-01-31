@@ -255,19 +255,17 @@ export const CalendarPane = () => {
     }
     rows.push(<tr key={i}>{row}</tr>)
   }
-  const changeMonth = (count) => {
-    setViewDate(monthStartDate.add(count, "month"))
-    console.log("🚀 ~ changeMonth ~ monthStartDate:", monthStartDate)
-    // calendarBoxRef.current.scrollTop = 0;
-  }
-  // setInterval(() => {
-  //   console.log("1111")
-  //   debugger
-  //   calendarBoxContentRef.current.style.marginTop = parseInt(calendarBoxContentRef.current.style.marginTop.replace("px", "")||0) - 10 + "px"
-  // },1000)
+
   let oldScrollTop = useRef(900)
   let oldDistance = useRef(0)
   let isInitAcitve = useRef(true)
+  const changeMonth = (count) => {
+    setViewDate(monthStartDate.add(count, "month"))
+    oldScrollTop.current = 900
+    oldDistance.current = 0
+    calendarBoxRef.current.scrollTop = oldScrollTop.current
+    calendarBoxContentRef.current.style.marginTop = `${oldScrollTop.current}px`
+  }
   useEffect(() => {
     isInitAcitve.current = false
     calendarBoxRef.current.scrollTop = oldScrollTop.current
