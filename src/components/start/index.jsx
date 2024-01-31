@@ -181,6 +181,9 @@ export const CalendarPane = () => {
   let viewDateInit = dayjs()
   let selectDateInit = dayjs()
   let rowNumInit = 7
+  let colNum = 7
+  let locale = "zh-cn"
+  let scrollTopInit = 1000
   const [viewDate, setViewDate] = useState(viewDateInit)
   const [selectDate, setSelectDate] = useState(selectDateInit)
   const [rowNum, setRowNum] = useState(rowNumInit)
@@ -188,8 +191,7 @@ export const CalendarPane = () => {
   let calendarRef = useRef();
   let calendarBoxRef = useRef();
   let calendarBoxContentRef = useRef();
-  let colNum = 7
-  let locale = "zh-cn"
+
   let rows = []
   let addDate = (date, diff) => date.add(diff, 'day')
   let getWeekFirstDay = (locale) => {
@@ -259,21 +261,22 @@ export const CalendarPane = () => {
   // 一但到达数据顶部便开始重置滚动距离
   const resetScrollDistance = () => {
     isInitAcitve.current = false;
-    calendarBoxRef.current.scrollTop = 900
-    calendarBoxContentRef.current.style.marginTop = `900px`
+    calendarBoxRef.current.scrollTop = scrollTopInit
+    calendarBoxContentRef.current.style.marginTop = `${scrollTopInit}px`
   }
   const changeMonth = (count) => {
     setViewDate(monthStartDate.add(count, "month"))
     resetScrollDistance()
   }
   useEffect(() => {
-    isInitAcitve.current = false
-    calendarBoxRef.current.scrollTop = 900
-    calendarBoxContentRef.current.style.marginTop = `900px`
+    resetScrollDistance()
   }, [])
   let lastViewDateRef = useRef(dayjs())
+
   const scrollMouse = (e) => {
+
     let newViewDate = lastViewDateRef.current.clone()
+    let itemHeight = 34;
     let calendarBox = calendarBoxRef.current
     if (!isInitAcitve.current) {
       isInitAcitve.current = true
@@ -285,8 +288,8 @@ export const CalendarPane = () => {
       return
     }
     let scrollTop = calendarBox.scrollTop
-    let offset = (scrollTop) % 34
-    let scrollNum = parseInt((scrollTop - 900) / 34)
+    let offset = (scrollTop) % itemHeight
+    let scrollNum = parseInt((scrollTop - scrollTopInit) / itemHeight)
     calendarBoxContentRef.current.style.marginTop = `${scrollTop - offset}px`
     setViewDate(newViewDate.add(scrollNum * 7, 'day'))
   }
