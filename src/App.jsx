@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { ErrorBoundary } from "react-error-boundary";
-import { Background } from "./containers/background";
+import { Background, BootScreen, LockScreen } from "./containers/background";
 import { useDispatch, useSelector } from "react-redux";
 import Taskbar from "./components/taskbar";
 import * as Drafts from "./containers/applications/draft";
@@ -65,6 +65,7 @@ function ErrorFallback({ error, resetErrorBoundary }) {
 }
 function App() {
   const apps = useSelector((state) => state.apps);
+  const wall = useSelector((state) => state.wallpaper);
   const dispatch = useDispatch();
   const afterMath = (event) => {
     var ess = [
@@ -97,7 +98,8 @@ function App() {
   return (
     <div className="App">
       <ErrorBoundary FallbackComponent={ErrorFallback}>
-        { }
+        {/* {!wall.booted ? <BootScreen dir={wall.dir} /> : null} */}
+        {wall.locked ? <LockScreen dir={wall.dir} /> : null}
         <div className="appwrap">
           <Background />
           <div className="desktop" data-menu="desk">

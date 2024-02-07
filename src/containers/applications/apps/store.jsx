@@ -240,16 +240,6 @@ const DownPage = ({ action, apps }) => {
         >
           Games
         </div>
-        <div className="absolute right-0 mr-4 text-sm">
-          <a
-            href="https://win11react-docs.andrewstech.me/docs/Store/add-app"
-            className="catbtn"
-            target="_blank"
-            rel="noreferrer"
-          >
-            Add your own app
-          </a>
-        </div>
       </div>
       <div className="appscont mt-8">
         {apps.map((item, i) => {

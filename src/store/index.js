@@ -25,6 +25,7 @@ import { deskTopSliceActions } from "./deskTopSlice"
 import { globalsSliceActions } from "./globalsSlice"
 import { startmenuSliceActions } from "./startmenuSlice"
 import { searchmenuSliceActions } from "./searchmenuSlice"
+import { wallpaperSliceActions } from "./wallpaperSlice"
 export let Actions = {
   ...winpanSliceActions,
   ...paneSliceActions,
@@ -35,7 +36,8 @@ export let Actions = {
   ...deskTopSliceActions,
   ...globalsSliceActions,
   ...startmenuSliceActions,
-  ...searchmenuSliceActions
+  ...searchmenuSliceActions,
+  ...wallpaperSliceActions
 }
 export default configureStore({
   reducer: {

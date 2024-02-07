@@ -17,7 +17,6 @@ export const EfficientWorkApp = ({ src, title, iconSize, payload, click }) => {
         type: actionName,
         payload
       }
-
       dispatch(action)
     }
   };
@@ -31,10 +30,26 @@ export const EfficientWorkApp = ({ src, title, iconSize, payload, click }) => {
   )
 }
 const MenuItemSelects = ({ options, className }) => {
+  const dispatch = useDispatch();
+
+  const clickDispatch = (event) => {
+    let type = event.currentTarget.dataset.action;
+    let payload = event.currentTarget.dataset.payload;
+    let createAction = Actions[type]
+    if (createAction) {
+      dispatch(createAction(payload));
+    } else if (type) {
+      let action = {
+        type,
+        payload
+      }
+      dispatch(action)
+    }
+  }
   let items = options.map(
     ({ icon, width, name, action, payload }) => {
-      return <div className={`MenuItemSelect`} key={name}>
-        <Icon className={`menuItemIcon`} src={icon} payload={payload} click={action} width={width} />
+      return <div style={{ "--prefix": "no" }} className={`MenuItemSelect`} data-payload={""} data-action={action} onClick={clickDispatch} key={name}>
+        <Icon className={`menuItemIcon`} src={icon} width={width} />
         <span>{name}</span>
       </div>
     }
@@ -111,7 +126,7 @@ export const StartMenu = () => {
         payload
       }
       dispatch(action)
-      // dispatch(Actions.STARTHIDE())
+      // dispatch(Actions.STARTHIDE()) 
     }
 
     if (
@@ -140,7 +155,7 @@ export const StartMenu = () => {
       name: "更改账户设置",
       width: "",
       payload: "",
-      aciton: "",
+      action: "",
       width: ""
     },
     {
@@ -148,7 +163,7 @@ export const StartMenu = () => {
       name: "锁定",
       width: "",
       payload: "",
-      aciton: "",
+      action: "WALLRESTART",
       width: ""
     },
     {
@@ -156,7 +171,7 @@ export const StartMenu = () => {
       name: "注销",
       width: "",
       payload: "",
-      aciton: "",
+      action: "",
       width: ""
     }
   ]
@@ -166,7 +181,7 @@ export const StartMenu = () => {
       width: "",
       name: "睡眠",
       payload: "",
-      aciton: "",
+      action: "",
       width: ""
     },
     {
@@ -174,7 +189,7 @@ export const StartMenu = () => {
       name: "关机",
       width: "",
       payload: "",
-      aciton: "",
+      action: "",
       width: ""
     },
     {
@@ -182,7 +197,7 @@ export const StartMenu = () => {
       name: "重启",
       width: "",
       payload: "",
-      aciton: "",
+      action: "",
       width: ""
     }
   ]
@@ -232,7 +247,7 @@ export const StartMenu = () => {
             event.stopPropagation()
             dispatch(Actions.STARTCHANGECONTROL("start"))
           }}>
-            <Icon className="settingIcon" src="startKaijijian" width={16} />
+            <Icon className="settingIcon" src="startUp" width={16} />
             <span>电源</span>
           </div>
           <div className="rightShadow"></div>

@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 var wps = localStorage.getItem("wps") || 3;
+var locked = localStorage.getItem("locked");
 const walls = [
     "default/img0.jpg",
     "dark/img0.jpg",
@@ -23,44 +24,45 @@ const walls = [
 const initialState = {
     wps,
     src: walls[wps],
+    locked: !(locked == "false"),
+    booted: false || import.meta.env.MODE == "development",
+    dir: 0
 };
 export const wallpaperSlice = createSlice({
     name: 'wallpaper',
     initialState,
     reducers: {
-        // increment: state => {
-        //     // Redux Toolkit 允许我们在 reducers 写 "可变" 逻辑。它
-        //     // 并不是真正的改变状态值，因为它使用了 Immer 库
-        //     // 可以检测到“草稿状态“ 的变化并且基于这些变化生产全新的
-        //     // 不可变的状态
-        //     state.value += 1
-        // },
-        // decrement: state => {
-        //     state.value -= 1
-        // },
-        // incrementByAmount: (state, action) => {
-        //     state.value += action.payload
-        // }
+        WALLUNLOCK: state => {
+            localStorage.setItem("locked", false);
+            state.locked = false
+            state.dir = 0
+        },
         WALLNEXT: state => {
             var twps = (state.wps + 1) % walls.length;
             localStorage.setItem("wps", twps);
             state.src = walls[twps]
         },
-        // WALLSET: (state, { payload }) => {
-        //     var isIndex = !Number.isNaN(parseInt(action.payload)),
-        //         wps = 0,
-        //         src = "";
-        //     if (isIndex) {
-        //         wps = action.payload;
-        //         src = walls[action.payload];
-        //     } else {
-        //         src = action.payload;
-        //         wps = walls.indexOf(action.payload);
-        //     }
-        // }
+        WALLALOCK: state => {
+            state.locked = true
+            state.dir = -1
+        },
+        WALLBOOTED: state => {
+            state.booted = true
+            state.dir = 0
+        },
+        WALLRESTART: state => {
+            state.booted = false
+            state.locked = true
+            state.dir = -1
+        },
+        WALLSHUTDN: state => {
+            state.booted = false
+            state.locked = true
+            state.dir = -1
+        },
     }
 })
 // 每个 case reducer 函数会生成对应的 Action creators
-export const { WALLNEXT } = wallpaperSlice.actions
+export const wallpaperSliceActions = wallpaperSlice.actions
 
 export default wallpaperSlice.reducer
