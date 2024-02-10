@@ -144,7 +144,7 @@ body[data-theme="dark"] {
 
   &[data-open="true"]:hover:after {
     // background: var(--bg3);
-       width: 100%;
+    width: 100%;
   }
 
   &[data-open="true"]:after {
@@ -222,8 +222,7 @@ body[data-theme="dark"] {
   display: flex;
   align-items: center;
   height: 100%;
-
-  &>div {
+  .iconBox {
     height: 100%;
     margin-right: 2px;
   }

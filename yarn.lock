@@ -184,7 +184,7 @@
   dependencies:
     "@babel/helper-plugin-utils" "^7.22.5"
 
-"@babel/runtime@^7.12.1", "@babel/runtime@^7.12.5", "@babel/runtime@^7.22.5", "@babel/runtime@^7.23.2", "@babel/runtime@^7.9.2":
+"@babel/runtime@^7.12.1", "@babel/runtime@^7.12.5", "@babel/runtime@^7.15.4", "@babel/runtime@^7.22.5", "@babel/runtime@^7.23.2", "@babel/runtime@^7.9.2":
   "integrity" "sha512-mM8eg4yl5D6i3lu2QKPuPH4FArvJ8KhTofbE7jwMUv9KX5mBvwPAqnV3MlyBNqdp9RyRKP6Yck8TrfYrPvX3bg=="
   "resolved" "https://registry.npmmirror.com/@babel/runtime/-/runtime-7.23.2.tgz"
   "version" "7.23.2"
@@ -425,7 +425,7 @@
   dependencies:
     "@babel/types" "^7.20.7"
 
-"@types/hoist-non-react-statics@^3.3.1", "@types/hoist-non-react-statics@>= 3.3.1":
+"@types/hoist-non-react-statics@^3.3.0", "@types/hoist-non-react-statics@^3.3.1", "@types/hoist-non-react-statics@>= 3.3.1":
   "integrity" "sha512-ZchYkbieA+7tnxwX/SCBySx9WwvWR8TaP5tb2jRAzwvLb/rWchGw3v0w3pqUbUvj0GCwW2Xz/AVPSk6kUGctXQ=="
   "resolved" "https://registry.npmmirror.com/@types/hoist-non-react-statics/-/hoist-non-react-statics-3.3.4.tgz"
   "version" "3.3.4"
@@ -444,6 +444,16 @@
   "version" "18.2.14"
   dependencies:
     "@types/react" "*"
+
+"@types/react-redux@^7.1.20":
+  "integrity" "sha512-NF8m5AjWCkert+fosDsN3hAlHzpjSiXlVy9EgQEmLoBhaNXbmyeGs/aj5dQzKuF+/q+S7JQagorGDW8pJ28Hmg=="
+  "resolved" "https://registry.npmmirror.com/@types/react-redux/-/react-redux-7.1.33.tgz"
+  "version" "7.1.33"
+  dependencies:
+    "@types/hoist-non-react-statics" "^3.3.0"
+    "@types/react" "*"
+    "hoist-non-react-statics" "^3.3.0"
+    "redux" "^4.0.0"
 
 "@types/react@*", "@types/react@^16.8 || ^17.0 || ^18.0", "@types/react@^18.2.15", "@types/react@>= 16":
   "integrity" "sha512-OfqdJnDsSo4UNw0bqAjFCuBpLYQM7wvZidz0hVxHRjrEkzRlvZL1pJVyOSY55HMiKvRNEo9DUBRuEl7FNlJ/Vg=="
@@ -712,11 +722,6 @@
   "resolved" "https://registry.npmmirror.com/caniuse-lite/-/caniuse-lite-1.0.30001551.tgz"
   "version" "1.0.30001551"
 
-"catenary-curve@^1.0.1":
-  "integrity" "sha512-vSHQtYFjItV4wxUH5OkicA3Kmln6thBBWlJLiw2f4apfvkKw4BVe8bTbG6lnbJe60CIr8PyHzjSX27blSJ07Ww=="
-  "resolved" "https://registry.npmmirror.com/catenary-curve/-/catenary-curve-1.0.1.tgz"
-  "version" "1.0.1"
-
 "chalk@^2.4.2":
   "integrity" "sha512-Mti+f9lpJNcwF4tWV8/OrTTtF1gZi+f8FqlyAdouralcFWFQWF2+NgCHShjkCb+IFBLq9buZwE1xckQU4peSuQ=="
   "resolved" "https://registry.npmmirror.com/chalk/-/chalk-2.4.2.tgz"
@@ -817,6 +822,13 @@
     "path-key" "^3.1.0"
     "shebang-command" "^2.0.0"
     "which" "^2.0.1"
+
+"css-box-model@^1.2.0":
+  "integrity" "sha512-a7Vr4Q/kd/aw96bnJG332W9V9LkJO69JRcaCYDUqjp6/z0w6VcZjgAcTbgFxEPfBgdnAwlh3iwu+hLopa+flJw=="
+  "resolved" "https://registry.npmmirror.com/css-box-model/-/css-box-model-1.2.1.tgz"
+  "version" "1.2.1"
+  dependencies:
+    "tiny-invariant" "^1.0.6"
 
 "cssesc@^3.0.0":
   "integrity" "sha512-/Tb/JcjK111nNScGob5MNtsntNM1aCNUDipB/TkwZFhyDrrE47SOx/18wF2bbjgc3ZzCSKW1T5nt5EbFoAz/Vg=="
@@ -1442,10 +1454,10 @@
   dependencies:
     "void-elements" "3.1.0"
 
-"i18next@>= 23.2.3":
-  "integrity" "sha512-A/vOkw8vY99YHU9A1Td3I1dcTiYaPnwBWzrpVzfXUXSYgogK3cmBcmop/0cnXPc6QpUWIyqaugKNxRUEZVk9Nw=="
-  "resolved" "https://registry.npmmirror.com/i18next/-/i18next-23.7.11.tgz"
-  "version" "23.7.11"
+"i18next@^23.8.2", "i18next@>= 23.2.3":
+  "integrity" "sha512-Z84zyEangrlERm0ZugVy4bIt485e/H8VecGUZkZWrH7BDePG6jT73QdL9EA1tRTTVVMpry/MgWIP1FjEn0DRXA=="
+  "resolved" "https://registry.npmmirror.com/i18next/-/i18next-23.8.2.tgz"
+  "version" "23.8.2"
   dependencies:
     "@babel/runtime" "^7.23.2"
 
@@ -1749,11 +1761,6 @@
   "version" "4.5.4"
   dependencies:
     "json-buffer" "3.0.1"
-
-"lazy-brush@^1.0.1":
-  "integrity" "sha512-xT/iSClTVi7vLoF8dCWTBhCuOWqsLXCMPa6ucVmVAk6hyNCM5JeS1NLhXqIrJktUg+caEYKlqSOUU4u3cpXzKg=="
-  "resolved" "https://registry.npmmirror.com/lazy-brush/-/lazy-brush-1.0.1.tgz"
-  "version" "1.0.1"
 
 "levn@^0.4.1":
   "integrity" "sha512-+bT2uH4E5LGE7h/n3evcS/sQlJXCpIp6ym8OWJ5eV6+67Dsql/LaaT7qJBAt2rzfoa/5QBGBhxDix1dMt2kQKQ=="
@@ -2097,7 +2104,7 @@
   "resolved" "https://registry.npmmirror.com/prelude-ls/-/prelude-ls-1.2.1.tgz"
   "version" "1.2.1"
 
-"prop-types@^15.6.2", "prop-types@^15.7.2", "prop-types@^15.8.1":
+"prop-types@^15.7.2", "prop-types@^15.8.1":
   "integrity" "sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg=="
   "resolved" "https://registry.npmmirror.com/prop-types/-/prop-types-15.8.1.tgz"
   "version" "15.8.1"
@@ -2121,15 +2128,23 @@
   "resolved" "https://registry.npmmirror.com/queue-microtask/-/queue-microtask-1.2.3.tgz"
   "version" "1.2.3"
 
-"react-canvas-draw@^1.2.1":
-  "integrity" "sha512-mCHE+Q91a26gUhyraHONedmbCI7dF/4BKdOxba7s4538QNfFWv/NfzLXWZrmjAQ4tO1vTvO+axX5YGIFjGc6uw=="
-  "resolved" "https://registry.npmmirror.com/react-canvas-draw/-/react-canvas-draw-1.2.1.tgz"
-  "version" "1.2.1"
+"raf-schd@^4.0.2":
+  "integrity" "sha512-tQkJl2GRWh83ui2DiPTJz9wEiMN20syf+5oKfB03yYP7ioZcJwsIK8FjrtLwH1m7C7e+Tt2yYBlrOpdT+dyeIQ=="
+  "resolved" "https://registry.npmmirror.com/raf-schd/-/raf-schd-4.0.3.tgz"
+  "version" "4.0.3"
+
+"react-beautiful-dnd@^13.1.1":
+  "integrity" "sha512-0Lvs4tq2VcrEjEgDXHjT98r+63drkKEgqyxdA7qD3mvKwga6a5SscbdLPO2IExotU1jW8L0Ksdl0Cj2AF67nPQ=="
+  "resolved" "https://registry.npmmirror.com/react-beautiful-dnd/-/react-beautiful-dnd-13.1.1.tgz"
+  "version" "13.1.1"
   dependencies:
-    "catenary-curve" "^1.0.1"
-    "lazy-brush" "^1.0.1"
-    "prop-types" "^15.6.2"
-    "resize-observer-polyfill" "^1.5.0"
+    "@babel/runtime" "^7.9.2"
+    "css-box-model" "^1.2.0"
+    "memoize-one" "^5.1.1"
+    "raf-schd" "^4.0.2"
+    "react-redux" "^7.2.0"
+    "redux" "^4.0.4"
+    "use-memo-one" "^1.1.1"
 
 "react-dnd-html5-backend@^16.0.1":
   "integrity" "sha512-Wu3dw5aDJmOGw8WjH1I1/yTH+vlXEL4vmjk5p+MHxP8HuHJS1lAGeIdG/hze1AvNeXWo/JgULV87LyQOr+r5jw=="
@@ -2149,7 +2164,7 @@
     "fast-deep-equal" "^3.1.3"
     "hoist-non-react-statics" "^3.3.2"
 
-"react-dom@^16.8 || ^17.0 || ^18.0", "react-dom@^18.2.0":
+"react-dom@^16.8 || ^17.0 || ^18.0", "react-dom@^16.8.5 || ^17.0.0 || ^18.0.0", "react-dom@^18.2.0":
   "integrity" "sha512-6IMTriUmvsjHUjNtEDudZfuDQUoWXVxKHhlEGSk81n4YFS+r/Kl99wXiwlVXtPBtJenozv2P+hxDsw9eA7Xo6g=="
   "resolved" "https://registry.npmmirror.com/react-dom/-/react-dom-18.2.0.tgz"
   "version" "18.2.0"
@@ -2182,6 +2197,11 @@
   "resolved" "https://registry.npmmirror.com/react-is/-/react-is-16.13.1.tgz"
   "version" "16.13.1"
 
+"react-is@^17.0.2":
+  "integrity" "sha512-w2GsyukL62IJnlaff/nRegPQR94C/XXamvMWmSHRJ4y7Ts/4ocGRmTHvOs8PSE6pB3dWOrD/nueuU5sduBsQ4w=="
+  "resolved" "https://registry.npmmirror.com/react-is/-/react-is-17.0.2.tgz"
+  "version" "17.0.2"
+
 "react-is@^18.0.0":
   "integrity" "sha512-xWGDIW6x921xtzPkhiULtthJHoJvBbF3q26fzloPCK0hsvxtPVelvftw3zjbHWSkR2km9Z+4uxbDDK/6Zw9B8w=="
   "resolved" "https://registry.npmmirror.com/react-is/-/react-is-18.2.0.tgz"
@@ -2197,6 +2217,18 @@
     "memoize-one" "^5.1.1"
     "prop-types" "^15.7.2"
     "react-fast-compare" "^3.0.1"
+
+"react-redux@^7.2.0":
+  "integrity" "sha512-Gx4L3uM182jEEayZfRbI/G11ZpYdNAnBs70lFVMNdHJI76XYtR+7m0MN+eAs7UHBPhWXcnFPaS+9owSCJQHNpQ=="
+  "resolved" "https://registry.npmmirror.com/react-redux/-/react-redux-7.2.9.tgz"
+  "version" "7.2.9"
+  dependencies:
+    "@babel/runtime" "^7.15.4"
+    "@types/react-redux" "^7.1.20"
+    "hoist-non-react-statics" "^3.3.2"
+    "loose-envify" "^1.4.0"
+    "prop-types" "^15.7.2"
+    "react-is" "^17.0.2"
 
 "react-redux@^7.2.1 || ^8.0.2", "react-redux@^8.1.3":
   "integrity" "sha512-n0ZrutD7DaX/j9VscF+uTALI3oUPa/pO4Z3soOBIjuRn/FzVu6aehhysxZCLi6y7duMf52WNZGMl7CtuK5EnRw=="
@@ -2215,7 +2247,7 @@
   "resolved" "https://registry.npmmirror.com/react-refresh/-/react-refresh-0.14.0.tgz"
   "version" "0.14.0"
 
-"react@^16.8 || ^17.0 || ^18.0", "react@^16.8.0 || ^17.0.0 || ^18.0.0", "react@^16.9.0 || ^17.0.0 || ^18", "react@^18.2.0", "react@>= 16.14", "react@>= 16.8.0", "react@>=16.13.1", "react@>=16.3", "react@>=16.6.0", "react@16.x || 17.x":
+"react@^16.8 || ^17.0 || ^18.0", "react@^16.8.0 || ^17.0.0 || ^18.0.0", "react@^16.8.3 || ^17 || ^18", "react@^16.8.5 || ^17.0.0 || ^18.0.0", "react@^16.9.0 || ^17.0.0 || ^18", "react@^18.2.0", "react@>= 16.14", "react@>= 16.8.0", "react@>=16.13.1", "react@>=16.3", "react@>=16.6.0":
   "integrity" "sha512-/3IjMdb2L9QbBdWiW5e3P2/npwMBaU9mHCSCUzNln0ZCYbcfTsGbTJrU/kGemdH2IWmB2ioZ+zkxtmq6g09fGQ=="
   "resolved" "https://registry.npmmirror.com/react/-/react-18.2.0.tgz"
   "version" "18.2.0"
@@ -2241,7 +2273,7 @@
   "resolved" "https://registry.npmmirror.com/redux-thunk/-/redux-thunk-2.4.2.tgz"
   "version" "2.4.2"
 
-"redux@^4", "redux@^4 || ^5.0.0-beta.0", "redux@^4.2.0", "redux@^4.2.1":
+"redux@^4", "redux@^4 || ^5.0.0-beta.0", "redux@^4.0.0", "redux@^4.0.4", "redux@^4.2.0", "redux@^4.2.1":
   "integrity" "sha512-LAUYz4lc+Do8/g7aeRa8JkyDErK6ekstQaqWQrNRW//MY1TvCEpMtpTWvlQ+FPbWCx+Xixu/6SHt5N0HR+SB4w=="
   "resolved" "https://registry.npmmirror.com/redux/-/redux-4.2.1.tgz"
   "version" "4.2.1"
@@ -2278,11 +2310,6 @@
   "integrity" "sha512-ab9EmR80F/zQTMNeneUr4cv+jSwPJgIlvEmVwLerwrWVbpLlBuls9XHzIeTFy4cegU2NHBp3va0LKOzU5qFEYQ=="
   "resolved" "https://registry.npmmirror.com/reselect/-/reselect-4.1.8.tgz"
   "version" "4.1.8"
-
-"resize-observer-polyfill@^1.5.0":
-  "integrity" "sha512-LwZrotdHOo12nQuZlHEmtuXdqGoOD0OhaxopaNFxWzInpEgaLWoVuAMbTzixuosCx2nEG58ngzW3vxdWoxIgdg=="
-  "resolved" "https://registry.npmmirror.com/resize-observer-polyfill/-/resize-observer-polyfill-1.5.1.tgz"
-  "version" "1.5.1"
 
 "resolve-from@^4.0.0":
   "integrity" "sha512-pb/MYmXstAkysRFx8piNI1tGFNQIFA3vkE3Gq4EuA1dF6gHp/+vgZqsCGJapvy8N3Q+4o7FwvquPJcnZ7RYy4g=="
@@ -2560,6 +2587,11 @@
   dependencies:
     "any-promise" "^1.0.0"
 
+"tiny-invariant@^1.0.6":
+  "integrity" "sha512-AD5ih2NlSssTCwsMznbvwMZpJ1cbhkGd2uueNxzv2jDlEeZdU04JQfRnggJQ8DrcVBGjAsCKwFBbDlVNtEMlzw=="
+  "resolved" "https://registry.npmmirror.com/tiny-invariant/-/tiny-invariant-1.3.1.tgz"
+  "version" "1.3.1"
+
 "to-fast-properties@^2.0.0":
   "integrity" "sha512-/OaKK0xYrs3DmxRYqL/yDc+FxFUVYhDlXMhRmv3z915w2HF1tnN1omB354j8VUGO/hbRzyD6Y3sA7v7GS/ceog=="
   "resolved" "https://registry.npmmirror.com/to-fast-properties/-/to-fast-properties-2.0.0.tgz"
@@ -2652,6 +2684,11 @@
   "version" "4.4.1"
   dependencies:
     "punycode" "^2.1.0"
+
+"use-memo-one@^1.1.1":
+  "integrity" "sha512-g66/K7ZQGYrI6dy8GLpVcMsBp4s17xNkYJVSMvTEevGy3nDxHOfE6z8BVE22+5G5x7t3+bhzrlTDB7ObrEE0cQ=="
+  "resolved" "https://registry.npmmirror.com/use-memo-one/-/use-memo-one-1.1.3.tgz"
+  "version" "1.1.3"
 
 "use-sync-external-store@^1.0.0":
   "integrity" "sha512-eEgnFxGQ1Ife9bzYs6VLi8/4X6CObHMw9Qr9tPY43iKwsPw8xE8+EFsf/2cFZ5S3esXgpWgtSCtLNS41F+sKPA=="

@@ -1,5 +1,6 @@
 import { useEffect, useState, useRef, useDebugValue, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { Icon } from "../../utils/general";
 import { DndProvider, useDrop, useDrag } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
@@ -9,10 +10,7 @@ import "./taskbar.scss";
 import { prefix } from "@fortawesome/free-solid-svg-icons";
 const TaskIcon = (props) => {
   const dispatch = useDispatch();
-  let { apps, task, isOpen } = props;
-  let showApps = useSelector((state) => {
-    return JSON.parse(JSON.stringify(state.apps.appOrder));
-  });
+  let { apps, task, isOpen, index } = props;
   const clickDispatch = (event) => {
     // event.stopPropagation()
     let actionName = event.currentTarget.dataset.action
@@ -29,75 +27,8 @@ const TaskIcon = (props) => {
       dispatch(action)
     }
   };
-  const moveCard = useCallback(
-    (dragIndex, hoverIndex) => {
-      let appOrder = [...showApps];
-      let dragObject = appOrder.splice(dragIndex, 1);
-      appOrder.splice(hoverIndex, 0, ...dragObject);
-      // let appOrder = [...taskApps, ...appObjects]
-      dispatch({
-        type: "ORDERAPP",
-        payload: appOrder,
-      });
-    },
-    [showApps]
-  );
   let isHidden = apps[task.icon].hide;
   let isActive = apps[task.icon].z == apps.hz;
-  const ref = useRef(null);
-  //先定义一个推拽组件
-  const [{ isDragging, handlerId }, drag] = useDrag(() => ({
-    type: "BOX", //作用:只有为相同类型注册的放置目标才会对此项目做出反应
-    item: { icon: task.icon }, //必须要有的,相当于id
-    //收集器:负责监听收集拖拽组件的状态
-    collect: (monitor) => ({
-      isDragging: monitor.isDragging(), //是否拖拽状态
-    }),
-  }), [showApps]);
-  let hover = (item, monitor) => {
-    if (!ref.current) {
-      return;
-    }
-    const dragIndex = showApps.findIndex((obj) => obj.icon == item.icon);
-    const hoverIndex = showApps.findIndex((obj) => obj.icon == task.icon);
-    // Determine rectangle on screen
-    const hoverBoundingRect = ref.current?.getBoundingClientRect();
-    // Get vertical middle
-    const hoverMiddleX = (hoverBoundingRect.right - hoverBoundingRect.left) / 2;
-    // Determine mouse position
-    const clientOffset = monitor.getClientOffset();
-    // Get pixels to the top
-    const hoverClientX = clientOffset.x - hoverBoundingRect.left;
-    // Only perform the move when the mouse has crossed half of the items height
-    // When dragging downwards, only move when the cursor is below 50%
-    // When dragging upwards, only move when the cursor is above 50%
-    // Dragging downwards
-    if (dragIndex < hoverIndex && hoverClientX < hoverMiddleX) {
-      return;
-    }
-    // Dragging upwards
-    if (dragIndex > hoverIndex && hoverClientX > hoverMiddleX) {
-      return;
-    }
-    // if(showApps[hoverIndex] === undefined){
-    //   debugger
-    // }
-    // Time to actually perform the action
-    moveCard(dragIndex, hoverIndex);
-    // Note: we're mutating the monitor item here!
-    // Generally it's better to avoid mutations,
-    // but it's good here for the sake of performance
-    // to avoid expensive index searches.
-    item.icon = showApps[hoverIndex].icon;
-  };
-  const [{ isOver }, drop] = useDrop(() => {
-    return {
-      //accept:只接受类型为BOX的拖拽组件,否则不能感应
-      accept: "BOX",
-      hover,
-    };
-  }, [showApps]);
-  const opacity = isDragging ? 0 : 1;
   const showPrev = (event) => {
     var ele = event.target;
     while (ele && ele.getAttribute("value") == null) {
@@ -117,27 +48,39 @@ const TaskIcon = (props) => {
       },
     });
   };
+
   return (
-    <div
-      key={task.icon}
-      ref={drop(drag(ref))}
-      style={{ opacity }}
-      onMouseOver={(!isActive && !isHidden && showPrev) || null}
-      value={task.icon}
-      data-payload="togg"
-      data-action={task.action}
-      onClick={clickDispatch}
-    >
-      <Icon
-        className="tsIcon"
-        width={24}
-        open={isOpen(task)}
-        // click={task.action}
-        active={isActive}
-        // payload="togg"
-        src={task.icon}
-      />
-    </div>
+    <Draggable key={task.icon} draggableId={task.icon} index={index}>
+      {(provided, snapshot) => {
+        const style = {
+          // backgroundColor: snapshot.isDragging ? 'blue' : 'grey',
+          ...provided.draggableProps.style,
+          cursor: "auto"
+        };
+        return <div
+          ref={provided.innerRef}
+          onMouseOver={(!isActive && !isHidden && showPrev) || null}
+          data-payload="togg"
+          value={task.icon}
+          className="iconBox"
+          data-action={task.action}
+          onClick={clickDispatch}
+          {...provided.draggableProps}
+          {...provided.dragHandleProps}
+          style={style}
+        >
+          <Icon
+            className="tsIcon"
+            width={24}
+            open={isOpen(task)}
+            // click={task.action}
+            active={isActive}
+            // payload="togg"
+            src={task.icon}
+          />
+        </div>
+      }}
+    </Draggable>
   );
 };
 let TaskTime = () => {
@@ -200,18 +143,10 @@ const Taskbar = () => {
     }
     return tmpApps;
   });
-  // let getAppOrder = () => {
-  //     let temApps = isInit ? appSlice.getInitialState() : store.getState().apps
-  //     let isShowApp = key => {
-  //         return key != "hz" && key != "undefined" && !temApps[key].task && !temApps[key].hide
-  //     }
-  //     let appObjects = Object.keys(temApps).filter(isShowApp).map(key => temApps[key])
-  //     let appOrder = [...taskApps, ...appObjects]
-  //     return appOrder
-  // }
   const appOrder = useSelector((state) => {
     return JSON.parse(JSON.stringify(state.apps.appOrder));
   });
+
   const soundPane = useSelector((state) => {
     return state.soundPane;
   });
@@ -220,7 +155,22 @@ const Taskbar = () => {
   const hidePrev = () => {
     dispatch({ type: "TASKPHIDE" });
   };
-
+  const onDragEnd = useCallback(
+    ({ destination, source }) => {
+      if (!destination) {
+        return;
+      }
+      let newAppOrder = [...appOrder];
+      let dragObject = newAppOrder.splice(source.index, 1);
+      newAppOrder.splice(destination.index, 0, ...dragObject);
+      // let newAppOrder = [...taskApps, ...appObjects]
+      dispatch({
+        type: "ORDERAPP",
+        payload: newAppOrder,
+      });
+    },
+    [appOrder]
+  );
   const clickDispatch = (event) => {
     let type = event.currentTarget.dataset.action;
     let payload = event.currentTarget.dataset.payload;
@@ -309,17 +259,30 @@ const Taskbar = () => {
             )}
           </div>
           <div className="fix-icon">
-            <DndProvider backend={HTML5Backend}>
-              {appOrder.map((task, i) => (
-                <TaskIcon
-                  key={task.icon}
-                  apps={apps}
-                  task={task}
-                  isOpen={isOpen}
-                  showApps={appOrder}
-                ></TaskIcon>
-              ))}
-            </DndProvider>
+            <DragDropContext onDragEnd={onDragEnd}>
+              <Droppable droppableId="droppable" direction="horizontal">
+                {(provided, snapshot) => (
+                  <div
+                    {...provided.droppableProps}
+                    ref={provided.innerRef}
+                    // className="dropBox"
+                    style={{ display: "flex", height: "100%" }}
+                  >
+                    {appOrder.map((task, index) => (
+                      <TaskIcon
+                        key={task.icon}
+                        apps={apps}
+                        task={task}
+                        index={index}
+                        isOpen={isOpen}
+                        showApps={appOrder}
+                      ></TaskIcon>
+                    ))}
+                    {provided.placeholder}
+                  </div>
+                )}
+              </Droppable>
+            </DragDropContext>
           </div>
           <div className="win-task-tem"></div>
           <div className="taskright">
