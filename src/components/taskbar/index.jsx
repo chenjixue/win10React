@@ -53,9 +53,9 @@ const TaskIcon = (props) => {
     <Draggable key={task.icon} draggableId={task.icon} index={index}>
       {(provided, snapshot) => {
         const style = {
-          // backgroundColor: snapshot.isDragging ? 'blue' : 'grey',
           ...provided.draggableProps.style,
-          cursor: "auto"
+          cursor: "auto",
+          top: "0px",
         };
         return <div
           ref={provided.innerRef}
