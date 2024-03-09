@@ -7,19 +7,7 @@
   justify-content: space-between;
   align-items: center;
   position: relative;
-  border-radius: 6px 6px 0 0;
-
-  &[data-float="false"] {
-    z-index: 10;
-  }
-
-  &[data-back="light"] {
-    background: #fefefe;
-  }
-
-  &[data-back="dark"] {
-    background: #181818;
-  }
+  background: var(--fakeMica);
 }
 
 .topInfo {

@@ -381,9 +381,6 @@ export const ToolBar = (props) => {
         className="toolbar"
         data-float={props.float != null}
         data-noinvert={props.noinvert != null}
-        style={{
-          background: props.bg,
-        }}
       >
         <div
           className="topInfo flex flex-grow items-center"

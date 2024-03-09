@@ -47,13 +47,6 @@ const apps = [
     action: "MSEDGE",
   },
   {
-    name: "Buy me a coffee",
-    icon: "buyme",
-    type: "app",
-    action: "EXTERNAL",
-    payload: "https://www.buymeacoffee.com/blueedgetechno",
-  },
-  {
     name: "Store",
     icon: "store",
     type: "app",
@@ -227,13 +220,6 @@ const apps = [
     type: "app",
   },
   {
-    name: "Twitter",
-    icon: "twitter",
-    type: "app",
-    action: "EXTERNAL",
-    payload: "https://twitter.com/blueedgetechno",
-  },
-  {
     name: "Teams",
     icon: "teams",
     type: "app",
@@ -269,12 +255,6 @@ const apps = [
     icon: "weather",
     type: "app",
   },
-  // {
-  //   name: "Whiteboard",
-  //   icon: "board",
-  //   type: "app",
-  //   action: "WHITEBOARD",
-  // },
   {
     name: "Cortana",
     icon: "cortana",
@@ -285,7 +265,7 @@ const apps = [
     icon: "github",
     type: "app",
     action: "EXTERNAL",
-    payload: "https://github.com/blueedgetechno/win11React",
+    payload: "https://github.com/chenjixue/win10React",
   },
   {
     name: "Unescape",
