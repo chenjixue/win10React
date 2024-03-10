@@ -45,8 +45,10 @@ export const installApp = (data) => {
   localStorage.setItem("desktop", JSON.stringify(desk));
 
   app.action = gene_name();
+  app.action = gene_name();
+  console.log(app,"app-----111")
   store.dispatch({ type: "ADDAPP", payload: app });
-  store.dispatch({ type: "DESKADD", payload: app });
+  store.dispatch(Actions["DESKADD"](app));
   store.dispatch({ type: "WNSTORE", payload: "mnmz" });
 };
 

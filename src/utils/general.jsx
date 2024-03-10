@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useSelector, useDispatch } from "react-redux";
+import { LazyLoadImage } from "react-lazy-load-image-component";
 import "./general.scss";
 import * as FaIcons from "@fortawesome/free-solid-svg-icons";
 import * as FaRegIcons from "@fortawesome/free-regular-svg-icons";
@@ -12,7 +13,6 @@ export const Image = (props) => {
   if (props.ext != null) {
     src = props.src;
   }
-
   const errorHandler = (e) => {
     if (props.err) {
       e.currentTarget.src = props.err;
@@ -29,7 +29,6 @@ export const Image = (props) => {
       dispatch(action);
     }
   };
-
   return (
     <div
       className={`imageCont prtclk ${props.className || ""}`}
@@ -235,9 +234,9 @@ export const SnapScreen = (props) => {
 
   // useEffect(() => {
   // if (delay && props.snap) {
-    // setTimeout(() => {
-    // setDelay(false);
-    // });
+  // setTimeout(() => {
+  // setDelay(false);
+  // });
   // } else if (props.snap) {
   //   setDelay(true);
   // }

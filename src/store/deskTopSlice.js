@@ -15,6 +15,12 @@ export const deskTopSlice = createSlice({
       let arr = state.apps.filter((x) => x.name != action.payload);
       localStorage.setItem("desktop", JSON.stringify(arr.map((x) => x.name)));
       state.apps = arr
+    },
+    DESKADD:(state,action) =>{
+      let arr = [...state.apps];
+      arr.push(action.payload);
+      state.apps = arr
+      localStorage.setItem("desktop", JSON.stringify(arr.map((x) => x.name)));
     }
   }
 })

@@ -56,6 +56,7 @@ const apps = [
     name: "Recycle Bin",
     icon: "bin0",
     type: "app",
+    action: "EXPLORER",
   },
   {
     name: "Blue",
@@ -113,6 +114,38 @@ const apps = [
     action: "EXTERNAL",
     payload: "https://win11react-docs.andrewstech.me/",
   },
+  {
+    name: "Jitsi Meet",
+    icon: "https://avatars.githubusercontent.com/u/3671647",
+    type: "app",
+    data: {
+      type: "IFrame",
+      url: "https://meet.jit.si/",
+      gallery: [
+        "https://www.icescrum.com/wp-content/uploads/2020/03/jitsi1.png"
+      ],
+      desc: "Jitsi Meet is a fully encrypted, 100% open source video conferencing solution.",
+      feat: "video conferencing solution."
+    },
+    pwa: true,
+    action: "M58GOH12",
+  },
+  // {
+  //   name: "MDown Editor",
+  //   icon: "https://github.com/RedEdge967/mdown-editor/raw/master/favicon.png",
+  //   type: "app",
+  //   data: {
+  //     type: "IFrame",
+  //     url: "https://rededge967.github.io/mdown-editor/",
+  //     gallery: [
+  //       "https://user-images.githubusercontent.com/91379432/155248594-05ffaa5e-29d4-4935-b681-ebdfd2ba8796.png"
+  //     ],
+  //     desc: "A free open source markdown editor to play with codes",
+  //     feat: "A Markdown playground with a preview panel to play with codes written in JS, HTML5 and CSS3"
+  //   },
+  //   pwa: true,
+  //   action: "T32EBVVQ",
+  // },
   {
     name: "Yammer",
     icon: "yammer",

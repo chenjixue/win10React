@@ -6,7 +6,7 @@ import axios from "axios";
 import storedata from "./assets/store.json";
 import { installApp } from "../../../actions";
 import { useTranslation } from "react-i18next";
-
+import downloadList from "./assets/downloadList.json"
 const geneStar = (item, rv = 0) => {
   var url = item.data.url,
     stars = 0;
@@ -114,18 +114,20 @@ export const MicroStore = () => {
   useEffect(() => {
     if (!wnapp.hide && fetchState == 0) {
       var url = queryParams.get("customstore");
-      if (!url) url = "https://store.win11react.com/store/index.json";
-
-      axios
-        .get(url)
-        .then((res) => res.data)
-        .then((data) => {
-          if (data) setApps(data);
-        })
-        .catch((err) => {
-        });
-
       setFetch(1);
+      if (!url) {
+        let data = downloadList;
+        setApps(data)
+      } else {
+        axios
+          .get(url)
+          .then((res) => res.data)
+          .then((data) => {
+            if (data) setApps(data);
+          })
+          .catch((err) => {
+          });
+      }
     }
   }, [hide]);
 
@@ -155,7 +157,7 @@ export const MicroStore = () => {
             </div>
             <Icon className="acount" src="acount" width={36} />
           </div>
-        
+
         </div>
       </ToolBar>
       <div className="windowScreen flex">
@@ -261,7 +263,8 @@ const DownPage = ({ action, apps }) => {
                 w={100}
                 h={100}
                 src={item.icon}
-                ext
+                dir={item.icon?.startsWith("http") ? "" : "icon"}
+                ext={item.icon?.startsWith("http") ? true : null}
               />
               <div className="capitalize text-xs font-semibold">
                 {item.name}
@@ -336,7 +339,8 @@ const DetailPage = ({ app }) => {
       <div className="detailcont">
         <Image
           className="rounded"
-          ext
+          dir={app.icon?.startsWith("http") ? "" : "icon"}
+          ext={app.icon?.startsWith("http") ? true : null}
           w={100}
           h={100}
           src={app.icon}

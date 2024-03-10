@@ -16,24 +16,6 @@ export const WnTerminal = () => {
   const dispatch = useDispatch();
 
   let IpDetails = [];
-  const getIPDetails = async () => {
-    try {
-      const response = await fetch("https://ipapi.co/json")
-        .then((response) => response.json())
-        .then((data) => {
-          IpDetails.push(data);
-        });
-    } catch (error) {
-      IpDetails.push({
-        ip: "__network_error",
-        network: "__kindly check internet connection",
-        city: "",
-        region: "",
-        org: "",
-        postal: "",
-      });
-    }
-  };
 
   const dirFolders = (isFile = "") => {
     var tdir = { ...dirs },
@@ -429,8 +411,6 @@ export const WnTerminal = () => {
   };
 
   useEffect(() => {
-    getIPDetails();
-
     if (wnapp.dir && wnapp.dir != pwd) {
       setPwd(wnapp.dir);
       dispatch({ type: "OPENTERM", payload: null });

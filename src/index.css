@@ -34,7 +34,9 @@
   top: 0;
   overflow: hidden;
 }
-
+.dpShad {
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.25);
+}
 body {
   margin: 0;
   padding: 0;
