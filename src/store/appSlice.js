@@ -1,9 +1,5 @@
 import { allApps, taskApps } from "@/utils";
 import { createSlice } from '@reduxjs/toolkit'
-var dev = "";
-if (import.meta.env.MODE == "development") {
-  dev = ""; // set the name (lowercase) of the app you are developing so that it will be opened on refresh
-}
 const initialState = {};
 for (var i = 0; i < allApps.length; i++) {
   initialState[allApps[i].icon] = { ...allApps[i] };
@@ -11,13 +7,6 @@ for (var i = 0; i < allApps.length; i++) {
   initialState[allApps[i].icon].hide = true;
   initialState[allApps[i].icon].max = null;
   initialState[allApps[i].icon].z = 0;
-
-  if (allApps[i].icon == dev) {
-    initialState[allApps[i].icon].size = "mini";
-    initialState[allApps[i].icon].hide = false;
-    initialState[allApps[i].icon].max = true;
-    initialState[allApps[i].icon].z = 1;
-  }
 }
 initialState.hz = 2;
 initialState.appOrder = taskApps
@@ -89,13 +78,19 @@ const appReducer = (state = initialState, action) => {
       var obj = { ...state[keys[i]] };
       if (obj.action == action.type) {
         if (action.payload == "full") {
-          let closeAppIndex = tmpState.appOrder.findIndex(item => item.action == obj.action)
-          if (obj.hide && closeAppIndex === -1) {
+          let appIndex = tmpState.appOrder.findIndex(item => item.action == obj.action)
+          if (obj.hide && appIndex === -1) {
             let newAppOrder = [...tmpState.appOrder]
             newAppOrder.push(obj)
             tmpState.appOrder = newAppOrder
           }
           obj.size = "full";
+          obj.hide = false;
+          obj.max = true;
+          tmpState.hz += 1;
+          obj.z = tmpState.hz;
+        } else if (action.payload == "barClickShow") {
+          obj.size = obj.size && "full";
           obj.hide = false;
           obj.max = true;
           tmpState.hz += 1;
@@ -126,14 +121,17 @@ const appReducer = (state = initialState, action) => {
         } else if (action.payload == "togg") {
           if (obj.z != tmpState.hz) {
             obj.hide = false;
-            if (!obj.max) {
-              tmpState.hz += 1;
-              obj.z = tmpState.hz;
-              obj.max = true;
-            } else {
-              obj.z = -1;
-              obj.max = false;
-            }
+            // if (!obj.max) {
+            //   tmpState.hz += 1;
+            //   obj.z = tmpState.hz;
+            //   obj.max = true;
+            // } else {
+            //   obj.z = -1;
+            //   obj.max = false;
+            // }
+            tmpState.hz += 1;
+            obj.z = tmpState.hz;
+            obj.max = true;
           } else {
             obj.max = !obj.max;
             obj.hide = false;

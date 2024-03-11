@@ -27,6 +27,7 @@ const TaskIcon = (props) => {
       dispatch(action)
     }
   };
+
   let isHidden = apps[task.icon].hide;
   let isActive = apps[task.icon].z == apps.hz;
   const showPrev = (event) => {
@@ -48,7 +49,7 @@ const TaskIcon = (props) => {
       },
     });
   };
-
+ 
   return (
     <Draggable key={task.icon} draggableId={task.icon} index={index}>
       {(provided, snapshot) => {
@@ -60,7 +61,7 @@ const TaskIcon = (props) => {
         return <div
           ref={provided.innerRef}
           onMouseOver={(!isActive && !isHidden && showPrev) || null}
-          data-payload="togg"
+          data-payload={"togg"}
           value={task.icon}
           className="iconBox"
           data-action={task.action}
