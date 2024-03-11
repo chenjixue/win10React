@@ -98,7 +98,7 @@ let TaskTime = () => {
   };
   useEffect(() => {
     return () => clearInterval(interval);
-  }, []);
+  }, [time]);
   return (
     <div
       className="taskDate handcr prtclk rounded hvlight"
