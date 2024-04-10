@@ -314,8 +314,6 @@ export const ToolBar = (props) => {
     }
 
     if (wnapp) {
-      wnapp.classList.add("notrans");
-      wnapp.classList.add("z9900");
       posP = [wnapp.offsetTop, wnapp.offsetLeft];
       dimP = [
         parseFloat(getComputedStyle(wnapp).height.replaceAll("px", "")),
@@ -338,7 +336,8 @@ export const ToolBar = (props) => {
   const eleDrag = (e) => {
     e = e || window.event;
     e.preventDefault();
-
+    const iframe = wnapp.querySelector("iframe")
+    iframe && (iframe.style["pointer-events"] = "none")
     var pos0 = posP[0] + e.clientY - posM[0],
       pos1 = posP[1] + e.clientX - posM[1],
       dim0 = dimP[0] + vec[0] * (e.clientY - posM[0]),
@@ -357,9 +356,8 @@ export const ToolBar = (props) => {
   const closeDrag = () => {
     document.onmouseup = null;
     document.onmousemove = null;
-
-    wnapp.classList.remove("notrans");
-    wnapp.classList.remove("z9900");
+    const iframe = wnapp.querySelector("iframe")
+    iframe && (iframe.style["pointer-events"] = "auto")
     var action = {
       type: props.app,
       payload: "resize",
