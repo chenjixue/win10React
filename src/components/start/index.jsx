@@ -269,7 +269,9 @@ export const CalendarPane = () => {
     calendarBoxContentRef.current.style.marginTop = `${scrollTopInit}px`
   }
   const changeMonth = (count) => {
-    setViewDate(monthStartDate.add(count, "month"))
+    let newMonthStartDate  = monthStartDate.add(count, "month")
+    setViewDate(newMonthStartDate)
+    lastViewDateRef.current = newMonthStartDate
     resetScrollDistance()
   }
   useEffect(() => {
