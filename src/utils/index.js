@@ -31,7 +31,6 @@ var { taskbar, desktop, pinned, recent } = {
             "Notepad",
             "Whiteboard",
             "Calculator",
-            "Spotify",
             "Twitter",
             "File Explorer",
             "Terminal",
@@ -46,7 +45,6 @@ var { taskbar, desktop, pinned, recent } = {
             "Terminal",
             "Github",
             "File Explorer",
-            "Spotify",
             "Edge",
         ]
 };

@@ -857,11 +857,6 @@
   "resolved" "https://registry.npmmirror.com/deep-is/-/deep-is-0.1.4.tgz"
   "version" "0.1.4"
 
-"deepmerge@^4.0.0":
-  "integrity" "sha512-3sUqbMEc77XqpdNO7FRyRog+eW3ph+GYCbj+rK+uYyRMuwsVy0rMiVtPn+QJlKFvWP/1PYpapqYn0Me2knFn+A=="
-  "resolved" "https://registry.npmmirror.com/deepmerge/-/deepmerge-4.3.1.tgz"
-  "version" "4.3.1"
-
 "define-data-property@^1.0.1", "define-data-property@^1.1.1":
   "integrity" "sha512-E7uGkTzkk1d0ByLeSc6ZsFS79Axg+m1P/VsgYsxHgiuc3tFSj+MjMIwe90FC4lOAZzNBdY7kkO2P2wKdsQ1vgQ=="
   "resolved" "https://registry.npmmirror.com/define-data-property/-/define-data-property-1.1.1.tgz"
@@ -1780,11 +1775,6 @@
   "resolved" "https://registry.npmmirror.com/lines-and-columns/-/lines-and-columns-1.2.4.tgz"
   "version" "1.2.4"
 
-"load-script@^1.0.0":
-  "integrity" "sha512-kPEjMFtZvwL9TaZo0uZ2ml+Ye9HUMmPwbYRJ324qF9tqMejwykJ5ggTyvzmrbBeapCAbk98BSbTeovHEEP1uCA=="
-  "resolved" "https://registry.npmmirror.com/load-script/-/load-script-1.0.0.tgz"
-  "version" "1.0.0"
-
 "locate-path@^6.0.0":
   "integrity" "sha512-iPZK6eYjbxRu3uB4/WZ3EsEIMJFMqAoopl3R+zuq0UjcAm/MO6KCweDgPfP3elTztoKP3KtnVHxTn2NHBSDVUw=="
   "resolved" "https://registry.npmmirror.com/locate-path/-/locate-path-6.0.0.tgz"
@@ -2189,11 +2179,6 @@
   dependencies:
     "@babel/runtime" "^7.12.5"
 
-"react-fast-compare@^3.0.1":
-  "integrity" "sha512-nsO+KSNgo1SbJqJEYRE9ERzo7YtYbou/OqjSQKxV7jcKox7+usiUVZOAC+XnDOABXggQTno0Y1CpVnuWEc1boQ=="
-  "resolved" "https://registry.npmmirror.com/react-fast-compare/-/react-fast-compare-3.2.2.tgz"
-  "version" "3.2.2"
-
 "react-i18next@^13.5.0":
   "integrity" "sha512-CFJ5NDGJ2MUyBohEHxljOq/39NQ972rh1ajnadG9BjTk+UXbHLq4z5DKEbEQBDoIhUmmbuS/fIMJKo6VOax1HA=="
   "resolved" "https://registry.npmmirror.com/react-i18next/-/react-i18next-13.5.0.tgz"
@@ -2225,17 +2210,6 @@
     "lodash.debounce" "^4.0.8"
     "lodash.throttle" "^4.1.1"
 
-"react-player@^2.14.1":
-  "integrity" "sha512-jILj7F9o+6NHzrJ1GqZIxfJgskvGmKeJ05FNhPvgiCpvMZFmFneKEkukywHcULDO2lqITm+zcEkLSq42mX0FbA=="
-  "resolved" "https://registry.npmmirror.com/react-player/-/react-player-2.14.1.tgz"
-  "version" "2.14.1"
-  dependencies:
-    "deepmerge" "^4.0.0"
-    "load-script" "^1.0.0"
-    "memoize-one" "^5.1.1"
-    "prop-types" "^15.7.2"
-    "react-fast-compare" "^3.0.1"
-
 "react-redux@^7.2.0":
   "integrity" "sha512-Gx4L3uM182jEEayZfRbI/G11ZpYdNAnBs70lFVMNdHJI76XYtR+7m0MN+eAs7UHBPhWXcnFPaS+9owSCJQHNpQ=="
   "resolved" "https://registry.npmmirror.com/react-redux/-/react-redux-7.2.9.tgz"
@@ -2265,7 +2239,7 @@
   "resolved" "https://registry.npmmirror.com/react-refresh/-/react-refresh-0.14.0.tgz"
   "version" "0.14.0"
 
-"react@^15.x.x || ^16.x.x || ^17.x.x || ^18.x.x", "react@^16.8 || ^17.0 || ^18.0", "react@^16.8.0 || ^17.0.0 || ^18.0.0", "react@^16.8.3 || ^17 || ^18", "react@^16.8.5 || ^17.0.0 || ^18.0.0", "react@^16.9.0 || ^17.0.0 || ^18", "react@^18.2.0", "react@>= 16.14", "react@>= 16.8.0", "react@>=16.13.1", "react@>=16.3", "react@>=16.6.0":
+"react@^15.x.x || ^16.x.x || ^17.x.x || ^18.x.x", "react@^16.8 || ^17.0 || ^18.0", "react@^16.8.0 || ^17.0.0 || ^18.0.0", "react@^16.8.3 || ^17 || ^18", "react@^16.8.5 || ^17.0.0 || ^18.0.0", "react@^16.9.0 || ^17.0.0 || ^18", "react@^18.2.0", "react@>= 16.14", "react@>= 16.8.0", "react@>=16.13.1", "react@>=16.3":
   "integrity" "sha512-/3IjMdb2L9QbBdWiW5e3P2/npwMBaU9mHCSCUzNln0ZCYbcfTsGbTJrU/kGemdH2IWmB2ioZ+zkxtmq6g09fGQ=="
   "resolved" "https://registry.npmmirror.com/react/-/react-18.2.0.tgz"
   "version" "18.2.0"

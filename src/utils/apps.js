@@ -232,12 +232,6 @@ const apps = [
     type: "app",
   },
   {
-    name: "Spotify",
-    icon: "spotify",
-    type: "app",
-    action: "SPOTIFY",
-  },
-  {
     name: "Sharepoint",
     icon: "share",
     type: "app",
