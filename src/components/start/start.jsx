@@ -139,11 +139,11 @@ export const StartMenu = () => {
     }
 
     if (action.type == "STARTALPHA") {
-      var target = document.getElementById("char" + action.payload);
+      let target = document.getElementById("char" + action.payload);
       if (target) {
         target.parentNode.scrollTop = target.offsetTop;
       } else {
-        var target = document.getElementById("charA");
+        let target = document.getElementById("charA");
         target.parentNode.scrollTop = 0;
       }
     }
@@ -156,7 +156,6 @@ export const StartMenu = () => {
       width: "",
       payload: "",
       action: "",
-      width: ""
     },
     {
       icon: "screenLock",
@@ -164,7 +163,6 @@ export const StartMenu = () => {
       width: "",
       payload: "",
       action: "WALLRESTART",
-      width: ""
     },
     {
       icon: "signLogout",
@@ -172,7 +170,6 @@ export const StartMenu = () => {
       width: "",
       payload: "",
       action: "",
-      width: ""
     }
   ]
   let startOptions = [
@@ -182,7 +179,6 @@ export const StartMenu = () => {
       name: "睡眠",
       payload: "",
       action: "",
-      width: ""
     },
     {
       icon: "shutdown",
@@ -190,7 +186,6 @@ export const StartMenu = () => {
       width: "",
       payload: "",
       action: "",
-      width: ""
     },
     {
       icon: "restart",
@@ -198,7 +193,6 @@ export const StartMenu = () => {
       width: "",
       payload: "",
       action: "",
-      width: ""
     }
   ]
   // let activeMenuItem =  acountOptions startOptions

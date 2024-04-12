@@ -1,4 +1,3 @@
-"use babel";
 import React from "react";
 
 export const home = (props) => {
@@ -250,9 +249,9 @@ export const terminal = (props) => {
           width="18.95"
           height="25.875"
           filterUnits="userSpaceOnUse"
-          color-interpolation-filters="sRGB"
+          colorInterpolationFilters="sRGB"
         >
-          <feFlood flood-opacity="0" result="BackgroundImageFix" />
+          <feFlood floodOpacity="0" result="BackgroundImageFix" />
           <feColorMatrix
             in="SourceAlpha"
             type="matrix"
@@ -299,9 +298,9 @@ export const terminal = (props) => {
           width="18.95"
           height="18.875"
           filterUnits="userSpaceOnUse"
-          color-interpolation-filters="sRGB"
+          colorInterpolationFilters="sRGB"
         >
-          <feFlood flood-opacity="0" result="BackgroundImageFix" />
+          <feFlood floodOpacity="0" result="BackgroundImageFix" />
           <feColorMatrix
             in="SourceAlpha"
             type="matrix"
@@ -348,9 +347,9 @@ export const terminal = (props) => {
           width="24"
           height="11"
           filterUnits="userSpaceOnUse"
-          color-interpolation-filters="sRGB"
+          colorInterpolationFilters="sRGB"
         >
-          <feFlood flood-opacity="0" result="BackgroundImageFix" />
+          <feFlood floodOpacity="0" result="BackgroundImageFix" />
           <feColorMatrix
             in="SourceAlpha"
             type="matrix"
@@ -398,8 +397,8 @@ export const terminal = (props) => {
           y2="5.1748"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#333333" />
-          <stop offset="1" stop-color="#4D4D4D" />
+          <stop stopColor="#333333" />
+          <stop offset="1" stopColor="#4D4D4D" />
         </linearGradient>
         <linearGradient
           id="paint1_linear"
@@ -409,8 +408,8 @@ export const terminal = (props) => {
           y2="26.9924"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#999999" />
-          <stop offset="1" stop-color="#B3B3B3" />
+          <stop stopColor="#999999" />
+          <stop offset="1" stopColor="#B3B3B3" />
         </linearGradient>
         <linearGradient
           id="paint2_linear"
@@ -420,8 +419,8 @@ export const terminal = (props) => {
           y2="26.9924"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#999999" />
-          <stop offset="1" stop-color="#B3B3B3" />
+          <stop stopColor="#999999" />
+          <stop offset="1" stopColor="#B3B3B3" />
         </linearGradient>
         <linearGradient
           id="paint3_linear"
@@ -431,8 +430,8 @@ export const terminal = (props) => {
           y2="16.9781"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#CCCCCC" />
-          <stop offset="1" stop-color="#E6E6E6" />
+          <stop stopColor="#CCCCCC" />
+          <stop offset="1" stopColor="#E6E6E6" />
         </linearGradient>
         <linearGradient
           id="paint4_linear"
@@ -442,8 +441,8 @@ export const terminal = (props) => {
           y2="16.9781"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#CCCCCC" />
-          <stop offset="1" stop-color="#E6E6E6" />
+          <stop stopColor="#CCCCCC" />
+          <stop offset="1" stopColor="#E6E6E6" />
         </linearGradient>
         <linearGradient
           id="paint5_linear"
@@ -453,8 +452,8 @@ export const terminal = (props) => {
           y2="29.0447"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#CCCCCC" />
-          <stop offset="1" stop-color="#E6E6E6" />
+          <stop stopColor="#CCCCCC" />
+          <stop offset="1" stopColor="#E6E6E6" />
         </linearGradient>
       </defs>
     </svg>

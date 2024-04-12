@@ -121,7 +121,7 @@ export const LockScreen = (props) => {
       proceed()
     }
   }
-  day = day.slice(0, 4) + "," + day.slice(4)
+  day = day.slice(0, 5) + "," + day.slice(5)
   return (
     <div
       className={Styles.lockscreen + " " + (props.dir == -1 ? Styles.slowfadein : "")}
@@ -142,16 +142,16 @@ export const LockScreen = (props) => {
         </div>
       </div>
       <div className={Styles.fadeinScreen} data-faded={!lock} data-unlock={unlocked}>
-        <Icon src="LockScreenAcount" width={126} />
+        <Icon src="LockScreenAcount" width={166} />
         <div className={Styles.name}>chenjixue</div>
         <div className={Styles.inputBox}>
-          <input type="text" placeholder="密码:随便输入没做限制" onKeyDown={handleKeyDown} /><Icon src="rightArrowWhite" onClick={proceed} className={Styles.rightArrow} width={26} />
+          <input type="text" placeholder="密码:随便输入没做限制" onKeyDown={handleKeyDown} /><Icon src="rightArrowWhite" onClick={proceed} className={Styles.rightArrow} width={13} />
         </div>
         {/* </div> */}
 
       </div>
       <div className={Styles.bottomInfo}>
-        <Icon className="mx-2" src="wifiWhite" width={22} invert />
+        <Icon className="mx-2" src="wifiWhite" width={28} invert />
         {lock ?
           <>
             <Icon className="mx-2" src="easyToUse" width={25} invert />

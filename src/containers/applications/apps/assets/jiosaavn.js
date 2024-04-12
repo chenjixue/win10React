@@ -1,4 +1,3 @@
-"use babel";
 import axios from "axios";
 
 const search_url = "/search?query=";
