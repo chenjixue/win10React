@@ -224,7 +224,6 @@
   box-sizing: border-box;
 
   &[data-hide="true"] {
-    transform: translateY(100px);
     opacity: 0;
     pointer-events: none;
   }
