@@ -5,9 +5,10 @@ npm i
 npm run dev
 ```
 ## 演示网址
-<https://chenjixue.github.io>
+<https://chen_ji_xue.gitee.io/win10reactsite>
 ## 提示
-提示根据所在地区网络不同部分图片或者连接加载缓慢，体验者最好可以科学上网
+提示根据所在地区网络不同部分图片或者连接加载缓慢，体验者最好可以科学上网或使用国内备份地址  
+<https://gitee.com/chen_ji_xue/win10React>
 ## 功能模块演示
 开始菜单
 ![](./doc/example1.gif)  
