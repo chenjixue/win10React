@@ -295,6 +295,7 @@ export const ToolBar = (props) => {
     vec = [0, 0];
 
   const toolDrag = (e) => {
+    toolClick()
     e = e || window.event;
     e.preventDefault();
     posM = [e.clientY, e.clientX];
