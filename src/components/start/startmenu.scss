@@ -93,7 +93,7 @@
         overflow: hidden;
         opacity: 0;
         height: 0px;
-        padding: 10px 0;
+        padding: 5px 0;
         &.acountPosition {
           height: 95px;
           opacity: 1;
@@ -109,7 +109,7 @@
         .MenuItemSelect {
           top: 400px;
           font-size: 13px;
-
+          height:32px;
           &:hover {
             background-color: rgb(255, 255, 255);
           }
