@@ -9,7 +9,7 @@ npm run dev
 <https://gitee.com/chen_ji_xue/win10React>
 ## 演示网址  
 <https://chenjixue.github.io/win10ReactSite>  
-<https://chen_ji_xue.gitee.io/win10reactsite>（墙内备份部署，速度快但是部署经常失败）
+<http://13.213.68.237/win10ReactSite>（推荐速度快） 
 ## 功能模块演示
 开始菜单
 ![](./doc/example1.gif)  
