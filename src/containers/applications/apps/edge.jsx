@@ -12,11 +12,7 @@ export const EdgeMenu = () => {
 
   const iframes = {
     "https://bing.com": "Bing",
-    "https://blueedge.me": "blueedge",
     "https://andrewstech.me": "\nandrewstech",
-    "https://blueedge.me/unescape": "Unescape",
-    "https://win11.blueedge.me": "Inception",
-    "https://bluelab.blueedge.me": "BlueLab",
     "https://othello.blueedge.me": "Othello",
   };
 

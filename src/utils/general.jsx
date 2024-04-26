@@ -287,13 +287,13 @@ export const ToolBar = (props) => {
     });
   };
 
-  var posP = [0, 0],
+  let posP = [0, 0],
     dimP = [0, 0],
     posM = [0, 0],
     wnapp = {},
     op = 0,
     vec = [0, 0];
-
+  let desktop = document.querySelector("desktop")
   const toolDrag = (e) => {
     toolClick()
     e = e || window.event;
@@ -334,11 +334,23 @@ export const ToolBar = (props) => {
     wnapp.style.height = dim0 + "px";
     wnapp.style.width = dim1 + "px";
   };
+  const setIframePointerNo = () => {
+    let iframes = desktop.querySelectorAll("iframe")
+    iframes.forEach(iframeEle => {
+      iframeEle.style["pointer-events"] = "none"
+    })
+  }
+  const setIframePointerAuto =()=>{
+    let iframes = desktop.querySelectorAll("iframe")
+    iframes.forEach(iframeEle => {
+      iframeEle.style["pointer-events"] = "auto"
+    })
+  }
   const eleDrag = (e) => {
     e = e || window.event;
     e.preventDefault();
     const iframe = wnapp.querySelector("iframe")
-    iframe && (iframe.style["pointer-events"] = "none")
+    setIframePointerNo()
     var pos0 = posP[0] + e.clientY - posM[0],
       pos1 = posP[1] + e.clientX - posM[1],
       dim0 = dimP[0] + vec[0] * (e.clientY - posM[0]),
@@ -358,7 +370,7 @@ export const ToolBar = (props) => {
     document.onmouseup = null;
     document.onmousemove = null;
     const iframe = wnapp.querySelector("iframe")
-    iframe && (iframe.style["pointer-events"] = "auto")
+    setIframePointerAuto()
     var action = {
       type: props.app,
       payload: "resize",
