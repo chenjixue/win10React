@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useSelector, useDispatch } from "react-redux";
 import { LazyLoadImage } from "react-lazy-load-image-component";
@@ -271,7 +271,10 @@ export const SnapScreen = (props) => {
 export const ToolBar = (props) => {
   const dispatch = useDispatch();
   const [snap, setSnap] = useState(false);
-
+  let noResize = useSelector((state) => {
+       return state.apps[props.icon]?.size == "full"
+  })
+  const desktop = useRef(null)
   const openSnap = () => {
     setSnap(true);
   };
@@ -293,9 +296,7 @@ export const ToolBar = (props) => {
     wnapp = {},
     op = 0,
     vec = [0, 0];
-  let desktop = document.querySelector("desktop")
   const toolDrag = (e) => {
-    toolClick()
     e = e || window.event;
     e.preventDefault();
     posM = [e.clientY, e.clientX];
@@ -305,8 +306,8 @@ export const ToolBar = (props) => {
       wnapp =
         e.currentTarget.parentElement &&
         e.currentTarget.parentElement.parentElement;
-
     } else {
+      toolClick()
       vec = e.currentTarget.dataset.vec.split(",");
       wnapp =
         e.currentTarget.parentElement &&
@@ -335,21 +336,22 @@ export const ToolBar = (props) => {
     wnapp.style.width = dim1 + "px";
   };
   const setIframePointerNo = () => {
-    let iframes = desktop.querySelectorAll("iframe")
-    iframes.forEach(iframeEle => {
-      iframeEle.style["pointer-events"] = "none"
-    })
-  }
-  const setIframePointerAuto =()=>{
-    let iframes = desktop.querySelectorAll("iframe")
-    iframes.forEach(iframeEle => {
-      iframeEle.style["pointer-events"] = "auto"
-    })
-  }
+    desktop.current || (desktop.current = document.querySelector(".desktop"));
+    let iframes = desktop.current.querySelectorAll("iframe");
+    iframes.forEach((iframeEle) => {
+      iframeEle.style["pointer-events"] = "none";
+    });
+  };
+  const setIframePointerAuto = () => {
+    desktop.current || (desktop.current = document.querySelector(".desktop"));
+    let iframes = desktop.current.querySelectorAll("iframe");
+    iframes.forEach((iframeEle) => {
+      iframeEle.style["pointer-events"] = "auto";
+    });
+  };
   const eleDrag = (e) => {
     e = e || window.event;
     e.preventDefault();
-    const iframe = wnapp.querySelector("iframe")
     setIframePointerNo()
     var pos0 = posP[0] + e.clientY - posM[0],
       pos1 = posP[1] + e.clientX - posM[1],
@@ -357,8 +359,13 @@ export const ToolBar = (props) => {
       dim1 = dimP[1] + vec[1] * (e.clientX - posM[1]);
     if (op == 0) setPos(pos0, pos1)
     else {
-      dim0 = Math.max(dim0, 320);
-      dim1 = Math.max(dim1, 320);
+      if(props.app == "SETTINGS"){
+        dim0 = Math.max(dim0, 720);
+        dim1 = Math.max(dim1, 720);
+      }else{
+        dim0 = Math.max(dim0, 320);
+        dim1 = Math.max(dim1, 320);
+      }
       pos0 = posP[0] + Math.min(vec[0], 0) * (dim0 - dimP[0]);
       pos1 = posP[1] + Math.min(vec[1], 0) * (dim1 - dimP[1]);
       setPos(pos0, pos1);
@@ -369,7 +376,6 @@ export const ToolBar = (props) => {
   const closeDrag = () => {
     document.onmouseup = null;
     document.onmousemove = null;
-    const iframe = wnapp.querySelector("iframe")
     setIframePointerAuto()
     var action = {
       type: props.app,
@@ -446,7 +452,9 @@ export const ToolBar = (props) => {
           />
         </div>
       </div>
-      <div className="resizecont topone">
+      { noResize ? null :
+      <>
+        <div className="resizecont topone">
         <div className="flex">
           <div
             className="conrsz cursor-nw-resize"
@@ -461,8 +469,8 @@ export const ToolBar = (props) => {
             data-vec="-1,0"
           ></div>
         </div>
-      </div>
-      <div className="resizecont leftone">
+        </div>
+        <div className="resizecont leftone">
         <div className="h-full">
           <div
             className="edgrsz cursor-w-resize hdws"
@@ -471,8 +479,8 @@ export const ToolBar = (props) => {
             data-vec="0,-1"
           ></div>
         </div>
-      </div>
-      <div className="resizecont rightone">
+        </div>
+        <div className="resizecont rightone">
         <div className="h-full">
           <div
             className="edgrsz cursor-w-resize hdws"
@@ -481,8 +489,8 @@ export const ToolBar = (props) => {
             data-vec="0,1"
           ></div>
         </div>
-      </div>
-      <div className="resizecont bottomone">
+        </div>
+        <div className="resizecont bottomone">
         <div className="flex">
           <div
             className="conrsz cursor-ne-resize"
@@ -503,7 +511,9 @@ export const ToolBar = (props) => {
             data-vec="1,1"
           ></div>
         </div>
-      </div>
+        </div>
+      </> 
+      }
     </>
   );
 };
