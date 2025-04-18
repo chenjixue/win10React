@@ -180,156 +180,212 @@ export const CalendarTime = () => {
     <div className="currentDate">{currentDate}</div>
   </div>)
 }
-export const CalendarPane = () => {
-  let today = dayjs()
-  let viewDateInit = dayjs()
-  let selectDateInit = dayjs()
-  let rowNumInit = 7
-  let colNum = 7
-  let locale = "zh-cn"
-  let scrollTopInit = 1000
-  const [viewDate, setViewDate] = useState(viewDateInit)
-  const [selectDate, setSelectDate] = useState(selectDateInit)
-  const [rowNum, setRowNum] = useState(rowNumInit)
-  const calendarPane = useSelector((state) => state.calendarPane);
-  let calendarRef = useRef();
-  let calendarBoxRef = useRef();
-  let calendarBoxContentRef = useRef();
-
-  let rows = []
-  let addDate = (date, diff) => date.add(diff, 'day')
-  let getWeekFirstDay = (locale) => {
+let addDate = (date, diff) => date.add(diff, 'day')
+let getWeekFirstDay = (locale) => {
     let t = dayjs().locale(locale)
     return t.localeData().firstDayOfWeek()
-  }
-  let setDate = (date, num) => date.date(num)
-  let getWeekDay = (date) => {
+}
+let setDate = (date, num) => date.date(num)
+let getWeekDay = (date) => {
     const clone = date.locale('en');
     return clone.weekday() + clone.localeData().firstDayOfWeek();
-  }
-  let getMonth = (date) => date.month()
-  let getDate = (date) => date.date()
-  let isSame = (date1, date2) => date1.format("YYYYMMDD") === date2.format("YYYYMMDD")
-  let getWeekStartDate = (
+}
+let getMonth = (date) => date.month()
+let getDate = (date) => date.date()
+let isSame = (date1, date2) => date1.format("YYYYMMDD") === date2.format("YYYYMMDD")
+let getWeekStartMonth = (
     locale,
     value
-  ) => {
+) => {
     const weekFirstDay = getWeekFirstDay(locale);
     const monthStartDate = setDate(value, 1);
     const startDateWeekDay = getWeekDay(monthStartDate);
     let alignStartDate = addDate(monthStartDate, weekFirstDay - startDateWeekDay);
     if (
-      getMonth(alignStartDate) === getMonth(value)
+        getMonth(alignStartDate) === getMonth(value)
     ) {
-      alignStartDate = addDate(alignStartDate, -7);
+        alignStartDate = addDate(alignStartDate, -7);
     }
 
     return alignStartDate;
-  }
-  let oneDayBefore = 0
-  let oneDayAfter = 0
-  let baseDate, monthStartDate
-  const disabledDate = (date) => {
-    if (oneDayBefore > oneDayAfter) {
-      monthStartDate.subtract(1, "month")
-    }
-    const firstDayOfCurrentMonth = monthStartDate.startOf('month');
-    const lastDayOfCurrentMonth = monthStartDate.endOf('month');
+}
+const disabledDate = (date, anyMonthDate) => {
+    const firstDayOfCurrentMonth = anyMonthDate.startOf('month');
+    const lastDayOfCurrentMonth = anyMonthDate.endOf('month');
     return date.isAfter(firstDayOfCurrentMonth) && date.isBefore(lastDayOfCurrentMonth);
-  }
-  for (let i = 0; i < rowNum; i += 1) {
-    const row = [];
-    for (let j = 0; j < colNum; j += 1) {
-      const offset = i * colNum + j;
-      baseDate = getWeekStartDate(locale, viewDate);
-      monthStartDate = setDate(viewDate, 1);
-      const currentDate = addDate(baseDate, offset + 1);
-      if (currentDate.isBefore(monthStartDate)) {
-        oneDayBefore++
-      } else {
-        oneDayAfter++
-      }
-      const d = Lunar.fromDate(currentDate.toDate());
-      const lunar = d.getDayInChinese();
-      const solarTerm = d.getJieQi();
-      const h = HolidayUtil.getHoliday(currentDate.get('year'), currentDate.get('month') + 1, currentDate.get('date'));
-      const displayHoliday = h?.getTarget() === h?.getDay() ? h?.getName() : undefined;
-      const isSelectedDate = isSame(currentDate, selectDate)
-      const activeDate = isSame(currentDate, today)
-      const activeClass = activeDate ? "fill" : ""
-      row.push(<td key={j}><div className="cellBox" onClick={() => { setSelectDate(dayjs(currentDate)) }}><div className="today" date-selected={`${isSelectedDate}`}> <div className={activeClass}></div> </div><div className="cellContainer" style={{ color: activeDate ? "rgb(255,255,255)" : !disabledDate(currentDate) ? 'rgba(125,125,125,1)' : '' }}>{getDate(currentDate)}<div className="nl">{displayHoliday || solarTerm || lunar}</div></div></div></td>)
+}
+const CalendarData = ({date, selectDate, setSelectDate, viewMonth}) => {
+    const today = dayjs()
+    const locale = "zh-cn"
+    const rows = []
+    let baseDate = getWeekStartMonth(locale, date);
+    const monthStartDate = setDate(date, 1);
+    const startDateWeekDay = getWeekDay(monthStartDate);
+    const daysInMonth = date.daysInMonth()
+    const rowNum = parseInt((daysInMonth + startDateWeekDay - 1) / 7)
+    const colNum = 7
+    for (let i = 0; i < rowNum; i += 1) {
+        const row = [];
+        for (let j = 0; j < colNum; j += 1) {
+            const offset = i * colNum + j;
+            const currentDate = addDate(baseDate, offset + 1);
+            const d = Lunar.fromDate(currentDate.toDate());
+            const lunar = d.getDayInChinese();
+            const solarTerm = d.getJieQi();
+            const h = HolidayUtil.getHoliday(currentDate.get('year'), currentDate.get('month') + 1, currentDate.get('date'));
+            const displayHoliday = h?.getTarget() === h?.getDay() ? h?.getName() : undefined;
+            const isSelectedDate = isSame(currentDate, selectDate)
+            const activeDate = isSame(currentDate, today)
+            const activeClass = activeDate ? "fill" : ""
+            row.push(<td key={j}>
+                <div className="cellBox" onClick={() => {
+                    setSelectDate(dayjs(currentDate))
+                }}>
+                    <div className="today" date-selected={`${isSelectedDate}`}>
+                        <div className={activeClass}></div>
+                    </div>
+                    <div className="cellContainer"
+                         style={{color: activeDate ? "rgb(255,255,255)" : !disabledDate(currentDate, viewMonth) ? 'rgba(125,125,125,1)' : ''}}>{getDate(currentDate)}
+                        <div className="nl">{displayHoliday || solarTerm || lunar}</div>
+                    </div>
+                </div>
+            </td>)
+        }
+        rows.push(<tr key={i}>{row}</tr>)
     }
-    rows.push(<tr key={i}>{row}</tr>)
-  }
-  let isInitAcitve = useRef(true)
-  // 一但到达数据顶部便开始重置滚动距离
-  const resetScrollDistance = () => {
-    isInitAcitve.current = false;
-    calendarBoxRef.current.scrollTop = scrollTopInit
-    calendarBoxContentRef.current.style.marginTop = `${scrollTopInit}px`
-  }
-  const changeMonth = (count) => {
-    let newMonthStartDate  = monthStartDate.add(count, "month")
-    setViewDate(newMonthStartDate)
-    lastViewDateRef.current = newMonthStartDate
-    resetScrollDistance()
-  }
-  useEffect(() => {
-    resetScrollDistance()
-  }, [])
-  let lastViewDateRef = useRef(dayjs())
-
-  const scrollMouse = (e) => {
-
-    let newViewDate = lastViewDateRef.current.clone()
-    let itemHeight = 34;
-    let calendarBox = calendarBoxRef.current
-    if (!isInitAcitve.current) {
-      isInitAcitve.current = true
-      return
+    return (<table className="calendar month-box" data-month={date.format('YYYY-MM')}>
+        <tbody>
+        {rows}
+        </tbody>
+    </table>)
+}
+export const CalendarPane = () => {
+    let selectDateInit = dayjs()
+    let scrollTopInit = 1000
+    const [selectDate, setSelectDate] = useState(selectDateInit)
+    const calendarPane = useSelector((state) => state.calendarPane);
+    let calendarBoxRef = useRef();
+    let calendarBoxContentRef = useRef();
+    let isInitAcitve = useRef(true)
+    // 一但到达数据顶部便开始重置滚动距离
+    const resetScrollDistance = () => {
+        const todayMonth = viewMonth.format('YYYY-MM');
+        const calendarBoxContent = calendarBoxContentRef.current
+        const currentMonthBox = calendarBoxContent.querySelector(`table.calendar.month-box[data-month="${todayMonth}"]`);
+        isInitAcitve.current = false;
+        calendarBoxContent.style.marginTop = `${scrollTopInit}px`
+        calendarBoxRef.current.scrollTop = currentMonthBox.offsetTop;
     }
-    if (calendarBox.scrollTop < 200) {
-      resetScrollDistance()
-      lastViewDateRef.current = viewDate.clone()
-      return
+    const changeMonth = (count) => {
+        // 不想因为页面月份刷新触发视图滚动事件
+        isInitAcitve.current = false;
+        if (count == -1) {
+            const newDateFlag = [dateFlag[0] - 1, ...dateFlag.slice(0, dateFlag.length - 1)]
+            setDateFLag(newDateFlag)
+            setViewMonthFrom(viewMonth.subtract(1, "month"), 'arrow')
+        } else if (count == 1) {
+            const newDateFlag = [...dateFlag.slice(1), dateFlag[dateFlag.length - 1] + 1]
+            setDateFLag(newDateFlag)
+            setViewMonthFrom(viewMonth.add(1, "month"), 'arrow')
+        }
     }
-    let scrollTop = calendarBox.scrollTop
-    let offset = (scrollTop) % itemHeight
-    let scrollNum = parseInt((scrollTop - scrollTopInit) / itemHeight)
-    calendarBoxContentRef.current.style.marginTop = `${scrollTop - offset}px`
-    setViewDate(newViewDate.add(scrollNum * 7, 'day'))
-  }
-  return (
-    <div
-      className="pane dpShad"
-      data-hide={calendarPane.banhide}
-      style={{ "--prefix": "CAL" }}
-    >
-      <div className="bandContainer">
-        <CalendarTime />
-        <div className="calendarSelectTime">{monthStartDate.format('YYYY年MM月')}
-          <div className="arrows">
-            <Icon width={33} src="calendarUpArrow" onClick={() => changeMonth(-1)}></Icon>
-            <Icon width={33} src="calendarDownArrow" onClick={() => changeMonth(1)}></Icon>
-          </div>
-        </div>
-        <div className="calendarHeader"><span>一</span><span>二</span><span>三</span><span>四</span><span>五</span><span>六</span><span>日</span></div>
+    useEffect(() => {
+        resetScrollDistance()
+    }, [])
+    let today = dayjs()
+    let [dateFlag, setDateFLag] = useState([-2, -1, 0, 1, 2])
+    let [viewMonth, setViewMonth] = useState(dayjs())
+    let flashViewMonth = () => {
+        const viewCenterLine = calendarBoxRef.current.scrollTop + 264 / 2
+        const monthBoxs = document.querySelectorAll(".month-box");
+        for (const month of monthBoxs) {
+            const offsetTop = month.offsetTop
+            if (offsetTop > viewCenterLine) {
+                setViewMonthFrom(dayjs(month.dataset.month).subtract(1, "month"), null)
+                break;
+            }
+        }
+    }
+    const scrollMouse = () => {
+        if (!isInitAcitve.current) {
+            isInitAcitve.current = true
+            return
+        }
+        // 更新视图框内高亮月显示
+        flashViewMonth()
+        // 滚动后新增视图月显示
+        addViewMonth()
+    }
+    useEffect(() => {
+        if (dateFlag.length === 3) {
+            // 初始状态不需要执行操作
+            return
+        }
+        console.log(calendarBoxRef.current.scrollTop, "calendarBoxRef.current.scrollTop")
 
-        <div className="calendarBox" ref={calendarBoxRef} onScroll={scrollMouse}>
-          <div className="calendarBoxContent" ref={calendarBoxContentRef}>
-            <table className="calendar" ref={calendarRef} >
-              <tbody>
-                {rows}
-              </tbody>
-            </table>
-          </div>
+    }, [dateFlag]); // 依赖项是 visible，变化后执行
+    let sourceRef = useRef(null);
+    const setViewMonthFrom = (newValue, origin) => {
+        sourceRef.current = origin;
+        setViewMonth(newValue);
+    };
+    useEffect(() => {
+        console.log(calendarBoxRef.current.scrollTop, "calendarBoxRef.current.scrollTop")
+        if (sourceRef.current == "arrow") {
+            resetScrollDistance()
+        }
+    }, [viewMonth]); // 依赖项是 visible，变化后执行
+    const addViewMonth = () => {
+        let scrollTop = calendarBoxRef.current.scrollTop
+        const calendarBoxContent = calendarBoxContentRef.current
+        const currentMonthBoxs = calendarBoxContent.querySelectorAll(`table.calendar.month-box[data-month]`);
+        //当滚动到正数第二个的时候就要往前面添加month了
+        if (scrollTop < currentMonthBoxs[1].offsetTop) {
+            let newDateFlag = [dateFlag[0] - 1, ...dateFlag.slice(0, dateFlag.length - 1)]
+            setDateFLag(newDateFlag)
+            // 添加后要调整scrollTop
+        }
+        //当滚动到倒数第二个的时候就要往后面添加month了
+        if (scrollTop > currentMonthBoxs[currentMonthBoxs.length - 2].offsetTop) {
+            let newDateFlag = [...dateFlag.slice(1), dateFlag[dateFlag.length - 1] + 1]
+            setDateFLag(newDateFlag)
+        }
+    }
+    return (
+        <div
+            className="pane dpShad"
+            data-hide={calendarPane.banhide}
+            style={{"--prefix": "CAL"}}
+        >
+            <div className="bandContainer">
+                <CalendarTime/>
+                <div className="calendarSelectTime">
+                    {viewMonth.format('YYYY年MM月')}
+                    <div className="arrows">
+                        <Icon width={33} src="calendarUpArrow" onClick={() => changeMonth(-1)}></Icon>
+                        <Icon width={33} src="calendarDownArrow" onClick={() => changeMonth(1)}></Icon>
+                    </div>
+                </div>
+                <div className="calendarHeader">
+                    <span>一</span><span>二</span><span>三</span><span>四</span><span>五</span><span>六</span><span>日</span>
+                </div>
+
+                <div className="calendarBox" ref={calendarBoxRef} onScroll={scrollMouse}>
+                    <div className="calendarBoxContent" ref={calendarBoxContentRef}>
+                        {
+                            dateFlag.map(num => (
+                                <CalendarData key={num} date={today.add(num, "month")} selectDate={selectDate}
+                                              viewMonth={viewMonth} setSelectDate={setSelectDate}></CalendarData>
+                            ))
+                        }
+                    </div>
+                </div>
+                <div className="operationText">
+                    日期和时间设置
+                </div>
+            </div>
         </div>
-        <div className="operationText">
-          日期和时间设置
-        </div>
-      </div>
-    </div>
-  );
+    );
 }
 export const SoundPane = () => {
   const vSlider = document.querySelector(".vSlider");
