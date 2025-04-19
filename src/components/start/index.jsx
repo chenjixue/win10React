@@ -273,7 +273,6 @@ export const CalendarPane = () => {
         const calendarBoxContent = calendarBoxContentRef.current
         const currentMonthBox = calendarBoxContent.querySelector(`table.calendar.month-box[data-month="${todayMonth}"]`);
         isInitAcitve.current = false;
-        calendarBoxContent.style.marginTop = `${scrollTopInit}px`
         calendarBoxRef.current.scrollTop = currentMonthBox.offsetTop;
     }
     const changeMonth = (count) => {
