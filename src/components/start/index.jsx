@@ -261,7 +261,6 @@ const CalendarData = ({date, selectDate, setSelectDate, viewMonth}) => {
 }
 export const CalendarPane = () => {
     let selectDateInit = dayjs()
-    let scrollTopInit = 1000
     const [selectDate, setSelectDate] = useState(selectDateInit)
     const calendarPane = useSelector((state) => state.calendarPane);
     let calendarBoxRef = useRef();
@@ -315,14 +314,6 @@ export const CalendarPane = () => {
         // 滚动后新增视图月显示
         addViewMonth()
     }
-    useEffect(() => {
-        if (dateFlag.length === 3) {
-            // 初始状态不需要执行操作
-            return
-        }
-        console.log(calendarBoxRef.current.scrollTop, "calendarBoxRef.current.scrollTop")
-
-    }, [dateFlag]); // 依赖项是 visible，变化后执行
     let sourceRef = useRef(null);
     const setViewMonthFrom = (newValue, origin) => {
         sourceRef.current = origin;
