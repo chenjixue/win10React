@@ -198,8 +198,10 @@
               font-size: 15px;
               line-height: 16px;
               max-width: 39px;
-
               .nl {
+                display: flex;
+                justify-content: center;
+                white-space: nowrap;
                 font-size: 11px;
               }
             }

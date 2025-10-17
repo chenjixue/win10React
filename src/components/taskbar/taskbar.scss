@@ -191,8 +191,21 @@ body[data-theme="dark"] {
   display: flex;
   align-items: center;
   background-color: #fff;
-  // pointer-events: none;
-  border: 1px solid rgb(180, 180, 180);
+  position: relative;
+
+  &::after {
+    position: absolute;
+    inset: 0;
+    box-sizing: border-box;
+    content: "";
+    border: 1px solid rgb(180, 180, 180);
+    pointer-events: none;
+  }
+
+  &:hover::after {
+    border-width: 2px;
+  }
+
   // * {
   //   pointer-events: none;
   // }
@@ -221,6 +234,7 @@ body[data-theme="dark"] {
   display: flex;
   align-items: center;
   height: 100%;
+
   .iconBox {
     height: 100%;
     margin-right: 2px;
