@@ -4,11 +4,14 @@ import { Provider } from 'react-redux'
 import dayjs from 'dayjs';
 import localeData from 'dayjs/plugin/localeData';
 import weekday from 'dayjs/plugin/weekday';
+import isBetween from 'dayjs/plugin/isBetween'
+dayjs.extend(isBetween);
 dayjs.extend(localeData);
 dayjs.extend(weekday);
 import App from './App.jsx'
 import './index.css'
 import store from './store'
+// window.console.log = () => {};
 ReactDOM.createRoot(document.getElementById('root')).render(
   <Suspense
     fallback={

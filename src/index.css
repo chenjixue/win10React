@@ -71,3 +71,11 @@ body {
 .handcr {
   cursor: pointer;
 }
+
+.z9900 {
+  z-index: 9900 !important;
+}
+
+.notrans {
+  transition: none !important;
+}

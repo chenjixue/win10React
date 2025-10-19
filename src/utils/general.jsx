@@ -275,6 +275,7 @@ export const ToolBar = (props) => {
        return state.apps[props.icon]?.size == "full"
   })
   const desktop = useRef(null)
+  const toolBarRef = useRef();
   const openSnap = () => {
     setSnap(true);
   };
@@ -289,7 +290,18 @@ export const ToolBar = (props) => {
       payload: "front",
     });
   };
-
+  useEffect(() => {
+    const wnapp = toolBarRef.current.parentElement
+    wnapp.onclick = () => {
+      dispatch({
+        type: props.app,
+        payload: "front",
+      });
+    };
+    return () => {
+      wnapp.onclick = null;
+    };
+  }, []);
   let posP = [0, 0],
     dimP = [0, 0],
     posM = [0, 0],
@@ -307,7 +319,6 @@ export const ToolBar = (props) => {
         e.currentTarget.parentElement &&
         e.currentTarget.parentElement.parentElement;
     } else {
-      toolClick()
       vec = e.currentTarget.dataset.vec.split(",");
       wnapp =
         e.currentTarget.parentElement &&
@@ -316,6 +327,9 @@ export const ToolBar = (props) => {
     }
 
     if (wnapp) {
+      wnapp.classList.add("z9900");
+      // 移动窗口时候会触发重排和重绘，添加notrans类禁用过渡效果以提升性能
+      wnapp.classList.add("notrans");
       posP = [wnapp.offsetTop, wnapp.offsetLeft];
       dimP = [
         parseFloat(getComputedStyle(wnapp).height.replaceAll("px", "")),
@@ -376,6 +390,8 @@ export const ToolBar = (props) => {
   const closeDrag = () => {
     document.onmouseup = null;
     document.onmousemove = null;
+    wnapp.classList.remove("z9900");
+    wnapp.classList.remove("notrans");
     setIframePointerAuto()
     var action = {
       type: props.app,
@@ -395,6 +411,7 @@ export const ToolBar = (props) => {
     <>
       <div
         className="toolbar"
+        ref={toolBarRef}
         data-float={props.float != null}
         data-noinvert={props.noinvert != null}
       >

@@ -44,23 +44,26 @@
   height: calc(100% - 50px);
   display: flex;
   overflow-y: scroll;
-    /* 定义滚动条样式 */
-  &::-webkit-scrollbar {
-    width: 20px;
-  }
+  // 作用于容器自身和内部所有元素
+  &, & * {
+    /* Webkit */
+    &::-webkit-scrollbar {
+      width: 15px;
+      height: 20px;
+    }
 
-  /*定义滚动条轨道 内阴影+圆角*/
-  &::-webkit-scrollbar-track {
-    // box-shadow: inset 0 0 0px rgba(240, 240, 240, 0.5);
-    background-color: rgba(240, 240, 240);
-  }
+    &::-webkit-scrollbar-track {
+      background-color: rgba(240, 240, 240);
+      // box-shadow: inset 0 0 0px rgba(240, 240, 240, 0.5);
+    }
 
-  /*定义滑块 内阴影+圆角*/
-  &::-webkit-scrollbar-thumb {
-    box-shadow: inset 0 0 0px rgba(240, 240, 240, 0.5);
-    background-color: rgba(122, 122, 122, 0.3);
-    &:hover {
-      background-color: rgba(122, 122, 122);
+    &::-webkit-scrollbar-thumb {
+      background-color: rgba(122, 122, 122, 0.3);
+      box-shadow: inset 0 0 0px rgba(240, 240, 240, 0.5);
+
+      &:hover {
+        background-color: rgba(122, 122, 122);
+      }
     }
   }
 
@@ -176,7 +179,7 @@
 
   .info {
     width: 53%;
-    height: 100%;
+    height: calc(100% - 10px);
     box-sizing: border-box;
     margin: 10px 10px 0 10px;
     background-color: #fff;

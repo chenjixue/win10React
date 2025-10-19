@@ -210,10 +210,11 @@ let getWeekStartMonth = (
     return alignStartDate;
 }
 const disabledDate = (date, anyMonthDate) => {
-    const firstDayOfCurrentMonth = anyMonthDate.startOf('month');
-    const lastDayOfCurrentMonth = anyMonthDate.endOf('month');
-    return date.isAfter(firstDayOfCurrentMonth) && date.isBefore(lastDayOfCurrentMonth);
-}
+  const start = anyMonthDate.startOf('month');
+  const end = anyMonthDate.endOf('month');
+  return date.isBetween(start, end, null, '[]'); // [] 表示包含首尾
+};
+
 const CalendarData = ({date, selectDate, setSelectDate, viewMonth}) => {
     const today = dayjs()
     const locale = "zh-cn"
@@ -265,81 +266,86 @@ export const CalendarPane = () => {
     const calendarPane = useSelector((state) => state.calendarPane);
     let calendarBoxRef = useRef();
     let calendarBoxContentRef = useRef();
-    let isInitAcitve = useRef(true)
+    let isManualScroll = useRef(true)
     // 一但到达数据顶部便开始重置滚动距离
     const resetScrollDistance = () => {
         const todayMonth = viewMonth.format('YYYY-MM');
         const calendarBoxContent = calendarBoxContentRef.current
         const currentMonthBox = calendarBoxContent.querySelector(`table.calendar.month-box[data-month="${todayMonth}"]`);
-        isInitAcitve.current = false;
+        isManualScroll.current = false;
         calendarBoxRef.current.scrollTop = currentMonthBox.offsetTop;
     }
     const changeMonth = (count) => {
         // 不想因为页面月份刷新触发视图滚动事件
-        isInitAcitve.current = false;
-        if (count == -1) {
-            const newDateFlag = [dateFlag[0] - 1, ...dateFlag.slice(0, dateFlag.length - 1)]
-            setDateFLag(newDateFlag)
-            setViewMonthFrom(viewMonth.subtract(1, "month"), 'arrow')
-        } else if (count == 1) {
-            const newDateFlag = [...dateFlag.slice(1), dateFlag[dateFlag.length - 1] + 1]
-            setDateFLag(newDateFlag)
-            setViewMonthFrom(viewMonth.add(1, "month"), 'arrow')
-        }
+        isManualScroll.current = false;
+         const currentViewMonth = getCurrentViewMonth()
+        const newDateFlag = getNearbyMonths(dayjs(currentViewMonth, "YYYY-MM").add(count, "month"))
+        setDateFLag(newDateFlag)
+        setViewMonthFrom(viewMonth.add(count, "month"), 'arrow')
     }
     useEffect(() => {
         resetScrollDistance()
     }, [])
     let today = dayjs()
-    let [dateFlag, setDateFLag] = useState([-2, -1, 0, 1, 2])
+    let [dateFlag, setDateFLag] = useState(getNearbyMonths())
     let [viewMonth, setViewMonth] = useState(dayjs())
     let flashViewMonth = () => {
+        const currentViewMonth = getCurrentViewMonth()
+        setViewMonthFrom(dayjs(currentViewMonth,"YYYY-MM"), null)
+    }
+    let getCurrentViewMonth = () => {
         const viewCenterLine = calendarBoxRef.current.scrollTop + 264 / 2
         const monthBoxs = document.querySelectorAll(".month-box");
         for (const month of monthBoxs) {
             const offsetTop = month.offsetTop
             if (offsetTop > viewCenterLine) {
-                setViewMonthFrom(dayjs(month.dataset.month).subtract(1, "month"), null)
-                break;
+               return dayjs(month.dataset.month,"YYYY-MM").subtract(1, "month").format("YYYY-MM")
             }
         }
+        return monthBoxs[monthBoxs.length - 1].dataset.month
     }
     const scrollMouse = () => {
-        if (!isInitAcitve.current) {
-            isInitAcitve.current = true
+        if (!isManualScroll.current) {
+            isManualScroll.current = true
             return
         }
-        // 更新视图框内高亮月显示
-        flashViewMonth()
-        // 滚动后新增视图月显示
-        addViewMonth()
+        updateViewDate()
     }
+    const updateViewDate = () => {
+      addViewMonth()
+      // 更新视图框内高亮月显示
+      flashViewMonth()
+    }
+    
     let sourceRef = useRef(null);
     const setViewMonthFrom = (newValue, origin) => {
         sourceRef.current = origin;
         setViewMonth(newValue);
     };
     useEffect(() => {
-        console.log(calendarBoxRef.current.scrollTop, "calendarBoxRef.current.scrollTop")
         if (sourceRef.current == "arrow") {
             resetScrollDistance()
         }
-    }, [viewMonth]); // 依赖项是 visible，变化后执行
-    const addViewMonth = () => {
         let scrollTop = calendarBoxRef.current.scrollTop
-        const calendarBoxContent = calendarBoxContentRef.current
-        const currentMonthBoxs = calendarBoxContent.querySelectorAll(`table.calendar.month-box[data-month]`);
-        //当滚动到正数第二个的时候就要往前面添加month了
-        if (scrollTop < currentMonthBoxs[1].offsetTop) {
-            let newDateFlag = [dateFlag[0] - 1, ...dateFlag.slice(0, dateFlag.length - 1)]
-            setDateFLag(newDateFlag)
-            // 添加后要调整scrollTop
+        const currentViewMonth = getCurrentViewMonth()
+        // 如果视图更新前已经滚动到scrollTop == 0导致顶部插入月份scrollTop不发生变化当前高亮月份不在视图内则再重新刷新一边数据
+        if(viewMonth.format('YYYY-MM') !== currentViewMonth){
+          calendarBoxRef.current.scrollTop = scrollTop + 1
+          updateViewDate()
         }
-        //当滚动到倒数第二个的时候就要往后面添加month了
-        if (scrollTop > currentMonthBoxs[currentMonthBoxs.length - 2].offsetTop) {
-            let newDateFlag = [...dateFlag.slice(1), dateFlag[dateFlag.length - 1] + 1]
-            setDateFLag(newDateFlag)
+    }, [viewMonth]);
+    function getNearbyMonths(center = today.format("YYYY-MM")) {
+        const base = dayjs(center, "YYYY-MM")
+        const months = []
+        for (let i = -2; i <= 2; i++) {
+          months.push(base.add(i, "month").format("YYYY-MM"))
         }
+        return months
+    }
+    const addViewMonth = () => {
+        const currentViewMonth = getCurrentViewMonth()
+        let newDateFlag = getNearbyMonths(dayjs(currentViewMonth, "YYYY-MM"))
+        setDateFLag(newDateFlag)
     }
     return (
         <div
@@ -364,7 +370,7 @@ export const CalendarPane = () => {
                     <div className="calendarBoxContent" ref={calendarBoxContentRef}>
                         {
                             dateFlag.map(num => (
-                                <CalendarData key={num} date={today.add(num, "month")} selectDate={selectDate}
+                                <CalendarData key={num} date={dayjs(num,"YYYY-MM")} selectDate={selectDate}
                                               viewMonth={viewMonth} setSelectDate={setSelectDate}></CalendarData>
                             ))
                         }
