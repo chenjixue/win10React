@@ -373,11 +373,10 @@ export const ToolBar = (props) => {
       dim1 = dimP[1] + vec[1] * (e.clientX - posM[1]);
     if (op == 0) setPos(pos0, pos1)
     else {
+      dim0 = Math.max(dim0, 320);
       if(props.app == "SETTINGS"){
-        dim0 = Math.max(dim0, 720);
         dim1 = Math.max(dim1, 720);
       }else{
-        dim0 = Math.max(dim0, 320);
         dim1 = Math.max(dim1, 320);
       }
       pos0 = posP[0] + Math.min(vec[0], 0) * (dim0 - dimP[0]);
