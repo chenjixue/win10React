@@ -2,12 +2,9 @@ import { useEffect, useState, useRef, useDebugValue, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 import { Icon } from "../../utils/general";
-import { DndProvider, useDrop, useDrag } from "react-dnd";
-import { HTML5Backend } from "react-dnd-html5-backend";
 import { MOUSELEAVE, MOUSEENTER, ORDERAPP } from "@/store/taskbarSlice";
 import { Actions } from "@/store";
 import "./taskbar.scss";
-import { prefix } from "@fortawesome/free-solid-svg-icons";
 const TaskIcon = (props) => {
   const dispatch = useDispatch();
   let { apps, task, isOpen, index } = props;
@@ -49,7 +46,7 @@ const TaskIcon = (props) => {
       },
     });
   };
- 
+
   return (
     <Draggable key={task.icon} draggableId={task.icon} index={index}>
       {(provided, snapshot) => {

@@ -254,7 +254,7 @@ const CalendarData = ({date, selectDate, setSelectDate, viewMonth}) => {
         }
         rows.push(<tr key={i}>{row}</tr>)
     }
-    return (<table className="calendar month-box" data-month={date.format('YYYY-MM')}>
+    return (<table className="calendar" data-month={date.format('YYYY-MM')}>
         <tbody>
         {rows}
         </tbody>
@@ -271,7 +271,7 @@ export const CalendarPane = () => {
     const resetScrollDistance = () => {
         const todayMonth = viewMonth.format('YYYY-MM');
         const calendarBoxContent = calendarBoxContentRef.current
-        const currentMonthBox = calendarBoxContent.querySelector(`table.calendar.month-box[data-month="${todayMonth}"]`);
+        const currentMonthBox = calendarBoxContent.querySelector(`.calendar[data-month="${todayMonth}"]`);
         isManualScroll.current = false;
         calendarBoxRef.current.scrollTop = currentMonthBox.offsetTop;
     }
@@ -295,7 +295,8 @@ export const CalendarPane = () => {
     }
     let getCurrentViewMonth = () => {
         const viewCenterLine = calendarBoxRef.current.scrollTop + 264 / 2
-        const monthBoxs = document.querySelectorAll(".month-box");
+        const calendarBoxContent = calendarBoxContentRef.current
+        const monthBoxs = calendarBoxContent.querySelectorAll(".calendar");
         for (const month of monthBoxs) {
             const offsetTop = month.offsetTop
             if (offsetTop > viewCenterLine) {
@@ -316,7 +317,7 @@ export const CalendarPane = () => {
       // 更新视图框内高亮月显示
       flashViewMonth()
     }
-    
+
     let sourceRef = useRef(null);
     const setViewMonthFrom = (newValue, origin) => {
         sourceRef.current = origin;
