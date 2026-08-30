@@ -193,6 +193,7 @@ const Taskbar = () => {
     dispatch(Actions.SEARCHSHOW());
   };
   useEffect(() => {
+    // The API connection has expired.
     let t =
       "https://api.msn.cn/weatherfalcon/weather/current?apikey=j5i4gDqHL6nGYwx5wi5kRhXjtf2c5qgFX9fzfk0TOo&activityId=742F8161-9837-4912-B5AC-B9C5F78696AA&ocid=msftweather&cm=zh-cn&it=edgeid&user=m-1398AA8B55406700058CB854549266CB&latLongList=41.2678733668769%2C123.23673248291%7C41.1083490928298%2C122.994346618652%7C41.6772825105281%2C123.46435546875%7C41.8810168743561%2C123.957023620605%7C42.2861994372228%2C123.842353820801%7C40.7196174412421%2C122.170715332031%7C40.0188387048721%2C124.315452575684%7C42.0217639812188%2C121.670150756836%7C41.095766117327%2C121.126670837402%7C43.1663169082502%2C124.350471496582%7C40.7108279939588%2C120.836906433105%7C42.8882676054473%2C125.143890380859%7C43.654234136767%2C122.243156433105%7C41.7281902342658%2C125.940055847168%7C41.6017125077067%2C120.488433837891&locale=zh-cn&units=C&appId=9e21380c-ff19-4c78-b4ea-19558e93a5d3&wrapOData=false&includenowcasting=true&usemscloudcover=true&getCmaAlert=true";
     fetch(t)
@@ -204,7 +205,14 @@ const Taskbar = () => {
           capAbbr: responses[0].weather[0].current.capAbbr,
         };
         dispatch(Actions.WINSETTING(param));
-      });
+      }).catch(() => {
+      let param = {
+        temp: 25,
+        weatherImg: "weather",
+        capAbbr: "晴朗",
+      };
+      dispatch(Actions.WINSETTING(param));
+    });
   }, []);
   return (
     <div className="taskbar">
@@ -289,7 +297,7 @@ const Taskbar = () => {
               <span style={{ paddingLeft: "10px" }}>{widpane.data.temp}°C</span>
               <span
                 style={{
-                  marginLeft: "10px",
+                  margin: "0 10px",
                 }}
               >
                 {" "}
