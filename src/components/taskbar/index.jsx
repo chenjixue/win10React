@@ -113,8 +113,8 @@ let TaskTime = () => {
         {time
           .toLocaleDateString("zh-CN", {
             year: "numeric",
-            month: "2-digit",
-            day: "2-digit",
+            month: "numeric",
+            day: "numeric",
           })
           .replace(/\//g, "/")}
       </div>
@@ -293,7 +293,7 @@ const Taskbar = () => {
           <div className="win-task-tem"></div>
           <div className="taskright">
             <div className="weather">
-              <Icon src={widpane.data.weatherImg} width={26} />
+              <Icon src={widpane.data.weatherImg} width={24} />
               <span style={{ paddingLeft: "10px" }}>{widpane.data.temp}°C</span>
               <span
                 style={{

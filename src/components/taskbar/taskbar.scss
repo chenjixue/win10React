@@ -41,7 +41,7 @@ body[data-theme="dark"] {
 
   .weather {
     display: flex;
-    font-size: 15px;
+    font-size: 14px;
     align-items: center;
     margin-right: 10px;
     // background-color: red;
@@ -74,10 +74,12 @@ body[data-theme="dark"] {
 
 .taskDate {
   display: flex;
-  padding: 3px 2px;
-  font-size: 14px;
+  padding: 4px 2px;
+  font-size: 13px;
   flex-direction: column;
   justify-content: space-between;
+  box-sizing: border-box;
+  width: 70.5px;
 
   div {
     width: 100%;
@@ -186,7 +188,7 @@ body[data-theme="dark"] {
 
 .win-search {
   height: 100%;
-  width: 286px;
+  width: 287px;
   display: flex;
   align-items: center;
   background-color: #fff;
